@@ -1,12 +1,15 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
 // Order of the groups in the XML document.
-var INITIALS_INDEX = 0;
-var ILLUMINATION_INDEX = 1;
-var LIGHTS_INDEX = 2;
-var TEXTURES_INDEX = 3;
-var MATERIALS_INDEX = 4;
-var NODES_INDEX = 5;
+var SCENE_INDEX = 0;
+var VIEWS_INDEX = 1;
+var AMBIENT_INDEX = 2;
+var LIGHTS_INDEX = 3;
+var TEXTURES_INDEX = 4;
+var MATERIALS_INDEX = 5;
+var TRANSFORMATIONS_INDEX = 6;
+var PRIMITIVES_INDEX = 7;
+var COMPONENTS_INDEX = 8;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -70,8 +73,8 @@ class MySceneGraph {
      * @param {XML root element} rootElement
      */
     parseXMLFile(rootElement) {
-        if (rootElement.nodeName != "SCENE")
-            return "root tag <SCENE> missing";
+        if (rootElement.nodeName != "yas")
+            return "root tag <yas> missing";
 
         var nodes = rootElement.children;
 
@@ -86,86 +89,110 @@ class MySceneGraph {
 
         // Processes each node, verifying errors.
 
-        // <INITIALS>
+        // <scene>
         var index;
-        if ((index = nodeNames.indexOf("INITIALS")) == -1)
-            return "tag <INITIALS> missing";
+        if ((index = nodeNames.indexOf("scene")) == -1)
+            return "tag <scene> missing";
         else {
-            if (index != INITIALS_INDEX)
-                this.onXMLMinorError("tag <INITIALS> out of order");
+            if (index != SCENE_INDEX)
+                this.onXMLMinorError("tag <scene> out of order");
 
-            //Parse INITIAL block
-            if ((error = this.parseInitials(nodes[index])) != null)
+            //Parse scene block
+            if ((error = this.parseScene(nodes[index])) != null)
                 return error;
         }
 
-        // <ILLUMINATION>
-        if ((index = nodeNames.indexOf("ILLUMINATION")) == -1)
-            return "tag <ILLUMINATION> missing";
+        // <views>
+        if ((index = nodeNames.indexOf("views")) == -1)
+            return "tag <views> missing";
         else {
-            if (index != ILLUMINATION_INDEX)
-                this.onXMLMinorError("tag <ILLUMINATION> out of order");
+            if (index != VIEWS_INDEX)
+                this.onXMLMinorError("tag <views> out of order");
 
-            //Parse ILLUMINATION block
-            if ((error = this.parseIllumination(nodes[index])) != null)
+            //Parse views block
+            if ((error = this.parseViews(nodes[index])) != null)
                 return error;
         }
 
-        // <LIGHTS>
-        if ((index = nodeNames.indexOf("LIGHTS")) == -1)
-            return "tag <LIGHTS> missing";
+        // <ambient>
+        if ((index = nodeNames.indexOf("ambient")) == -1)
+            return "tag <ambient> missing";
         else {
-            if (index != LIGHTS_INDEX)
-                this.onXMLMinorError("tag <LIGHTS> out of order");
+            if (index != AMBIENT_INDEX)
+                this.onXMLMinorError("tag <ambient> out of order");
 
             //Parse LIGHTS block
+            if ((error = this.parseAmbient(nodes[index])) != null)
+                return error;
+        }
+
+        // <lights>
+        if ((index = nodeNames.indexOf("lights")) == -1)
+            return "tag <lights> missing";
+        else {
+            if (index != LIGHTS_INDEX)
+                this.onXMLMinorError("tag <lights> out of order");
+
+            //Parse lights block
             if ((error = this.parseLights(nodes[index])) != null)
                 return error;
         }
 
-        // <TEXTURES>
-        if ((index = nodeNames.indexOf("TEXTURES")) == -1)
-            return "tag <TEXTURES> missing";
+        // <textures>
+        if ((index = nodeNames.indexOf("textures")) == -1)
+            return "tag <textures> missing";
         else {
             if (index != TEXTURES_INDEX)
-                this.onXMLMinorError("tag <TEXTURES> out of order");
+                this.onXMLMinorError("tag <textures> out of order");
 
-            //Parse TEXTURES block
+            //Parse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
                 return error;
         }
 
-        // <MATERIALS>
-        if ((index = nodeNames.indexOf("MATERIALS")) == -1)
-            return "tag <MATERIALS> missing";
+        // <materials>
+        if ((index = nodeNames.indexOf("materials")) == -1)
+            return "tag <materials> missing";
         else {
             if (index != MATERIALS_INDEX)
-                this.onXMLMinorError("tag <MATERIALS> out of order");
+                this.onXMLMinorError("tag <materials> out of order");
 
-            //Parse MATERIALS block
+            //Parse materials block
             if ((error = this.parseMaterials(nodes[index])) != null)
                 return error;
         }
 
-        // <NODES>
-        if ((index = nodeNames.indexOf("NODES")) == -1)
-            return "tag <NODES> missing";
+        // <primitives>
+        if ((index = nodeNames.indexOf("primitives")) == -1)
+            return "tag <primitives> missing";
         else {
-            if (index != NODES_INDEX)
-                this.onXMLMinorError("tag <NODES> out of order");
+            if (index != PRIMITIVES_INDEX)
+                this.onXMLMinorError("tag <primitives> out of order");
 
-            //Parse NODES block
-            if ((error = this.parseNodes(nodes[index])) != null)
+            //Parse primitives block
+            if ((error = this.parsePrimitives(nodes[index])) != null)
+                return error;
+        }
+
+        // <components>
+        if ((index = nodeNames.indexOf("components")) == -1)
+            return "tag <components> missing";
+        else {
+            if (index != COMPONENTS_INDEX)
+                this.onXMLMinorError("tag <components> out of order");
+
+            //Parse components block
+            if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
     }
 
     /**
-     * Parses the <INITIALS> block.
+     * Parses the <scene> block.
      */
-    parseInitials(initialsNode) {
+    parseScene(SceneNode) {
 
-        var children = initialsNode.children;
+        var children = SceneNode.children;
 
         var nodeNames = [];
 
@@ -198,13 +225,13 @@ class MySceneGraph {
         }
 
         // Checks if at most one translation, three rotations, and one scaling are defined.
-        if (initialsNode.getElementsByTagName('translation').length > 1)
+        if (SceneNode.getElementsByTagName('translation').length > 1)
             return "no more than one initial translation may be defined";
 
-        if (initialsNode.getElementsByTagName('rotation').length > 3)
+        if (SceneNode.getElementsByTagName('rotation').length > 3)
             return "no more than three initial rotations may be defined";
 
-        if (initialsNode.getElementsByTagName('scale').length > 1)
+        if (SceneNode.getElementsByTagName('scale').length > 1)
             return "no more than one scaling may be defined";
 
         // Initial transforms.
@@ -253,7 +280,7 @@ class MySceneGraph {
     }
 
     /**
-     * Parses the <ILLUMINATION> block.
+     * Parses the <illumination> block.
      * @param {illumination block element} illuminationNode
      */
     parseIllumination(illuminationNode) {
@@ -266,7 +293,7 @@ class MySceneGraph {
 
 
     /**
-     * Parses the <LIGHTS> node.
+     * Parses the <lights> node.
      * @param {lights block element} lightsNode
      */
     parseLights(lightsNode) {
@@ -412,7 +439,7 @@ class MySceneGraph {
     }
 
     /**
-     * Parses the <TEXTURES> block. 
+     * Parses the <textures> block. 
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
@@ -424,7 +451,7 @@ class MySceneGraph {
     }
 
     /**
-     * Parses the <MATERIALS> node.
+     * Parses the <materials> node.
      * @param {materials block element} materialsNode
      */
     parseMaterials(materialsNode) {
@@ -435,12 +462,22 @@ class MySceneGraph {
     }
 
     /**
-     * Parses the <NODES> block.
-     * @param {nodes block element} nodesNode
+     * Parses the <primitives> block.
+     * @param {nodes block element} primitivesNode
      */
-    parseNodes(nodesNode) {
+    parsePrimitives(nodesNode) {
         // TODO: Parse block
-        this.log("Parsed nodes");
+        this.log("Parsed primitives");
+        return null;
+    }
+
+        /**
+     * Parses the <components> block.
+     * @param {nodes block element} componentsNode
+     */
+    parseComponents(nodesNode) {
+        // TODO: Parse block
+        this.log("Parsed components");
         return null;
     }
 
