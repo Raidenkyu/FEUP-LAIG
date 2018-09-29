@@ -190,7 +190,95 @@ class MySceneGraph {
     /**
      * Parses the <scene> block.
      */
-    parseScene(SceneNode) {
+    parseScene(SceneNode){
+        this.idRoot = this.reader.getString(SceneNode,'root');
+        this.axisLength = this.reader.getFloat(SceneNode,'axis_length');
+
+        this.log("Parsed scene");
+    }
+
+    parseViews(viewsNode){
+        var children = viewsNode.children;
+        var nodeNames = []
+        var grandchildren = null;
+        var id;
+        var indexFrom,indexTo;
+        var fx,fy,fz,tx,ty,tz;
+        var near, far,angle,left,right, top,bottom;
+
+        for (var i = 0; i < children.length; i++){
+            
+            
+
+            if (children[i].nodeName == "perspective") {
+                grandchildren = children[i].children;
+
+                for(var j = 0; j < grandchildren.length;j++){
+                    nodeNames.push(children[i].nodeName);
+                }
+
+                indexFrom = nodeNames.indexOf("from");
+                indexTo = nodeNames.indexOf("to");
+
+                id = this.reader.getString(children[i],'id');
+                near = this.reader.getFloat(children[i],'near');
+                far = this.reader.getFloat(children[i],'far');
+                angle = this.reader.getFloat(children[i],'angle');
+
+                fx = this.reader.getFloat(grandchildren[indexFrom],'x');
+                fy = this.reader.getFloat(grandchildren[indexFrom],'y');
+                fz = this.reader.getFloat(grandchildren[indexFrom],'z');
+
+                tx = this.reader.getFloat(grandchildren[indexTo],'x');
+                ty = this.reader.getFloat(grandchildren[indexTo],'y');
+                tz = this.reader.getFloat(grandchildren[indexTo],'z');
+
+                //guardar perspective
+                nodeNames = [];
+            }
+            else if(children[i].nodeName == "ortho"){
+                id = this.reader.getString(children[i],'id');
+                near = this.reader.getFloat(children[i],'near');
+                far = this.reader.getFloat(children[i],'far');
+                left = this.reader.getFloat(children[i],'left');
+                right = this.reader.getFloat(children[i],'right');
+                top = this.reader.getFloat(children[i],'top');
+                bottom = this.reader.getFloat(children[i],'bottom');
+
+                //guardar ortho
+            }
+            else{
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+        }
+
+        this.log("Parsed views");
+    }
+
+    parseAmbient(ambientNode){
+        var children = ambientNode.children;
+        var nodeNames = [];
+        for(var i = 0; i< children.length;i++){
+            nodeNames.push(children[i].nodeName);
+        }
+
+        var indexAmbient = nodeNames.indexOf("ambient");
+        var indexBackground = nodeNames.indexOf("background");
+
+
+        this.ambientR = this.reader.getFloat(children[indexAmbient],'r');
+        this.ambientG = this.reader.getFloat(children[indexAmbient],'g');
+        this.ambientB = this.reader.getFloat(children[indexAmbient],'b');
+        this.ambientA = this.reader.getFloat(children[indexAmbient],'a');
+        this.backgroundR = this.reader.getFloat(children[indexBackground],'r');
+        this.backgroundG = this.reader.getFloat(children[indexBackground],'g');
+        this.backgroundB = this.reader.getFloat(children[indexBackground],'b');
+        this.backgroundA = this.reader.getFloat(children[indexBackground],'a');
+
+    }
+
+    parseStuff(SceneNode) {
 
         var children = SceneNode.children;
 
@@ -443,7 +531,12 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
-        // TODO: Parse block
+        this.textures = new Array();
+
+        var children = texturesNode.children;
+        for(var i = 0; i < children.length;i++){
+            this.textures[children[i].getString(children[i],'id')] = children[i].getString(children[i],'file');
+        }
 
         console.log("Parsed textures");
 
@@ -467,6 +560,8 @@ class MySceneGraph {
      */
     parsePrimitives(nodesNode) {
         // TODO: Parse block
+        this.triangles = [];
+        this.rectangles = [];
         this.log("Parsed primitives");
         return null;
     }
