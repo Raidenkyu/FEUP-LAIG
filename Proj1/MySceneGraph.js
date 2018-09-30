@@ -212,7 +212,7 @@ class MySceneGraph {
     parseViews(viewsNode) {
         var children = viewsNode.children;
         var nodeNames = []
-        var grandchildren = null;
+        var grandchildren = [];
         var id;
         var indexFrom, indexTo;
         var fx, fy, fz, tx, ty, tz;
@@ -391,12 +391,8 @@ class MySceneGraph {
         return null;
     }
 
-
-    /**
-     * Parses the <lights> node.
-     * @param {lights block element} lightsNode
-     */
     parseLights(lightsNode) {
+
         var children = lightsNode.children;
 
         this.lights = new Array();
@@ -405,46 +401,10 @@ class MySceneGraph {
         var grandChildren = [];
         var nodeNames = [];
 
-        var lightId;
-
         // Any number of lights.
         for (var i = 0; i < children.length; i++) {
 
-            if (children[i].nodeName != "omni" || children[i].nodeName != "spot") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-                continue;
-            }
-
-            lightId = this.reader.getString(children[i], 'id');
-
-            if (lightId == null)
-                return "no ID defined for light";
-
-            // Checks for repeated IDs.
-            if (this.lights[lightId] != null)
-                return "ID must be unique for each light (conflict: ID = " + lightId + ")";
-
-            this.lights.push(new CGFlight(this.scene, id));
-
-            numLights++;
-        }
-    }
-
-
-    parseLights2(lightsNode) {
-
-        var children = lightsNode.children;
-
-        this.lights = [];
-        var numLights = 0;
-
-        var grandChildren = [];
-        var nodeNames = [];
-
-        // Any number of lights.
-        for (var i = 0; i < children.length; i++) {
-
-            if (children[i].nodeName != "LIGHT") {
+            if (children[i].nodeName != "omni" && children[i].nodeName != "spot") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
@@ -458,6 +418,17 @@ class MySceneGraph {
             if (this.lights[lightId] != null)
                 return "ID must be unique for each light (conflict: ID = " + lightId + ")";
 
+            // Light enable/disable
+            var enableLight = true;
+            var aux = this.reader.getFloat(children[i], 'enabled');
+            if(aux != 0 && aux != 1){
+                return "enabled must be 0 or 1, but was " + lightId + ")";
+            }
+            if(aux == 0){
+                enableLight = false;
+            }
+
+
             grandChildren = children[i].children;
             // Specifications for the current light.
 
@@ -467,24 +438,15 @@ class MySceneGraph {
             }
 
             // Gets indices of each element.
-            var enableIndex = nodeNames.indexOf("enable");
             var positionIndex = nodeNames.indexOf("position");
             var ambientIndex = nodeNames.indexOf("ambient");
             var diffuseIndex = nodeNames.indexOf("diffuse");
             var specularIndex = nodeNames.indexOf("specular");
+            if(chidren[i].nodeName == "spot"){
+                var targetIndex = nodeNames.indexOf("target");
+            }
 
-            // Light enable/disable
-            var enableLight = true;
-            if (enableIndex == -1) {
-                this.onXMLMinorError("enable value missing for ID = " + lightId + "; assuming 'value = 1'");
-            }
-            else {
-                var aux = this.reader.getFloat(grandChildren[enableIndex], 'value');
-                if (!(aux != null && !isNaN(aux) && (aux == 0 || aux == 1)))
-                    this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'");
-                else
-                    enableLight = aux == 0 ? false : true;
-            }
+
 
             // Retrieves the light position.
             var positionLight = [];
@@ -559,7 +521,8 @@ class MySceneGraph {
             // TODO: Retrieve the specular component
 
             // TODO: Store Light global information.
-            //this.lights[lightId] = ...;
+            var light = CGFlight(this.scene,lightId);
+            this.lights.push(light);
             numLights++;
         }
 
@@ -609,7 +572,7 @@ class MySceneGraph {
         this.transforms = new Array();
 
         var children = transformationsNode.children;
-        var grandchildren = null;
+        var grandchildren = [];
 
 
         for (var i = 0; i < children.length; i++) {
