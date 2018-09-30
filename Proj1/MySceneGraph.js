@@ -606,75 +606,93 @@ class MySceneGraph {
      * @param {transformations block element} transformationsNode
      */
     parseTransformations(transformationsNode) {
-        // TODO: Parse block
+        this.transforms = new Array();
 
         var children = transformationsNode.children;
         var grandchildren = null;
-        var nodeNames = [];
 
-        // Initial transforms. 
-        this.initialTranslate = [];
-        this.initialScaling = [];
-        this.initialRotations = [];
 
         for (var i = 0; i < children.length; i++) {
             grandchildren = children[i].children;
 
-            for (var j = 0; j < grandchildren.length; j++) {
-                nodeNames.push(children[i].nodeName);
+            var transId = this.reader.getString(children[i],'id');
+
+            if(transId == null){
+                this.onXMLMinorError("Invalid id:" + transId);
+                continue;
             }
 
-            // Gets indices of each element.
-            var translationIndex = nodeNames.indexOf("translation");
-            var thirdRotationIndex = nodeNames.indexOf("rotation");
-            var secondRotationIndex = nodeNames.indexOf("rotation", thirdRotationIndex + 1);
-            var firstRotationIndex = nodeNames.lastIndexOf("rotation");
-            var scalingIndex = nodeNames.indexOf("scale");
+            if(this.transforms[transId] != null){
+                this.onXMLMinorError("Id already in use:" + transId);
+                continue;
+            }
 
-            // Checks if the indices are valid and in the expected order.
-            // Translation.
             this.initialTransforms = mat4.create();
             mat4.identity(this.initialTransforms);
             this.scene.pushMatrix();
+            this.scene.setMatrix(this.initialTransforms);
 
             for (var j = 0; j < grandchildren.length; j++) {
 
-                if (nodeNames[i] == "translation"){
-                    var tx = this.reader.getFloat(children[translationIndex], 'x');
-                    var ty = this.reader.getFloat(children[translationIndex], 'y');
-                    var tz = this.reader.getFloat(children[translationIndex], 'z');
+                if (children[i].nodeName == "translate"){
+                    var tx = this.reader.getFloat(children[i], 'x');
+                    var ty = this.reader.getFloat(children[i], 'y');
+                    var tz = this.reader.getFloat(children[i], 'z');
 
                     if (tx == null || ty == null || tz == null) {
-                        tx = 0;
-                        ty = 0;
-                        tz = 0;
-                        this.onXMLMinorError("failed to parse coordinates of initial translation; assuming zero");
+                        this.onXMLMinorError("failed to parse coordinates of translation; assuming zero");
+                        continue;
                     }
 
 
                     this.scene.translate(tx, ty, tz);
                 }
 
-                //TODO: Parse Rotations
 
-                if(nodeNames[i] == "rotation") {
-                    var rx = this.reader.getFloat(children[thirdRotationIndex], 'x');
-                    var ry = this.reader.getFloat(children[thirdRotationIndex], 'y');
-                    var rz = this.reader.getFloat(children[thirdRotationIndex], 'z');
+                else if(children[i].nodeName == "rotate") {
+                    var axis = this.reader.getString(children[i], 'axis');
+                    var ang = this.reader.getFloat(children[i],'angle');
 
-                    if (tx == null || ty == null || tz == null) {
-                        tx = 0;
-                        ty = 0;
-                        tz = 0;
-                        this.onXMLMinorError("failed to parse coordinates of initial translation; assuming zero");
+                    if(angle == null){
+                        this.onXMLMinorError("failed to parse angle of rotation; transformation omitted");
+                        continue;
                     }
-                    //TODO: Save translation data
 
-                    this.scene.translate(tx, ty, tz);
+                    if (axis == "x") {
+                        this.scene.rotate(angle,1,0,0);
+                    }
+                    if (axis == "y") {
+                        this.scene.rotate(angle,0,1,0);
+                    }
+                    if (axis == "z") {
+                        this.scene.rotate(angle,0,0,1);
+                    }
+                    else{
+                        this.onXMLMinorError("failed to parse axis of rotation; transformation omitted");
+                        continue;
+                    }
                 }
 
-                //TODO: Parse Scaling
+                else if (children[i].nodeName == "scale"){
+                    var sx = this.reader.getFloat(children[i], 'x');
+                    var sy = this.reader.getFloat(children[i], 'y');
+                    var sz = this.reader.getFloat(children[i], 'z');
+
+                    if (tx == null || ty == null || tz == null) {
+                        this.onXMLMinorError("failed to parse coordinates of scalation; assuming zero");
+                        continue;
+                    }
+
+
+                    this.scene.scale(sx, sy, sz);
+                }
+                else{
+                    this.onXMLMinorError("Invalid Transformation");
+                }
             }
+            mat4.copy(this.initialTransforms,this.scene.getMatrix());
+            this.scene.popMatrix();
+            this.transforms[transId] = this.initialTransforms;
 
         }
 
