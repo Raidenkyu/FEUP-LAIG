@@ -1,38 +1,37 @@
-<yas> 
-
-	<scene root="rootNode" axis_length=5.0 />
+<yas>
+<scene root="rootNode" axis_length="5.0" />
 
 	<views default="view_P1" >
 
-		<perspective id="view_P1" near=1 far=5 angle=90>
-			<from x=5.0 y=5.0 z=5.0 />
-			<to x=0.0 y=0.0 z=0.0 />
+		<perspective id="view_P1" near="1" far="5" angle="90">
+			<from x="5.0" y="5.0" z="5.0" />
+			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
-		<ortho id="view_O1" near=1 far=5
-			left=-5.0 right=5.0 top=5.0 bottom=-5.0 />
+		<ortho id="view_O1" near="1" far="5"
+			left="-5.0" right="5.0" top="5.0" bottom="-5.0" />
 	</views>
 		
 	<ambient> 
-		<ambient r=0.5 g=0.5 b=0.5 a=0.0 />
-		<background r=0.0 g=0.0 b=0.0 a=0.0 />
+		<ambient r="0.5" g="0.5" b="0.5" a="0.0" />
+		<background r="0.0" g="0.0" b="0.0" a="0.0" />
 	</ambient>
 
 	<lights>
 
-		<omni id="omni_1" enabled=0 >
-			<location x=10 y=10 z=10 w=1.0 />
-			<ambient r=0.0 g=0.0 b=0.0 a=0.0 />
-			<diffuse r=0.0 g=0.0 b=0.0 a=0.0 />
-			<specular r=0.0 g=0.0 b=0.0 a=0.0 />
+		<omni id="omni_1" enabled="0" >
+			<location x="10" y="10" z="10" w="1.0" />
+			<ambient r="0.0" g="0.0" b="0.0" a="0.0" />
+			<diffuse r="0.0" g="0.0" b="0.0" a="0.0" />
+			<specular r="0.0" g="0.0" b="0.0" a="0.0" />
 		</omni>
 
-		<spot id="spot_1" enabled=1 angle=15.0 exponent=2.0>
-			<location x=-10.0 y=-10.0 z=-10.0 w=1.0 />
-			<target x=0.0 y=0.0 z=0.0 />
-			<ambient r=0.0 g=0.0 b=0.0 a=0.0 />
-			<diffuse r=0.0 g=0.0 b=0.0 a=0.0 />
-			<specular r=0.0 g=0.0 b=0.0 a=0.0 />
+		<spot id="spot_1" enabled="1" angle="15.0" exponent="2.0">
+			<location x="-10.0" y="-10.0" z="-10.0" w="1.0" />
+			<target x="0.0" y="0.0" z="0.0" />
+			<ambient r="0.0" g="0.0" b="0.0" a="0.0" />
+			<diffuse r="0.0" g="0.0" b="0.0" a="0.0" />
+			<specular r="0.0" g="0.0" b="0.0" a="0.0" />
 		</spot>
 
 	</lights>
@@ -45,11 +44,11 @@
 		
 	<materials> 
 
-		<material id="mat_1" shininess = 0.5 >
-			<emission r=0.0 g=0.0 b=0.0 a=0.0 />
-			<ambient r=0.0 g=0.0 b=0.0 a=0.0 />
-			<diffuse r=0.0 g=0.0 b=0.0 a=0.0 />
-			<specular r=0.0 g=0.0 b=0.0 a=0.0 />
+		<material id="mat_1" shininess ="0.5" >
+			<emission r="0.0" g="0.0" b="0.0" a="0.0" />
+			<ambient r="0.0" g="0.0" b="0.0" a="0.0" />
+			<diffuse r="0.0" g="0.0" b="0.0" a="0.0" />
+			<specular r="0.0" g="0.0" b="0.0" a="0.0" />
 		</material>
 
 	</materials>
@@ -58,9 +57,9 @@
 
 		<transformation id="tranf_1">
 
-			<translate x=10.0 y=10.0 z=10.0 />
-			<rotate axis="x" angle=90.0 />
-			<scale x=1.0 y=1.0 z=2.0 />
+			<translate x="10.0" y="10.0" z="10.0" />
+			<rotate axis="x" angle="90.0" />
+			<scale x="1.0" y="1.0" z="2.0" />
 
 		</transformation>
 
@@ -110,5 +109,5 @@
 			</children>
 		</component> 
 	</components>
-
+	
 </yas>

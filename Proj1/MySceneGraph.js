@@ -618,7 +618,7 @@ class MySceneGraph {
                 light.enable();
             }
             else{
-
+                light.disable();
             }
             light.setPosition(positionLight[0],positionLight[1],positionLight[2],positionLight[3]);
             light.setAmbient(ambientIllumination[0],ambientIllumination[1],ambientIllumination[2],ambientIllumination[3]);
