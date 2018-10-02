@@ -436,8 +436,8 @@ class MySceneGraph {
             }
 
             // Gets indices of each element.
-            var positionIndex = nodeNames.indexOf("position");
-            if(chidren[i].nodeName == "spot"){
+            var positionIndex = nodeNames.indexOf("location");
+            if(children[i].nodeName == "spot"){
                 var targetIndex = nodeNames.indexOf("target");
             }
             var ambientIndex = nodeNames.indexOf("ambient");
@@ -482,6 +482,7 @@ class MySceneGraph {
                 return "light position undefined for ID = " + lightId;
 
             // Retrieve the target 
+            if(children[i].nodeName == "spot"){
             var targetLight = [];
             if (targetIndex != -1) {
                 // x
@@ -507,7 +508,7 @@ class MySceneGraph {
             }
             else
                 return "target undefined for ID = " + lightId;
-
+            }
 
             // Retrieves the ambient component.
             var ambientIllumination = [];
@@ -551,7 +552,7 @@ class MySceneGraph {
                 if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
                     return "unable to parse R component of the diffuse illumination for ID = " + lightId;
                 else
-                    diffusetIllumination.push(r);
+                    diffuseIllumination.push(r);
 
                 // G
                 var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
@@ -613,7 +614,7 @@ class MySceneGraph {
             
             
             // Store Light global information.
-            var light = CGFlight(this.scene,lightId);
+            var light =  new CGFlight(this.scene,lightId);
             if(enableLight){
                 light.enable();
             }
@@ -654,7 +655,7 @@ class MySceneGraph {
 
         var children = texturesNode.children;
         for (var i = 0; i < children.length; i++) {
-            this.textures[children[i].getString(children[i], 'id')] = new CGFTexture(this.scene, './scenes/images/' + children[i].getString(children[i], 'file'));
+            this.textures[this.reader.getString(children[i], 'id')] = new CGFtexture(this.scene, './scenes/images/' + this.reader.getString(children[i], 'file'));
         }
 
         console.log("Parsed textures");
@@ -706,10 +707,10 @@ class MySceneGraph {
 
             for (var j = 0; j < grandchildren.length; j++) {
 
-                if (children[i].nodeName == "translate"){
-                    var tx = this.reader.getFloat(children[i], 'x');
-                    var ty = this.reader.getFloat(children[i], 'y');
-                    var tz = this.reader.getFloat(children[i], 'z');
+                if (grandchildren[i].nodeName == "translate"){
+                    var tx = this.reader.getFloat(grandchildren[i], 'x');
+                    var ty = this.reader.getFloat(grandchildren[i], 'y');
+                    var tz = this.reader.getFloat(grandchildren[i], 'z');
 
                     if (tx == null || ty == null || tz == null) {
                         this.onXMLMinorError("failed to parse coordinates of translation; assuming zero");
@@ -721,9 +722,9 @@ class MySceneGraph {
                 }
 
 
-                else if(children[i].nodeName == "rotate") {
-                    var axis = this.reader.getString(children[i], 'axis');
-                    var ang = this.reader.getFloat(children[i],'angle');
+                else if(grandchildren[i].nodeName == "rotate") {
+                    var axis = this.reader.getString(grandchildren[i], 'axis');
+                    var ang = this.reader.getFloat(grandchildren[i],'angle');
 
                     if(angle == null){
                         this.onXMLMinorError("failed to parse angle of rotation; transformation omitted");
@@ -745,10 +746,10 @@ class MySceneGraph {
                     }
                 }
 
-                else if (children[i].nodeName == "scale"){
-                    var sx = this.reader.getFloat(children[i], 'x');
-                    var sy = this.reader.getFloat(children[i], 'y');
-                    var sz = this.reader.getFloat(children[i], 'z');
+                else if (grandchildren[i].nodeName == "scale"){
+                    var sx = this.reader.getFloat(grandchildren[i], 'x');
+                    var sy = this.reader.getFloat(grandchildren[i], 'y');
+                    var sz = this.reader.getFloat(grandchildren[i], 'z');
 
                     if (tx == null || ty == null || tz == null) {
                         this.onXMLMinorError("failed to parse coordinates of scalation; assuming zero");
@@ -763,7 +764,7 @@ class MySceneGraph {
                 }
             }
             mat4.copy(this.initialTransforms,this.scene.getMatrix());
-            this.scene.popMatrix();
+            this.scene.popMatrix();this
             this.transforms[transId] = this.initialTransforms;
 
         }
