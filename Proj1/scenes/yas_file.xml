@@ -55,57 +55,59 @@
 
 	<transformations> 
 
-		<transformation id="tranf_1">
+		<transformation id="tranlate_y_10">
+			<translate x="0.0" y="10.0" z="0.0" />
+		</transformation>
 
-			<translate x="10.0" y="10.0" z="10.0" />
-			<rotate axis="x" angle="90.0" />
-			<scale x="1.0" y="1.0" z="2.0" />
-
+		<transformation id="tranlate_xyz_2">
+			<scale x="2.0" y="2.0" z="2.0" />
 		</transformation>
 
 	</transformations>
 
 	<primitives> 
 
-		<primitive id="ss">
+		<primitive id="uni_rectangle">
+			<rectangle x1="0.0" y1="0.0" x2="1.0" y2="1.0" />
+		</primitive >
 
-			<rectangle x1="ff" y1="ff" x2="ff" y2="ff" />
-			<triangle x1="ff" y1="ff" z1="ff" 
-					x2="ff" y2="ff" z2="ff" 
-					x3="ff" y3="ff" z3="ff" />
-			<cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
-			<sphere radius="ff" slices="ii" stacks="ii" />
-			<torus inner="ff" outer="ff" slices="ii" loops="ii" />
+		<primitive id="uni_rec_triangle">
+			<triangle x1="0.0" y1="0.0" z1="0.0" 
+					x2="1.0" y2="0.0" z2="0.0" 
+					x3="0.0" y3="1.0" z3="0.0" />
+		</primitive >
+
+		<primitive id="uni_cylinder">
+			<cylinder base="1.0" top="1.0" height="1.0" slices="10.0" stacks="10.0" />
+		</primitive >
+
+		<primitive id="uni_sphere">
+			<sphere radius="1.0" slices="10.0" stacks="10.0" />
 		</primitive >
 
 	</primitives >
 
 	<components>
 
-		<component id="ss">
+		<component id="scaled_triangle">
 
 			<transformation>
 
-				<transformationref id="ss" />
-
-				<translate x="ff" y="ff" z="ff" />
-				<rotate axis="cc" angle="ff" />
-				<scale x="ff" y="ff" z="ff" />
+				<transformationref id="scale_xyz_2" />
+				<transformationref id="tranlate_y_10" />
 
 			</transformation>
 
 			<materials>
 				
-					<material id="ss" />
+					<material id="mat_1" />
 
 			</materials>
 
-			<texture id="ss" length_s="ff" length_t="ff" />
+			<texture id="ss" length_s="ff" length_t="ff" /> <!--TODO -->
 
 			<children>
-
-				<componentref id="ss" />
-				<primitiveref id="ss" />
+				<primitiveref id="uni_rec_triangle" />
 			</children>
 		</component> 
 	</components>
