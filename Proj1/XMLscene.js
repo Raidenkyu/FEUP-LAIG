@@ -84,10 +84,9 @@ class XMLscene extends CGFscene {
         this.camera.near = this.graph.near;
         this.camera.far = this.graph.far;
 
-        //TODO: Change reference length according to parsed graph
-        //this.axis = new CGFaxis(this, this.graph.referenceLength);
-
-        // TODO: Change ambient and background details according to parsed graph
+        this.axis = new CGFaxis(this, this.graph.axisLength);
+        this.setGlobalAmbientLight(this.graph.ambientR, this.graph.ambientG, this.graph.ambientB, this.graph.ambientA);
+        this.gl.clearColor(this.graph.backgroundR, this.graph.backgroundG, this.graph.backgroundB, this.graph.backgroundA);
 
         this.initLights();
 
