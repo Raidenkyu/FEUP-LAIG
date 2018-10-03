@@ -38,7 +38,7 @@
 
 	<textures> 
 
-		<texture id="text_1" file="randomTexture" />
+		<texture id="text_1" file="rocks.jpg" />
 
 	</textures>
 		
