@@ -116,6 +116,8 @@ class XMLscene extends CGFscene {
 
         this.pushMatrix();
 
+       
+
         if (this.sceneInited) {
             // Draw axis
             this.axis.display();
