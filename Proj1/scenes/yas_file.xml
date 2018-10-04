@@ -89,6 +89,25 @@
 
 	<components>
 
+		<compenent id="rootNode">
+
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_1" />
+			</materials>
+
+			<texture id="ss" length_s="ff" length_t="ff" /> <!--TODO -->
+
+			<children>
+				<componentref id="scaled_triangle" />
+			</children>
+
+		</compenent>
+
+
 		<component id="scaled_triangle">
 
 			<transformation>
