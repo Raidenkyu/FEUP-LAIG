@@ -246,7 +246,7 @@ class MySceneGraph {
                 tz = this.reader.getFloat(grandchildren[indexTo], 'z');
 
                 //guardar perspective
-                
+
             }
             else if (children[i].nodeName == "ortho") {
                 id = this.reader.getString(children[i], 'id');
@@ -1103,12 +1103,66 @@ class MySceneGraph {
 
     /**
  * Parses the <components> block.
- * @param {nodes block element} componentsNode
+ * @param {components block element} componentsNode
  */
-    parseComponents(nodesNode) {
-        // TODO: Parse block
+    parseComponents(componentsNode) {
+        var children = componentsNode.children;
+        this.components = new Array();
+        for (var i = 0; i < children.length; i++) {
+            if(children[i].nodeName != "component"){
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            var compId = this.reader.getString(children[i],'id');
+
+
+            if (compId == null) {
+                this.onXMLMinorError("component ID null");
+                continue
+            }
+
+            if (this.components[compId] != null) {
+                this.onXMLMinorError("component ID already in use, conflict in ID:" + primId);
+                continue
+            }
+
+            this.components[compId] = children[i];
+        }
+        this.parseNodes(this.rootElement);
         this.log("Parsed components");
         return null;
+    }
+
+    /**
+     * Parses the nodes of the graph
+     * @param {nodes ID} nodeId
+     */
+    parseNodes(nodeId) {
+        var children = this.components[nodeId].children;
+        var nodeNames = [];
+        for(var i = 0; i < children.length;i++){
+            nodeNames.push(children[i].nodeName);
+        }
+
+        var grandchildrenIndex = nodeNames.indexOf("children");
+        
+        var grandchildren = children[grandchildrenIndex];
+
+        for(var i = 0; i < grandchildren.length,i++){
+            if(grandchildren[i].nodeName == "componentref"){
+                var childId = this.reader.getString(grandchildren[i], 'id');
+                this.parseNodes(childId);
+            }
+
+            else if(grandchildren[i].nodeName == "primitiveref"){
+                //TODO
+            }
+            else{
+                this.onXMLMinorError("unknown tag <" + grandchildren[i].nodeName + ">");
+            }
+        }
+
     }
 
     /*
