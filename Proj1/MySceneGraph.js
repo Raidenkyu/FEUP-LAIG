@@ -226,7 +226,7 @@ class MySceneGraph {
                 grandchildren = children[i].children;
 
                 for (var j = 0; j < grandchildren.length; j++) {
-                    nodeNames.push(children[i].nodeName);
+                    nodeNames.push(grandchildren[j].nodeName);
                 }
 
                 indexFrom = nodeNames.indexOf("from");
@@ -246,7 +246,7 @@ class MySceneGraph {
                 tz = this.reader.getFloat(grandchildren[indexTo], 'z');
 
                 //guardar perspective
-                nodeNames = [];
+                
             }
             else if (children[i].nodeName == "ortho") {
                 id = this.reader.getString(children[i], 'id');
@@ -263,6 +263,7 @@ class MySceneGraph {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
+            nodeNames = [];
         }
 
         this.log("Parsed views");
@@ -288,95 +289,6 @@ class MySceneGraph {
         this.backgroundB = this.reader.getFloat(children[indexBackground], 'b');
         this.backgroundA = this.reader.getFloat(children[indexBackground], 'a');
 
-    }
-
-    parseStuff(SceneNode) {
-
-        var children = SceneNode.children;
-
-        var nodeNames = [];
-
-        for (var i = 0; i < children.length; i++)
-            nodeNames.push(children[i].nodeName);
-
-        // Frustum planes
-        // (default values)
-        this.near = 0.1;
-        this.far = 500;
-        var indexFrustum = nodeNames.indexOf("frustum");
-        if (indexFrustum == -1) {
-            this.onXMLMinorError("frustum planes missing; assuming 'near = 0.1' and 'far = 500'");
-        }
-        else {
-            this.near = this.reader.getFloat(children[indexFrustum], 'near');
-            this.far = this.reader.getFloat(children[indexFrustum], 'far');
-
-            if (!(this.near != null && !isNaN(this.near))) {
-                this.near = 0.1;
-                this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
-            }
-            else if (!(this.far != null && !isNaN(this.far))) {
-                this.far = 500;
-                this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 500'");
-            }
-
-            if (this.near >= this.far)
-                return "'near' must be smaller than 'far'";
-        }
-
-        // Checks if at most one translation, three rotations, and one scaling are defined.
-        if (SceneNode.getElementsByTagName('translation').length > 1)
-            return "no more than one initial translation may be defined";
-
-        if (SceneNode.getElementsByTagName('rotation').length > 3)
-            return "no more than three initial rotations may be defined";
-
-        if (SceneNode.getElementsByTagName('scale').length > 1)
-            return "no more than one scaling may be defined";
-
-        // Initial transforms.
-        this.initialTranslate = [];
-        this.initialScaling = [];
-        this.initialRotations = [];
-
-        // Gets indices of each element.
-        var translationIndex = nodeNames.indexOf("translation");
-        var thirdRotationIndex = nodeNames.indexOf("rotation");
-        var secondRotationIndex = nodeNames.indexOf("rotation", thirdRotationIndex + 1);
-        var firstRotationIndex = nodeNames.lastIndexOf("rotation");
-        var scalingIndex = nodeNames.indexOf("scale");
-
-        // Checks if the indices are valid and in the expected order.
-        // Translation.
-        this.initialTransforms = mat4.create();
-        mat4.identity(this.initialTransforms);
-
-        if (translationIndex == -1)
-            this.onXMLMinorError("initial translation undefined; assuming T = (0, 0, 0)");
-        else {
-            var tx = this.reader.getFloat(children[translationIndex], 'x');
-            var ty = this.reader.getFloat(children[translationIndex], 'y');
-            var tz = this.reader.getFloat(children[translationIndex], 'z');
-
-            if (tx == null || ty == null || tz == null) {
-                tx = 0;
-                ty = 0;
-                tz = 0;
-                this.onXMLMinorError("failed to parse coordinates of initial translation; assuming zero");
-            }
-
-            //TODO: Save translation data
-        }
-
-        //TODO: Parse Rotations
-
-        //TODO: Parse Scaling
-
-        //TODO: Parse Reference length
-
-        this.log("Parsed initials");
-
-        return null;
     }
 
     parseLights(lightsNode) {
@@ -1020,7 +932,7 @@ class MySceneGraph {
                 // y2
                 var y2 = this.reader.getFloat(primNode, 'y2');
                 if (!(y2 != null && !isNaN(y2)))
-                    return "unable to parse z1 coordinate from the primitive ID " + primId;
+                    return "unable to parse y2 coordinate from the primitive ID " + primId;
                 else
                     primArray.push(y2);
 
@@ -1030,7 +942,7 @@ class MySceneGraph {
                     return "unable to parse z2 coordinate from the primitive ID " + primId;
                 else
                     primArray.push(z2);
-        
+
                 // x3
                 var x3 = this.reader.getFloat(primNode, 'x3');
                 if (!(x3 != null && !isNaN(x3)))
@@ -1052,6 +964,136 @@ class MySceneGraph {
                 else
                     primArray.push(z3);
             }
+
+            if (primNode.nodeName == "rectangle") {
+                primArray.push('r');
+
+                // x1
+                var x1 = this.reader.getFloat(primNode, 'x1');
+                if (!(x1 != null && !isNaN(x1)))
+                    return "unable to parse x1 coordinate from the primitive ID " + primId;
+                else
+                    primArray.push(x1);
+
+                // y1
+                var y1 = this.reader.getFloat(primNode, 'y1');
+                if (!(y1 != null && !isNaN(y1)))
+                    return "unable to parse y1 coordinate from the primitive ID " + primId;
+                else
+                    primArray.push(y1);
+
+                // x2
+                var x2 = this.reader.getFloat(primNode, 'x2');
+                if (!(x2 != null && !isNaN(x2)))
+                    return "unable to parse x2 coordinate from the primitive ID " + primId;
+                else
+                    primArray.push(x2);
+
+                // y2
+                var y2 = this.reader.getFloat(primNode, 'y2');
+                if (!(y2 != null && !isNaN(y2)))
+                    return "unable to parse y2 coordinate from the primitive ID " + primId;
+                else
+                    primArray.push(y2);
+            }
+
+            if (primNode.nodeName == "cylinder") {
+                primArray.push('c');
+
+                // base
+                var base = this.reader.getFloat(primNode, 'base');
+                if (!(base != null && !isNaN(base)))
+                    return "unable to parse base radius from the primitive ID " + primId;
+                else
+                    primArray.push(base);
+
+                // top
+                var top = this.reader.getFloat(primNode, 'top');
+                if (!(top != null && !isNaN(top)))
+                    return "unable to parse top radius from the primitive ID " + primId;
+                else
+                    primArray.push(top);
+
+                // height
+                var height = this.reader.getFloat(primNode, 'height');
+                if (!(height != null && !isNaN(height)))
+                    return "unable to parse the height from the primitive ID " + primId;
+                else
+                    primArray.push(height);
+
+                // slices
+                var slices = this.reader.getFloat(primNode, 'slices');
+                if (!(slices != null && !isNaN(slices)))
+                    return "unable to parse the number of slices from the primitive ID " + primId;
+                else
+                    primArray.push(slices);
+
+                // stacks
+                var stacks = this.reader.getFloat(primNode, 'stacks');
+                if (!(stacks != null && !isNaN(stacks)))
+                    return "unable to parse the number of stacks from the primitive ID " + primId;
+                else
+                    primArray.push(stacks);
+            }
+
+            if (primNode.nodeName == "sphere") {
+                primArray.push('s');
+
+                // radius
+                var radius = this.reader.getFloat(primNode, 'radius');
+                if (!(radius != null && !isNaN(radius)))
+                    return "unable to parse base radius from the primitive ID " + primId;
+                else
+                    primArray.push(radius);
+
+                // slices
+                var slices = this.reader.getFloat(primNode, 'slices');
+                if (!(slices != null && !isNaN(slices)))
+                    return "unable to parse the number of slices from the primitive ID " + primId;
+                else
+                    primArray.push(slices);
+
+                // stacks
+                var stacks = this.reader.getFloat(primNode, 'stacks');
+                if (!(stacks != null && !isNaN(stacks)))
+                    return "unable to parse the number of stacks from the primitive ID " + primId;
+                else
+                    primArray.push(stacks);
+            }
+
+            if (primNode.nodeName == "torus") {
+                primArray.push('t');
+
+                // inner
+                var inner = this.reader.getFloat(primNode, 'inner');
+                if (!(inner != null && !isNaN(inner)))
+                    return "unable to parse inner radius from the primitive ID " + primId;
+                else
+                    primArray.push(inner);
+
+                // outer
+                var outer = this.reader.getFloat(primNode, 'outer');
+                if (!(outer != null && !isNaN(outer)))
+                    return "unable to parse outer radius from the primitive ID " + primId;
+                else
+                    primArray.push(outer);
+
+
+                // slices
+                var slices = this.reader.getFloat(primNode, 'slices');
+                if (!(slices != null && !isNaN(slices)))
+                    return "unable to parse the number of slices from the primitive ID " + primId;
+                else
+                    primArray.push(slices);
+
+                // loops
+                var loops = this.reader.getFloat(primNode, 'loops');
+                if (!(loops != null && !isNaN(loops)))
+                    return "unable to parse the number of loops from the primitive ID " + primId;
+                else
+                    primArray.push(loops);
+            }
+            this.primitives[primId] = primArray;
 
         }
 
