@@ -1108,9 +1108,10 @@ class MySceneGraph {
     parseComponents(componentsNode) {
         var children = componentsNode.children;
         this.components = new Array();
+        this.graphNodes = new Array();
         for (var i = 0; i < children.length; i++) {
             if(children[i].nodeName != "component"){
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                this.onXMLMinorErro("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
 
@@ -1118,18 +1119,18 @@ class MySceneGraph {
 
 
             if (compId == null) {
-                this.onXMLMinorError("component ID null");
+                this.onXMLMinorErro("component ID null");
                 continue
             }
 
             if (this.components[compId] != null) {
-                this.onXMLMinorError("component ID already in use, conflict in ID:" + primId);
+                this.onXMLMinorErro("component ID already in use, conflict in ID:" + primId);
                 continue
             }
 
             this.components[compId] = children[i];
         }
-        this.parseNodes(this.rootElement);
+        this.parseNodes(this.idRoot);
         this.log("Parsed components");
         return null;
     }
@@ -1138,32 +1139,85 @@ class MySceneGraph {
      * Parses the nodes of the graph
      * @param {nodes ID} nodeId
      */
+
     parseNodes(nodeId) {
+        var graphNode = new GraphNode(nodeId);
+        this.graphNodes[nodeId];
         var children = this.components[nodeId].children;
         var nodeNames = [];
         for(var i = 0; i < children.length;i++){
             nodeNames.push(children[i].nodeName);
         }
 
+        var transformationIndex = nodeNames.indexOf("transformation");
+        var materialIndex = nodeNames.indexOf("material");
+        var textureIndex = nodeNames.indexOf("texture");
         var grandchildrenIndex = nodeNames.indexOf("children");
+
+        if(transformationIndex != -1){
+            var transformChildren = children[transformationIndex].children;
+            if(transformChildren[0].nodeName == "transformationref"){
+                var transform = transformChildren[0];
+                var transfId = this.reader.getString(transform,'id');
+                if(this.transforms[transfId] != null){
+                    graphNode.transformID = transId;
+                }
+                else{
+                    this.onXMLMinorErro("No trasformation for ID : " + transfId);
+                }
+            }
+
+
+        }
+
+        if(materialIndex != -1){
+            var material = children[materialIndex].children[0];
+            var matId = this.reader.getString(material,'id');
+            if(this.materials[materialId] != null){
+                graphNode.materialID = matId;
+            }
+            else{
+                this.onXMLMinorErro("No material for ID : " + matId);
+            }
+
+        }
+
+        if(textureIndex != -1){
+            var texture = children[textureIndex];
+            var texId = this.reader.getString(texture,'id');
+            var xTex = this.reader.getFloat(texture,'length_s');
+            var yTex = this.reader.getFloat(texture,'length_t');
+            if(this.textures[texId] != null){
+                graphNode.textureID = texId;
+                graphNode.xTex = xTex;
+                graphNode.yTex = yTex;
+            }
+            else{
+                this.onXMLMinorErro("No texture for ID : " + texId);
+            }
+
+        }
         
         var grandchildren = children[grandchildrenIndex];
 
-        for(var i = 0; i < grandchildren.length,i++){
+        for(var i = 0; i < grandchildren.length;i++){
             if(grandchildren[i].nodeName == "componentref"){
                 var childId = this.reader.getString(grandchildren[i], 'id');
+                graphNode.addGraphNode(childId);
                 this.parseNodes(childId);
             }
 
             else if(grandchildren[i].nodeName == "primitiveref"){
-                //TODO
+                var childId = this.reader.getString(grandchildren[i], 'id');
+                graphNode.addLeaf(childId);
             }
             else{
-                this.onXMLMinorError("unknown tag <" + grandchildren[i].nodeName + ">");
+                this.onXMLMinorErro("unknown tag <" + grandchildren[i].nodeName + ">");
             }
         }
 
     }
+
 
     /*
      * Callback to be executed on any read error, showing an error on the console.

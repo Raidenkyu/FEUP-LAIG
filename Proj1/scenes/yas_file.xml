@@ -55,11 +55,11 @@
 
 	<transformations> 
 
-		<transformation id="tranlate_y_10">
+		<transformation id="translate_y_10">
 			<translate x="0.0" y="10.0" z="0.0" />
 		</transformation>
 
-		<transformation id="tranlate_xyz_2">
+		<transformation id="scale_xyz_2">
 			<scale x="2.0" y="2.0" z="2.0" />
 		</transformation>
 
@@ -89,7 +89,7 @@
 
 	<components>
 
-		<compenent id="rootNode">
+		<component id="rootNode">
 
 			<transformation>
 				<translate x="0.0" y="0.0" z="0.0" />
@@ -99,13 +99,13 @@
 					<material id="mat_1" />
 			</materials>
 
-			<texture id="ss" length_s="ff" length_t="ff" /> <!--TODO -->
+			<texture id="text_1" length_s="1.0" length_t="1.0" /> <!--TODO -->
 
 			<children>
 				<componentref id="scaled_triangle" />
 			</children>
 
-		</compenent>
+		</component>
 
 
 		<component id="scaled_triangle">
@@ -113,7 +113,6 @@
 			<transformation>
 
 				<transformationref id="scale_xyz_2" />
-				<transformationref id="tranlate_y_10" />
 
 			</transformation>
 
@@ -123,7 +122,7 @@
 
 			</materials>
 
-			<texture id="ss" length_s="ff" length_t="ff" /> <!--TODO -->
+			<texture id="text_1" length_s="1.0" length_t="1.0" /> <!--TODO -->
 
 			<children>
 				<primitiveref id="uni_rec_triangle" />
