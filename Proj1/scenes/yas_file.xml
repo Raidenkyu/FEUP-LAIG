@@ -39,6 +39,7 @@
 	<textures> 
 
 		<texture id="text_1" file="rocks.jpg" />
+		<texture id="trunk" file="trunk-image.jpg" />
 
 	</textures>
 		
@@ -71,6 +72,10 @@
 			<rectangle x1="0.0" y1="0.0" x2="1.0" y2="1.0" />
 		</primitive >
 
+		<primitive id="quad">
+			<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+		</primitive >
+
 		<primitive id="uni_rec_triangle">
 			<triangle x1="0.0" y1="0.0" z1="0.0" 
 					x2="1.0" y2="0.0" z2="0.0" 
@@ -78,11 +83,11 @@
 		</primitive >
 
 		<primitive id="uni_cylinder">
-			<cylinder base="1.0" top="1.0" height="1.0" slices="10.0" stacks="10.0" />
+			<cylinder base="1.0" top="1.0" height="1.0" slices="12.0" stacks="1.0" />
 		</primitive >
 
 		<primitive id="uni_sphere">
-			<sphere radius="1.0" slices="10.0" stacks="10.0" />
+			<sphere radius="1.0" slices="12.0" stacks="12.0" />
 		</primitive >
 
 	</primitives >
@@ -99,7 +104,7 @@
 					<material id="mat_1" />
 			</materials>
 
-			<texture id="text_1" length_s="1.0" length_t="1.0" /> <!--TODO -->
+			<texture id="text_1" length_s="1.0" length_t="1.0" /> 
 
 			<children>
 				<componentref id="scaled_triangle" />
@@ -122,12 +127,169 @@
 
 			</materials>
 
-			<texture id="text_1" length_s="1.0" length_t="1.0" /> <!--TODO -->
+			<texture id="text_1" length_s="1.0" length_t="1.0" /> 
 
 			<children>
 				<primitiveref id="uni_rec_triangle" />
 			</children>
 		</component> 
+
+		
+
+		<component id="cube">
+
+			<transformation>
+
+				<translate x="0.0" y="0.0" z="0.0" />
+
+			</transformation>
+
+			<materials>
+				
+					<material id="mat_1" />
+
+			</materials>
+
+			<texture id="trunk" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="cube_face1" />
+				<componentref id="cube_face2" />
+				<componentref id="cube_face3" />
+				<componentref id="cube_face4" />
+				<componentref id="cube_face5" />
+				<componentref id="cube_face6" />
+			</children>
+		</component> 
+
+		<component id="cube_face1">
+
+			<transformation>
+
+				<translate x="0.5" y="0.0" z="0.0" />
+
+			</transformation>
+
+			<materials>
+				
+					<material id="inherit" />
+
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="uni_rectangle" />
+			</children>
+		</component> 
+
+		<component id="cube_face2">
+
+			<transformation>
+				<rotate axis="z" angle="90.0" />
+				<translate x="0.5" y="0.0" z="0.0" />
+
+			</transformation>
+
+			<materials>
+				
+				<material id="inherit" />
+
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_face3">
+
+			<transformation>
+				<rotate axis="z" angle="180.0" />
+				<translate x="0.5" y="0.0" z="0.0" />
+
+			</transformation>
+
+			<materials>
+				
+				<material id="inherit" />
+
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_face4">
+
+			<transformation>
+				<rotate axis="z" angle="-90.0" />
+				<translate x="0.5" y="0.0" z="0.0" />
+
+			</transformation>
+
+			<materials>
+				
+				<material id="inherit" />
+
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_face5">
+
+			<transformation>
+				<rotate axis="y" angle="90.0" />
+				<translate x="0.5" y="0.0" z="0.0" />
+
+			</transformation>
+
+			<materials>
+				
+				<material id="inherit" />
+
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_face6">
+
+			<transformation>
+				<rotate axis="y" angle="-90.0" />
+				<translate x="0.5" y="0.0" z="0.0" />
+
+			</transformation>
+
+			<materials>
+				
+				<material id="inherit" />
+
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		
+	
 	</components>
 	
 </yas>
