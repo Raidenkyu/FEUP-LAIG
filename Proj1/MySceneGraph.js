@@ -210,6 +210,7 @@ class MySceneGraph {
     }
 
     parseViews(viewsNode) {
+        this.views = new Array();
         var children = viewsNode.children;
         var nodeNames = []
         var grandchildren = [];
@@ -220,7 +221,30 @@ class MySceneGraph {
 
         for (var i = 0; i < children.length; i++) {
 
+            if (children[i].nodeName != "perspective" && children[i].nodeName != "ortho") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
 
+            id = this.reader.getString(children[i], 'id');
+
+            if(id == null){
+                this.onXMLMinorError("View with null ID");
+                continue;
+            }
+
+            if(this.views[id] != null){
+                this.onXMLMinorError(" View with ID " + id + " already in use");
+                continue;
+            }
+
+            near = this.reader.getFloat(children[i], 'near');
+            far = this.reader.getFloat(children[i], 'far');
+
+            if(far == null || near == null){
+                this.onXMLMinorError("unable to parse Camera values");
+                continue;
+            }
 
             if (children[i].nodeName == "perspective") {
                 grandchildren = children[i].children;
@@ -232,9 +256,17 @@ class MySceneGraph {
                 indexFrom = nodeNames.indexOf("from");
                 indexTo = nodeNames.indexOf("to");
 
-                id = this.reader.getString(children[i], 'id');
-                near = this.reader.getFloat(children[i], 'near');
-                far = this.reader.getFloat(children[i], 'far');
+                if(indexFrom == -1){
+                    this.onXMLMinorError("Tag 'from' missing");
+                    continue;
+                }
+
+
+                if(indexTo == -1){
+                    this.onXMLMinorError("Tag 'to' missing");
+                    continue;
+                }
+
                 angle = this.reader.getFloat(children[i], 'angle');
 
                 fx = this.reader.getFloat(grandchildren[indexFrom], 'x');
@@ -245,23 +277,27 @@ class MySceneGraph {
                 ty = this.reader.getFloat(grandchildren[indexTo], 'y');
                 tz = this.reader.getFloat(grandchildren[indexTo], 'z');
 
-                //guardar perspective
+                if(angle == null || fx == null || fy == null || fz == null || tx == null || ty == null || tz == null){
+                    this.onXMLMinorError("unable to parse Perspective values");
+                    continue;
+                }
+
+                var v = new CGFcamera(angle * DEGREE_TO_RAD,near,far,[fx,fy,fz], [tx,ty,tz]);
+
+                this.views[id] = v;
 
             }
             else if (children[i].nodeName == "ortho") {
-                id = this.reader.getString(children[i], 'id');
-                near = this.reader.getFloat(children[i], 'near');
-                far = this.reader.getFloat(children[i], 'far');
                 left = this.reader.getFloat(children[i], 'left');
                 right = this.reader.getFloat(children[i], 'right');
                 top = this.reader.getFloat(children[i], 'top');
                 bottom = this.reader.getFloat(children[i], 'bottom');
-
+                
+                if(left == null || right == null || top == null || bottom == null){
+                    this.onXMLMinorError("unable to parse Ortho values");
+                    continue;
+                }
                 //guardar ortho
-            }
-            else {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
-                continue;
             }
             nodeNames = [];
         }
@@ -322,7 +358,7 @@ class MySceneGraph {
             var enableLight = true;
             var aux = this.reader.getFloat(children[i], 'enabled');
             if (aux != 0 && aux != 1) {
-                return "enabled must be 0 or 1, but was " + lightId + ")";
+                return "enabled must be 0 or 1, but was " + aux + ")";
             }
             if (aux == 0) {
                 enableLight = false;
@@ -562,7 +598,18 @@ class MySceneGraph {
 
         var children = texturesNode.children;
         for (var i = 0; i < children.length; i++) {
-            this.textures[this.reader.getString(children[i], 'id')] = new CGFtexture(this.scene, './scenes/images/' + this.reader.getString(children[i], 'file'));
+            var texId = this.reader.getString(children[i], 'id');
+
+            if(texId == null){
+                this.onXMLMinorError("Texture with null ID");
+            }
+
+            if(this.textures[texId] != null){
+                this.onXMLMinorError("Texture with ID" + texId + "already in use");
+            }
+
+            var tex = new CGFtexture(this.scene, './scenes/images/' + this.reader.getString(children[i], 'file'));
+            this.textures[texId] = tex;
         }
 
         console.log("Parsed textures");
@@ -792,8 +839,6 @@ class MySceneGraph {
 
             this.initialTransforms = mat4.create();
             mat4.identity(this.initialTransforms);
-            this.scene.pushMatrix();
-            this.scene.setMatrix(this.initialTransforms);
 
             for (var j = 0; j < grandchildren.length; j++) {
 
@@ -808,7 +853,7 @@ class MySceneGraph {
                     }
 
 
-                    this.scene.translate(tx, ty, tz);
+                    mat4.translate(this.initialTransforms, this.initialTransforms, [tx,ty,tz]);
                 }
 
 
@@ -822,13 +867,13 @@ class MySceneGraph {
                     }
 
                     if (axis == "x") {
-                        this.scene.rotate(angle, 1, 0, 0);
+                        mat4.rotate(this.initialTransforms,this.initialTransforms,angle*DEGREE_TO_RAD,[1,0,0]);
                     }
                     if (axis == "y") {
-                        this.scene.rotate(angle, 0, 1, 0);
+                        mat4.rotate(this.initialTransforms,this.initialTransforms,angle*DEGREE_TO_RAD,[0,1,0]);
                     }
                     if (axis == "z") {
-                        this.scene.rotate(angle, 0, 0, 1);
+                        mat4.rotate(this.initialTransforms,this.initialTransforms,angle*DEGREE_TO_RAD,[0,0,1]);
                     }
                     else {
                         this.onXMLMinorError("failed to parse axis of rotation; transformation omitted");
@@ -847,14 +892,13 @@ class MySceneGraph {
                     }
 
 
-                    this.scene.scale(sx, sy, sz);
+                    mat4.scale(this.initialTransforms,this.initialTransforms,[sx,sy,sz]);
                 }
                 else {
                     this.onXMLMinorError("Invalid Transformation");
                 }
             }
-            mat4.copy(this.initialTransforms, this.scene.getMatrix());
-            this.scene.popMatrix(); this
+
             this.transforms[transId] = this.initialTransforms;
 
         }
@@ -1111,7 +1155,7 @@ class MySceneGraph {
         this.graphNodes = new Array();
         for (var i = 0; i < children.length; i++) {
             if(children[i].nodeName != "component"){
-                this.onXMLMinorErro("unknown tag <" + children[i].nodeName + ">");
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
             }
 
@@ -1119,12 +1163,12 @@ class MySceneGraph {
 
 
             if (compId == null) {
-                this.onXMLMinorErro("component ID null");
+                this.onXMLMinorError("component ID null");
                 continue
             }
 
             if (this.components[compId] != null) {
-                this.onXMLMinorErro("component ID already in use, conflict in ID:" + primId);
+                this.onXMLMinorError("component ID already in use, conflict in ID:" + primId);
                 continue
             }
 
@@ -1163,7 +1207,7 @@ class MySceneGraph {
                     graphNode.transformID = transId;
                 }
                 else{
-                    this.onXMLMinorErro("No trasformation for ID : " + transfId);
+                    this.onXMLMinorError("No trasformation for ID : " + transfId);
                 }
             }
 
@@ -1177,7 +1221,7 @@ class MySceneGraph {
                 graphNode.materialID = matId;
             }
             else{
-                this.onXMLMinorErro("No material for ID : " + matId);
+                this.onXMLMinorError("No material for ID : " + matId);
             }
 
         }
@@ -1193,7 +1237,7 @@ class MySceneGraph {
                 graphNode.yTex = yTex;
             }
             else{
-                this.onXMLMinorErro("No texture for ID : " + texId);
+                this.onXMLMinorError("No texture for ID : " + texId);
             }
 
         }
@@ -1212,7 +1256,7 @@ class MySceneGraph {
                 graphNode.addLeaf(childId);
             }
             else{
-                this.onXMLMinorErro("unknown tag <" + grandchildren[i].nodeName + ">");
+                this.onXMLMinorError("unknown tag <" + grandchildren[i].nodeName + ">");
             }
         }
 
@@ -1232,7 +1276,7 @@ class MySceneGraph {
      * Callback to be executed on any minor error, showing a warning on the console.
      * @param {string} message
      */
-    onXMLMinorErro(message) {
+    onXMLMinorError(message) {
         console.warn("Warning: " + message);
     }
 
