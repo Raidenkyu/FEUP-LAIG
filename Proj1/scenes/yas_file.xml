@@ -403,7 +403,7 @@
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="cylinder" />
+				<primitiveref id="uni_cylinder" />
 			</children>
 		</component> 
 
@@ -525,7 +525,7 @@
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="cylinder" />
+				<primitiveref id="uni_cylinder" />
 			</children>
 		</component> 
 
