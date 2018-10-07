@@ -3,7 +3,7 @@
 
 	<views default="view_P1" >
 
-		<perspective id="view_P1" near="0.1" far="500" angle="0.4">
+		<perspective id="view_P1" near="0.1" far="500" angle="22.92">
 			<from x="10.0" y="10.0" z="10.0" />
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
@@ -76,6 +76,7 @@
 	<transformations> 
 
 		<transformation id="scale_xyz_2">
+			<translate x="8.0" y="1.0" z="2.0" />
 			<scale x="2.0" y="2.0" z="2.0" />
 		</transformation>
 
@@ -127,7 +128,7 @@
 
 		<component id="cubic_stand">
 			<transformation>
-				<translate x="8.0" y="1.0" z="2.0" />
+				
 				<transformationref id="scale_xyz_2" />
 			</transformation>
 
@@ -211,8 +212,30 @@
 				<primitiveref id="quad" />
 			</children>
 		</component> 
-		
 
+		<component id="chair">
+
+			<transformation>
+				<translate x="5.0" y="0.0" z="5.0"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="trunk" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="leg1" />
+				<componentref id="leg2" />
+				<componentref id="leg3" />
+				<componentref id="leg4" />
+				<componentref id="leg5" />
+				<componentref id="leg6" />
+				<componentref id="seat" />
+				<componentref id="back" />
+			</children>
+		</component> 
 
 
 		<component id="cube">
@@ -225,7 +248,7 @@
 					<material id="mat_white" />
 			</materials>
 
-			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
 
 			<children>
 				<componentref id="cube_face1" />
@@ -344,6 +367,127 @@
 			</children>
 		</component> 
 
+		<component id="leg">
+
+			<transformation>
+				<scale x="0.1" y="1.5" z="0.1"/>
+				<rotate axis="x" angle="-90.0" />
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="cylinder" />
+			</children>
+		</component> 
+
+		<component id="seat">
+
+			<transformation>
+				<translate x="0.0" y="1.5" z="0.0"/>
+				<scale x="1.25" y="0.25" z="1.25"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="cube" />
+			</children>
+		</component> 
+
+		<component id="back">
+
+			<transformation>
+				<translate x="0.0" y="4.0" z="-0.35"/>
+				<scale x="1.0" y="8.0" z="0.25"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="cube" />
+			</children>
+		</component> 
+
+		<component id="leg1">
+
+			<transformation>
+				<translate x="0.4" y="0.0" z="0.4"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="leg" />
+			</children>
+		</component> 
+
+		<component id="leg2">
+
+			<transformation>
+				<translate x="-0.4" y="0.0" z="0.4"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="leg" />
+			</children>
+		</component>
+
+		<component id="leg3">
+
+			<transformation>
+				<translate x="-0.4" y="0.0" z="-0.4"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="leg" />
+			</children>
+		</component>
+
+		<component id="leg4">
+
+			<transformation>
+				<translate x="0.4" y="0.0" z="-0.4"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="leg" />
+			</children>
+		</component>  
 		
 	
 	</components>
