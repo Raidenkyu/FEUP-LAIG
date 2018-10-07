@@ -3,13 +3,11 @@
 
 	<views default="view_P1" >
 
-		<perspective id="view_P1" near="1" far="5" angle="90">
-			<from x="5.0" y="5.0" z="5.0" />
+		<perspective id="view_P1" near="0.1" far="500" angle="0.4">
+			<from x="10.0" y="10.0" z="10.0" />
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
-		<ortho id="view_O1" near="1" far="5"
-			left="-5.0" right="5.0" top="5.0" bottom="-5.0" />
 	</views>
 		
 	<ambient> 
@@ -140,12 +138,7 @@
 			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<componentref id="cube_face1" />
-				<componentref id="cube_face2" />
-				<componentref id="cube_face3" />
-				<componentref id="cube_face4" />
-				<componentref id="cube_face5" />
-				<componentref id="cube_face6" />
+				<componentref id="cube" />
 			</children>
 		</component> 	
 
