@@ -14,19 +14,19 @@
 		
 	<ambient> 
 		<ambient r="0.1" g="0.1" b="0.1" a="0.1" />
-		<background r="1.0" g="0.0" b="0.0" a="0.5" />
+		<background r="0.0" g="0.0" b="0.8" a="0.5" />
 	</ambient>
 
 	<lights>
 
-		<omni id="omni_1" enabled="0" >
+		<omni id="omni_1" enabled="1" >
 			<location x="10" y="10" z="10" w="1.0" />
 			<ambient r="0.0" g="0.0" b="0.0" a="0.0" />
-			<diffuse r="0.0" g="0.0" b="0.0" a="0.0" />
-			<specular r="0.0" g="0.0" b="0.0" a="0.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
 		</omni>
 
-		<spot id="spot_1" enabled="1" angle="15.0" exponent="2.0">
+		<spot id="spot_1" enabled="0" angle="15.0" exponent="2.0">
 			<location x="-10.0" y="-10.0" z="-10.0" w="1.0" />
 			<target x="0.0" y="0.0" z="0.0" />
 			<ambient r="0.0" g="0.0" b="0.0" a="0.0" />
@@ -38,27 +38,44 @@
 
 	<textures> 
 
-		<texture id="text_1" file="rocks.jpg" />
+		<texture id="rocks" file="rocks.jpg" />
 		<texture id="trunk" file="trunk-image.jpg" />
 
 	</textures>
 		
 	<materials> 
 
-		<material id="mat_1" shininess ="0.5" >
+		<material id="mat_white" shininess ="1" >
 			<emission r="0.0" g="0.0" b="0.0" a="0.0" />
-			<ambient r="0.0" g="0.0" b="0.0" a="0.0" />
-			<diffuse r="0.0" g="0.0" b="0.0" a="0.0" />
-			<specular r="0.0" g="0.0" b="0.0" a="0.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
 		</material>
+
+		<material id="mat_red" shininess ="1" >
+			<emission r="0.0" g="0.0" b="0.0" a="0.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="0.8" g="0.1" b="0.1" a="1.0" />
+			<specular r="0.8" g="0.1" b="0.1" a="1.0" />
+		</material>
+
+		<material id="mat_blue" shininess ="1" >
+			<emission r="0.0" g="0.0" b="0.0" a="0.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="0.1" g="0.1" b="0.8" a="1.0" />
+			<specular r="0.1" g="0.1" b="0.8" a="1.0" />
+		</material>
+
+		<material id="mat_grey" shininess ="1" >
+			<emission r="0.0" g="0.0" b="0.0" a="0.0" />
+			<ambient r="0.3" g="0.3" b="0.3" a="1.0" />
+			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
+		</material>		
 
 	</materials>
 
 	<transformations> 
-
-		<transformation id="translate_y_10">
-			<translate x="0.0" y="10.0" z="0.0" />
-		</transformation>
 
 		<transformation id="scale_xyz_2">
 			<scale x="2.0" y="2.0" z="2.0" />
@@ -67,10 +84,6 @@
 	</transformations>
 
 	<primitives> 
-
-		<primitive id="uni_rectangle">
-			<rectangle x1="0.0" y1="0.0" x2="1.0" y2="1.0" />
-		</primitive >
 
 		<primitive id="quad">
 			<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
@@ -87,7 +100,7 @@
 		</primitive >
 
 		<primitive id="uni_sphere">
-			<sphere radius="1.0" slices="12.0" stacks="12.0" />
+			<sphere radius="1.0" slices="15.0" stacks="15.0" />
 		</primitive >
 
 	</primitives >
@@ -95,62 +108,131 @@
 	<components>
 
 		<component id="rootNode">
-
 			<transformation>
 				<translate x="0.0" y="0.0" z="0.0" />
 			</transformation>
 
 			<materials>
-					<material id="mat_1" />
+					<material id="mat_white" />
 			</materials>
 
-			<texture id="text_1" length_s="1.0" length_t="1.0" /> 
+			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<componentref id="scaled_triangle" />
+				<componentref id="cubic_stand" />
+				<componentref id="spherical_display" />
+				<componentref id="floor" />
+				<componentref id="left_wall" />
+				<componentref id="right_wall" />
 			</children>
-
 		</component>
 
-
-		<component id="scaled_triangle">
-
+		<component id="cubic_stand">
 			<transformation>
-
+				<translate x="8.0" y="1.0" z="2.0" />
 				<transformationref id="scale_xyz_2" />
-
 			</transformation>
 
 			<materials>
-				
-					<material id="mat_1" />
-
+					<material id="mat_white" />
 			</materials>
 
-			<texture id="text_1" length_s="1.0" length_t="1.0" /> 
+			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="uni_rec_triangle" />
+				<componentref id="cube_face1" />
+				<componentref id="cube_face2" />
+				<componentref id="cube_face3" />
+				<componentref id="cube_face4" />
+				<componentref id="cube_face5" />
+				<componentref id="cube_face6" />
+			</children>
+		</component> 	
+
+		<component id="spherical_display">
+
+			<transformation>
+				<translate x="8.0" y="3.0" z="2.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_blue" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="uni_sphere" />
 			</children>
 		</component> 
 
+		<component id="floor">
+			<transformation>
+				<translate x="5.0" y="0.0" z="5.0" />
+				<rotate axis="x" angle="-90" />
+				<scale x="10.0" y="10.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_red" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="left_wall">
+			<transformation>
+				<translate x="0.0" y="3.0" z="5.0" />
+				<rotate axis="y" angle="90" />
+				<scale x="10.0" y="6.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="right_wall">
+			<transformation>
+				<translate x="5.0" y="3.0" z="0.0" />
+				<scale x="10.0" y="6.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
 		
+
+
 
 		<component id="cube">
 
 			<transformation>
-
 				<translate x="0.0" y="0.0" z="0.0" />
-
 			</transformation>
 
 			<materials>
-				
-					<material id="mat_1" />
-
+					<material id="mat_white" />
 			</materials>
 
-			<texture id="trunk" length_s="1.0" length_t="1.0" /> 
+			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
 				<componentref id="cube_face1" />
@@ -165,36 +247,29 @@
 		<component id="cube_face1">
 
 			<transformation>
-
-				<translate x="0.5" y="0.0" z="0.0" />
-
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transformation>
 
 			<materials>
-				
 					<material id="inherit" />
-
 			</materials>
 
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="uni_rectangle" />
+				<primitiveref id="quad" />
 			</children>
 		</component> 
 
 		<component id="cube_face2">
 
 			<transformation>
-				<rotate axis="z" angle="90.0" />
-				<translate x="0.5" y="0.0" z="0.0" />
-
+				<rotate axis="y" angle="90.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transformation>
 
 			<materials>
-				
 				<material id="inherit" />
-
 			</materials>
 
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
@@ -207,15 +282,12 @@
 		<component id="cube_face3">
 
 			<transformation>
-				<rotate axis="z" angle="180.0" />
-				<translate x="0.5" y="0.0" z="0.0" />
-
+				<rotate axis="y" angle="180.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transformation>
 
 			<materials>
-				
 				<material id="inherit" />
-
 			</materials>
 
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
@@ -228,15 +300,12 @@
 		<component id="cube_face4">
 
 			<transformation>
-				<rotate axis="z" angle="-90.0" />
-				<translate x="0.5" y="0.0" z="0.0" />
-
+				<rotate axis="y" angle="-90.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transformation>
 
 			<materials>
-				
 				<material id="inherit" />
-
 			</materials>
 
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
@@ -249,15 +318,12 @@
 		<component id="cube_face5">
 
 			<transformation>
-				<rotate axis="y" angle="90.0" />
-				<translate x="0.5" y="0.0" z="0.0" />
-
+				<rotate axis="x" angle="90.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transformation>
 
 			<materials>
-				
 				<material id="inherit" />
-
 			</materials>
 
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
@@ -270,15 +336,12 @@
 		<component id="cube_face6">
 
 			<transformation>
-				<rotate axis="y" angle="-90.0" />
-				<translate x="0.5" y="0.0" z="0.0" />
-
+				<rotate axis="x" angle="-90.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
 			</transformation>
 
 			<materials>
-				
 				<material id="inherit" />
-
 			</materials>
 
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
