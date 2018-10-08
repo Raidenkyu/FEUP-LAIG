@@ -44,4 +44,18 @@ class MyInterface extends CGFinterface {
             }
         }
     }
+
+    /**
+     * Adds a folder containing the IDs of the views passed as parameter.
+     * @param {array} views
+     */
+    addViewsGroup(views){
+        var group = this.gui.addFolder("Lights");
+        group.open();
+
+        const cameraIdArray = Object.keys(views);
+        this.currentCameraId = this.scene.graph.default;
+
+        group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
+    }
 }
