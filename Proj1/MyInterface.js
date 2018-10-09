@@ -50,11 +50,11 @@ class MyInterface extends CGFinterface {
      * @param {array} views
      */
     addViewsGroup(views){
-        var group = this.gui.addFolder("Lights");
+        var group = this.gui.addFolder("Views");
         group.open();
 
         const cameraIdArray = Object.keys(views);
-        this.currentCameraId = this.scene.graph.default;
+        this.currentCameraId = this.scene.graph.defaultView;
 
         group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
     }

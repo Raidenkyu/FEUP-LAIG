@@ -1301,7 +1301,7 @@ class MySceneGraph {
         var intMat = mat4.create();
         mat4.identity(intMat);
         var matId = Object.keys(this.materials)[0];
-        this.processNode(this.idRoot, intMat, matId, "none");
+        //this.processNode(this.idRoot, intMat, matId, "none");
 
     }
 
