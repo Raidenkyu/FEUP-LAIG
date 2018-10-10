@@ -34,7 +34,7 @@ class MyCylinder extends CGFobject{
  */
 
 class MyCylinderSurface extends CGFobject{
-    constructor(scene, base_rad, top_rad, height, slices, stacks) {
+    constructor(scene, base_rad, top_rad, height, slices, stacks, text_s, text_t) {
         CGFobject.call(this, scene);
         this.base_rad = base_rad;
         this.top_rad = top_rad;
