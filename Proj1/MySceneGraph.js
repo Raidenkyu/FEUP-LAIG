@@ -24,6 +24,7 @@ class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         scene.graph = this;
+        this.sceneStack = new Array();
 
         this.nodes = [];
 
@@ -294,14 +295,47 @@ class MySceneGraph {
                 right = this.reader.getFloat(children[i], 'right');
                 top = this.reader.getFloat(children[i], 'top');
                 bottom = this.reader.getFloat(children[i], 'bottom');
-                near = this.reader.getFloat(children[i], 'near');
-                far = this.reader.getFloat(children[i], 'far');
+
+
 
                 if (left == null || right == null || top == null || bottom == null || near == null || far == null) {
                     this.onXMLMinorError("unable to parse Ortho values");
                     continue;
                 }
-                var cam = new CGFcameraOrtho(left,right,top,bottom,near,far);
+
+
+                for (var j = 0; j < grandchildren.length; j++) {
+                    nodeNames.push(grandchildren[j].nodeName);
+                }
+
+                indexFrom = nodeNames.indexOf("from");
+                indexTo = nodeNames.indexOf("to");
+
+                if (indexFrom == -1) {
+                    this.onXMLMinorError("Tag 'from' missing");
+                    continue;
+                }
+
+
+                if (indexTo == -1) {
+                    this.onXMLMinorError("Tag 'to' missing");
+                    continue;
+                }
+
+                fx = this.reader.getFloat(grandchildren[indexFrom], 'x');
+                fy = this.reader.getFloat(grandchildren[indexFrom], 'y');
+                fz = this.reader.getFloat(grandchildren[indexFrom], 'z');
+
+                tx = this.reader.getFloat(grandchildren[indexTo], 'x');
+                ty = this.reader.getFloat(grandchildren[indexTo], 'y');
+                tz = this.reader.getFloat(grandchildren[indexTo], 'z');
+
+                if (fx == null || fy == null || fz == null || tx == null || ty == null || tz == null) {
+                    this.onXMLMinorError("unable to parse Perspective values");
+                    continue;
+                }
+
+                var cam = new CGFcameraOrtho(left,right,top,bottom,near,far,[fx,fy,fz],[tx,ty,tz],[0,1,0]);
                 this.views[id] = cam;
             }
             nodeNames = [];
@@ -577,7 +611,12 @@ class MySceneGraph {
             if (children[0].nodeName == "spot") {
                 light.setSpotCutOff(angle);
                 light.setSpotExponent(exponent);
-                //TODO Set target
+                var directionPosition = [targetLight[0]-positionLight[0],targetLight[0]-positionLight[0],targetLight[0]-positionLight[0]];
+                var length = sqrt(directionPosition[0]*directionPosition[0] + directionPosition[1]*directionPosition[1] + directionPosition[2]*directionPosition[2]);
+                directionPosition[0] = directionPosition[0]/length;
+                directionPosition[1] = directionPosition[1]/length;
+                directionPosition[2] = directionPosition[2]/length;
+                light.push(angle,exponent,directionPosition);
             }
 
             this.lights.push(light);
@@ -842,75 +881,82 @@ class MySceneGraph {
                 continue;
             }
 
-            this.initialTransforms = mat4.create();
-            mat4.identity(this.initialTransforms);
-
-            for (var j = 0; j < grandchildren.length; j++) {
-
-                if (grandchildren[j].nodeName == "translate") {
-                    var tx = this.reader.getFloat(grandchildren[j], 'x');
-                    var ty = this.reader.getFloat(grandchildren[j], 'y');
-                    var tz = this.reader.getFloat(grandchildren[j], 'z');
-
-                    if (tx == null || ty == null || tz == null) {
-                        this.onXMLMinorError("failed to parse coordinates of translation; assuming zero");
-                        continue;
-                    }
-
-
-                    mat4.translate(this.initialTransforms, this.initialTransforms, [tx, ty, tz]);
-                }
-
-
-                else if (grandchildren[j].nodeName == "rotate") {
-                    var axis = this.reader.getString(grandchildren[j], 'axis');
-                    var ang = this.reader.getFloat(grandchildren[j], 'angle');
-
-                    if (angle == null) {
-                        this.onXMLMinorError("failed to parse angle of rotation; transformation omitted");
-                        continue;
-                    }
-
-                    if (axis == "x") {
-                        mat4.rotate(this.initialTransforms, this.initialTransforms, angle * DEGREE_TO_RAD, [1, 0, 0]);
-                    }
-                    if (axis == "y") {
-                        mat4.rotate(this.initialTransforms, this.initialTransforms, angle * DEGREE_TO_RAD, [0, 1, 0]);
-                    }
-                    if (axis == "z") {
-                        mat4.rotate(this.initialTransforms, this.initialTransforms, angle * DEGREE_TO_RAD, [0, 0, 1]);
-                    }
-                    else {
-                        this.onXMLMinorError("failed to parse axis of rotation; transformation omitted");
-                        continue;
-                    }
-                }
-
-                else if (grandchildren[j].nodeName == "scale") {
-                    var sx = this.reader.getFloat(grandchildren[j], 'x');
-                    var sy = this.reader.getFloat(grandchildren[j], 'y');
-                    var sz = this.reader.getFloat(grandchildren[j], 'z');
-
-                    if (sx == null || sy == null || sz == null) {
-                        this.onXMLMinorError("failed to parse coordinates of scalation; assuming zero");
-                        continue;
-                    }
-
-
-                    mat4.scale(this.initialTransforms, this.initialTransforms, [sx, sy, sz]);
-                }
-                else {
-                    this.onXMLMinorError("Invalid Transformation");
-                }
+            var initialTransforms = this.parseTransformation(grandchildren);
+            if(initialTransforms != null){
+            this.transforms[transId] = initialTransforms;
             }
-
-            this.transforms[transId] = this.initialTransforms;
-
         }
 
         this.log("Parsed transformations");
         return null;
 
+    }
+
+
+    parseTransformation(grandchildren){
+        var initialTransforms = mat4.create();
+        mat4.identity(initialTransforms);
+
+        for (var j = 0; j < grandchildren.length; j++) {
+
+            if (grandchildren[j].nodeName == "translate") {
+                var tx = this.reader.getFloat(grandchildren[j], 'x');
+                var ty = this.reader.getFloat(grandchildren[j], 'y');
+                var tz = this.reader.getFloat(grandchildren[j], 'z');
+
+                if (tx == null || ty == null || tz == null) {
+                    this.onXMLMinorError("failed to parse coordinates of translation; assuming zero");
+                    continue;
+                }
+
+
+                mat4.translate(initialTransforms, initialTransforms, [tx, ty, tz]);
+            }
+
+
+            else if (grandchildren[j].nodeName == "rotate") {
+                var axis = this.reader.getString(grandchildren[j], 'axis');
+                var ang = this.reader.getFloat(grandchildren[j], 'angle');
+
+                if (angle == null) {
+                    this.onXMLMinorError("failed to parse angle of rotation; transformation omitted");
+                    continue;
+                }
+
+                if (axis == "x") {
+                    mat4.rotate(initialTransforms, initialTransforms, angle * DEGREE_TO_RAD, [1, 0, 0]);
+                }
+                if (axis == "y") {
+                    mat4.rotate(initialTransforms, initialTransforms, angle * DEGREE_TO_RAD, [0, 1, 0]);
+                }
+                if (axis == "z") {
+                    mat4.rotate(initialTransforms, initialTransforms, angle * DEGREE_TO_RAD, [0, 0, 1]);
+                }
+                else {
+                    this.onXMLMinorError("failed to parse axis of rotation; transformation omitted");
+                    continue;
+                }
+            }
+
+            else if (grandchildren[j].nodeName == "scale") {
+                var sx = this.reader.getFloat(grandchildren[j], 'x');
+                var sy = this.reader.getFloat(grandchildren[j], 'y');
+                var sz = this.reader.getFloat(grandchildren[j], 'z');
+
+                if (sx == null || sy == null || sz == null) {
+                    this.onXMLMinorError("failed to parse coordinates of scalation; assuming zero");
+                    continue;
+                }
+
+
+                mat4.scale(initialTransforms, initialTransforms, [sx, sy, sz]);
+            }
+            else {
+                this.onXMLMinorError("Invalid Transformation");
+            }
+        }
+
+        return initialTransforms;
     }
 
     /**
@@ -1209,10 +1255,16 @@ class MySceneGraph {
                 var transform = transformChildren[0];
                 var transfId = this.reader.getString(transform, 'id');
                 if (this.transforms[transfId] != null) {
-                    graphNode.transformID = transId;
+                    mat4.copy(graphNode.transform,this.transforms[transfId]);
                 }
                 else {
                     this.onXMLMinorError("No trasformation for ID : " + transfId);
+                }
+            }
+            else{
+                var t = this.parseTransformation(transformChildren);
+                if(t != null){
+                    mat4.copy(graphNode.transform,t);
                 }
             }
 
@@ -1310,7 +1362,7 @@ class MySceneGraph {
     }
 
     processNode(id, tg, mat, text) {
-
+        
         var node = this.graphNodes[id];
         if (node.materialID != "inherit") {
             mat = this.materials[node.materialID];
@@ -1335,11 +1387,14 @@ class MySceneGraph {
             this.draw_primitive(node.leafs[i]);
         }
 
+        var ns = new NodeStack();
+        ns.setValues(mat,text,tg);
         for (var i = 0; i < node.children.length; i++) {
-
-            //push(mat,text,tg)
+            this.sceneStack.push(ns);
+            ns.apply(graph);
             this.processNode(node.children[i], tg, mat, text);
-            //pop(mat,text,tg)
+            ns = this.sceneStack.pop();
+            
         }
 
 
