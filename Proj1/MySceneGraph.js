@@ -20,6 +20,7 @@ class MySceneGraph {
      */
     constructor(filename, scene) {
         this.loadedOk = null;
+        this.ready = false;
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
@@ -198,6 +199,7 @@ class MySceneGraph {
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
+        this.ready = true;
     }
 
     /**
@@ -693,8 +695,8 @@ class MySceneGraph {
 
             var nodeNames = [];
 
-            for (var i = 0; i < grandchildren.length; i++) {
-                nodeNames.push(grandchildren[i].nodeName);
+            for (var j = 0; j < grandchildren.length; j++) {
+                nodeNames.push(grandchildren[j].nodeName);
             }
 
             var emissionIndex = nodeNames.indexOf("emission");
@@ -1244,8 +1246,8 @@ class MySceneGraph {
             nodeNames.push(children[i].nodeName);
         }
 
-        var transformationIndex = nodeNames.indexOf("transformation");
-        var materialIndex = nodeNames.indexOf("material");
+        var transformationIndex = nodeNames.indexOf("transformations");
+        var materialIndex = nodeNames.indexOf("materials");
         var textureIndex = nodeNames.indexOf("texture");
         var grandchildrenIndex = nodeNames.indexOf("children");
 
@@ -1274,7 +1276,7 @@ class MySceneGraph {
         if (materialIndex != -1) {
             var material = children[materialIndex].children[0];
             var matId = this.reader.getString(material, 'id');
-            if (this.materials[materialId] != null) {
+            if (matId == "inherit" || this.materials[matId] != null) {
                 graphNode.materialID = matId;
             }
             else {
@@ -1288,7 +1290,7 @@ class MySceneGraph {
             var texId = this.reader.getString(texture, 'id');
             var xTex = this.reader.getFloat(texture, 'length_s');
             var yTex = this.reader.getFloat(texture, 'length_t');
-            if (this.textures[texId] != null) {
+            if (texId == "none" || texId == "inherit" || this.textures[texId] != null) {
                 graphNode.textureID = texId;
                 graphNode.xTex = xTex;
                 graphNode.yTex = yTex;
@@ -1299,12 +1301,12 @@ class MySceneGraph {
 
         }
 
-        var grandchildren = children[grandchildrenIndex];
+        var grandchildren = children[grandchildrenIndex].children;
 
         for (var i = 0; i < grandchildren.length; i++) {
             if (grandchildren[i].nodeName == "componentref") {
                 var childId = this.reader.getString(grandchildren[i], 'id');
-                graphNode.addGraphNode(childId);
+                graphNode.addChildNode(childId);
                 this.parseNodes(childId);
             }
 
@@ -1316,6 +1318,7 @@ class MySceneGraph {
                 this.onXMLMinorError("unknown tag <" + grandchildren[i].nodeName + ">");
             }
         }
+        this.graphNodes[nodeId] = graphNode;
 
     }
 
@@ -1350,15 +1353,16 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        var intMat = mat4.create();
-        mat4.identity(intMat);
+        
+        if(this.ready){
         var matId = Object.keys(this.materials)[0];
-        //this.processNode(this.idRoot, intMat, matId, "none");
+        this.processNode(this.idRoot, this.scene.getMatrix(), matId, "none");
+        }
 
     }
 
     draw_primitive(id) {
-        var prim = this.primitives[id];
+        //this.primitives[id].display();
     }
 
     processNode(id, tg, mat, text) {
@@ -1380,7 +1384,7 @@ class MySceneGraph {
             text.unbind(0);
         }
 
-        tg = tg * this.transforms[node.transformID];
+        tg = mat4.multiply(tg,tg,node.transform);
         this.scene.setMatrix(tg);
 
         for(var i = 0; i < node.leafs.length;i++){
@@ -1391,7 +1395,7 @@ class MySceneGraph {
         ns.setValues(mat,text,tg);
         for (var i = 0; i < node.children.length; i++) {
             this.sceneStack.push(ns);
-            ns.apply(graph);
+            ns.apply(this);
             this.processNode(node.children[i], tg, mat, text);
             ns = this.sceneStack.pop();
             
