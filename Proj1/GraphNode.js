@@ -7,7 +7,7 @@ class GraphNode {
         this.textureID = null;
         this.xTex = null;
         this.yTex = null;
-        this.transformID = null;
+        this.transform = mat4.create();
     }
     addChildNode(nodeID) {
         this.children.push(nodeID);
