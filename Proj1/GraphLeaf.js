@@ -13,10 +13,15 @@ class GraphLeaf {
                 this.initializeRectangle();
                 break;    
             case 'c':
-
-
+                this.initializeCylinder();
+                break;
+            case 's':
+                this.initializeSphere();
+                break;
+            case 'o':
+                this.initializeTorus();
+                break;    
         }
-
 
     };
 

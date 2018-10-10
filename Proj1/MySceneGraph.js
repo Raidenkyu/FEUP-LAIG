@@ -1159,7 +1159,7 @@ class MySceneGraph {
             }
 
             if (primNode.nodeName == "torus") {
-                primArray.push('t');
+                primArray.push('o');
 
                 // inner
                 var inner = this.reader.getFloat(primNode, 'inner');
