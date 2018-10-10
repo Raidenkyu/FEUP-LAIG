@@ -295,14 +295,47 @@ class MySceneGraph {
                 right = this.reader.getFloat(children[i], 'right');
                 top = this.reader.getFloat(children[i], 'top');
                 bottom = this.reader.getFloat(children[i], 'bottom');
-                near = this.reader.getFloat(children[i], 'near');
-                far = this.reader.getFloat(children[i], 'far');
+
+
 
                 if (left == null || right == null || top == null || bottom == null || near == null || far == null) {
                     this.onXMLMinorError("unable to parse Ortho values");
                     continue;
                 }
-                var cam = new CGFcameraOrtho(left,right,top,bottom,near,far);
+
+
+                for (var j = 0; j < grandchildren.length; j++) {
+                    nodeNames.push(grandchildren[j].nodeName);
+                }
+
+                indexFrom = nodeNames.indexOf("from");
+                indexTo = nodeNames.indexOf("to");
+
+                if (indexFrom == -1) {
+                    this.onXMLMinorError("Tag 'from' missing");
+                    continue;
+                }
+
+
+                if (indexTo == -1) {
+                    this.onXMLMinorError("Tag 'to' missing");
+                    continue;
+                }
+
+                fx = this.reader.getFloat(grandchildren[indexFrom], 'x');
+                fy = this.reader.getFloat(grandchildren[indexFrom], 'y');
+                fz = this.reader.getFloat(grandchildren[indexFrom], 'z');
+
+                tx = this.reader.getFloat(grandchildren[indexTo], 'x');
+                ty = this.reader.getFloat(grandchildren[indexTo], 'y');
+                tz = this.reader.getFloat(grandchildren[indexTo], 'z');
+
+                if (fx == null || fy == null || fz == null || tx == null || ty == null || tz == null) {
+                    this.onXMLMinorError("unable to parse Perspective values");
+                    continue;
+                }
+
+                var cam = new CGFcameraOrtho(left,right,top,bottom,near,far,[fx,fy,fz],[tx,ty,tz],[0,1,0]);
                 this.views[id] = cam;
             }
             nodeNames = [];
