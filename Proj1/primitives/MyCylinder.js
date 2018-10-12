@@ -5,7 +5,7 @@
 
 class MyCylinder extends CGFobject{
     constructor(scene, base_rad, top_rad, height, slices, stacks) {
-        CGFobject.call(this, scene);
+        super(scene);
         this.cylinder_surface = new MyCylinderSurface(scene, base_rad, top_rad, height, slices, stacks);
         this.top_circle = new MyCircle(scene, top_rad, slices);
         this.bot_circle = new MyCircle(scene, base_rad, slices);
@@ -34,8 +34,8 @@ class MyCylinder extends CGFobject{
  */
 
 class MyCylinderSurface extends CGFobject{
-    constructor(scene, base_rad, top_rad, height, slices, stacks, text_s, text_t) {
-        CGFobject.call(this, scene);
+    constructor(scene, base_rad, top_rad, height, slices, stacks/*, text_s, text_t*/) {
+        super(scene);
         this.base_rad = base_rad;
         this.top_rad = top_rad;
         this.height = height;
@@ -80,6 +80,7 @@ class MyCylinderSurface extends CGFobject{
             }
     }
 
+    
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
