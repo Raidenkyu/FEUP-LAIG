@@ -1190,7 +1190,14 @@ class MySceneGraph {
                 else
                     primArray.push(loops);
             }
-            this.primitives[primId] = primArray;
+            var graphLeaf = new GraphLeaf(this.scene, primArray[0], primArray); //Index 0 is the char that identifies the type of primitive
+            if(graphLeaf.primitive == null){
+                this.log("Error: Primitive is null");
+            }
+            else{
+                this.primitives[primId] = graphLeaf.primitive;
+            }
+            
 
         }
 
@@ -1362,7 +1369,7 @@ class MySceneGraph {
     }
 
     draw_primitive(id) {
-        //this.primitives[id].display();
+        this.primitives[id].display();
     }
 
     processNode(id, tg, mat, text) {

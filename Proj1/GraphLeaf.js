@@ -57,7 +57,7 @@ class GraphLeaf {
         if (this.args_array.length == 4){
             this.primitive = new MySphere(this.scene,this.args_array[1], this.args_array[2], this.args_array[3]);
         }
-        else console.log("Invalid number of arguments for a Rectangle");
+        else console.log("Invalid number of arguments for a Sphere");
     }
 
     
