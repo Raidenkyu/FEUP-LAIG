@@ -900,7 +900,7 @@ class MySceneGraph {
         mat4.identity(initialTransforms);
 
         //CONFIRMAR ISTO
-        for (var j = grandchildren.length - 1; j >= 0; j--) {
+        for (var j = 0; j < grandchildren.length; j++) {
 
             if (grandchildren[j].nodeName == "translate") {
                 var tx = this.reader.getFloat(grandchildren[j], 'x');
@@ -1391,29 +1391,31 @@ class MySceneGraph {
         else if (node.textureID == "none") {
             text.unbind(0);
         }
-        /*
-        mat4.multiply(tg,tg,node.transform);
-        this.scene.setMatrix(tg);
-        */
-       mat4.multiply(tg,tg,node.transform);
-       this.scene.pushMatrix();
-       this.scene.multMatrix(node.transform);
+
+        this.scene.multMatrix(node.transform);
+       //mat4.multiply(tg,tg,node.transform);
+       //this.scene.setMatrix(tg);
+
+       
+
         for(var i = 0; i < node.leafs.length;i++){
             if(this.primitives[node.leafs[i]] != null)
             this.draw_primitive(node.leafs[i]);
         }
 
-        var ns = new NodeStack();
-        ns.setValues(mat,text,tg);
+        //var ns = new NodeStack();
+        //ns.setValues(mat,text,tg);
         for (var i = 0; i < node.children.length; i++) {
-            this.sceneStack.push(ns);
-            ns.apply(this);
+            //this.sceneStack.push(ns);
+            //ns.apply(this);
+            this.scene.pushMatrix();
             this.processNode(node.children[i], tg, mat, text);
-            ns = this.sceneStack.pop();
+            this.scene.popMatrix();
+            //ns = this.sceneStack.pop();
             
         }
 
-        this.scene.popMatrix();
+        
 
 
 
