@@ -899,7 +899,8 @@ class MySceneGraph {
         var initialTransforms = mat4.create();
         mat4.identity(initialTransforms);
 
-        for (var j = 0; j < grandchildren.length; j++) {
+        //CONFIRMAR ISTO
+        for (var j = grandchildren.length - 1; j >= 0; j--) {
 
             if (grandchildren[j].nodeName == "translate") {
                 var tx = this.reader.getFloat(grandchildren[j], 'x');
@@ -918,7 +919,7 @@ class MySceneGraph {
 
             else if (grandchildren[j].nodeName == "rotate") {
                 var axis = this.reader.getString(grandchildren[j], 'axis');
-                var ang = this.reader.getFloat(grandchildren[j], 'angle');
+                var angle = this.reader.getFloat(grandchildren[j], 'angle');
 
                 if (angle == null) {
                     this.onXMLMinorError("failed to parse angle of rotation; transformation omitted");
@@ -928,10 +929,10 @@ class MySceneGraph {
                 if (axis == "x") {
                     mat4.rotate(initialTransforms, initialTransforms, angle * DEGREE_TO_RAD, [1, 0, 0]);
                 }
-                if (axis == "y") {
+                else if (axis == "y") {
                     mat4.rotate(initialTransforms, initialTransforms, angle * DEGREE_TO_RAD, [0, 1, 0]);
                 }
-                if (axis == "z") {
+                else if (axis == "z") {
                     mat4.rotate(initialTransforms, initialTransforms, angle * DEGREE_TO_RAD, [0, 0, 1]);
                 }
                 else {
@@ -1253,7 +1254,7 @@ class MySceneGraph {
             nodeNames.push(children[i].nodeName);
         }
 
-        var transformationIndex = nodeNames.indexOf("transformations");
+        var transformationIndex = nodeNames.indexOf("transformation");
         var materialIndex = nodeNames.indexOf("materials");
         var textureIndex = nodeNames.indexOf("texture");
         var grandchildrenIndex = nodeNames.indexOf("children");
@@ -1372,7 +1373,7 @@ class MySceneGraph {
         this.primitives[id].display();
     }
 
-    processNode(id, tg, mat, text) {
+    processNode(id, tg,mat, text) {
         
         var node = this.graphNodes[id];
         if (node.materialID != "inherit") {
@@ -1390,11 +1391,15 @@ class MySceneGraph {
         else if (node.textureID == "none") {
             text.unbind(0);
         }
-
-        tg = mat4.multiply(tg,tg,node.transform);
+        /*
+        mat4.multiply(tg,tg,node.transform);
         this.scene.setMatrix(tg);
-
+        */
+       mat4.multiply(tg,tg,node.transform);
+       this.scene.pushMatrix();
+       this.scene.multMatrix(node.transform);
         for(var i = 0; i < node.leafs.length;i++){
+            if(this.primitives[node.leafs[i]] != null)
             this.draw_primitive(node.leafs[i]);
         }
 
@@ -1407,6 +1412,8 @@ class MySceneGraph {
             ns = this.sceneStack.pop();
             
         }
+
+        this.scene.popMatrix();
 
 
 
