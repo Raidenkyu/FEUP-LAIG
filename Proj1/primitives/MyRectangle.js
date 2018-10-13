@@ -43,5 +43,13 @@ class MyRectangle extends CGFobject{
         
     };
 
+    applyTextures(factorS,factorT){
+        factorS = factorS || 1;
+        factorT = factorT || 1;
+        this.texCoords = [];
 
+        //TODO by Fernando
+
+        this.initGLBuffers();
+    }
 }

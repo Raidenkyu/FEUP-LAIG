@@ -4,13 +4,11 @@
  */
 
 class MyTriangle extends CGFobject{
-    constructor(scene, vert_1, vert_2, vert_3 /*, text_s, text_t*/) {
+    constructor(scene, vert_1, vert_2, vert_3) {
         super(scene);
         this.v1 = vert_1;
         this.v2 = vert_2;
         this.v3 = vert_3;
-        //this.text_s = text_s || 1;
-        //this.text_t = text_t || 1;
         this.initBuffers();
     };
 
@@ -32,6 +30,16 @@ class MyTriangle extends CGFobject{
 
 
     };
+
+    applyTextures(factorS,factorT){
+        factorS = factorS || 1;
+        factorT = factorT || 1;
+        this.texCoords = [];
+
+        //TODO by Fernando
+
+        this.initGLBuffers();
+    }
 
 
 }

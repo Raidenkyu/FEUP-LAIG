@@ -1369,8 +1369,10 @@ class MySceneGraph {
 
     }
 
-    draw_primitive(id) {
-        this.primitives[id].display();
+    draw_primitive(id,factorS,factorT) {
+        var primitive =  this.primitives[id];
+        //primitive.applyTextures(factorS,factorT);
+        primitive.display();
     }
 
     processNode(id, tg,mat, text) {
@@ -1391,27 +1393,28 @@ class MySceneGraph {
         else if (node.textureID == "none") {
             text.unbind(0);
         }
+        else{
+            text.bind(0);
+        }
 
         this.scene.multMatrix(node.transform);
-       //mat4.multiply(tg,tg,node.transform);
-       //this.scene.setMatrix(tg);
 
        
 
         for(var i = 0; i < node.leafs.length;i++){
             if(this.primitives[node.leafs[i]] != null)
-            this.draw_primitive(node.leafs[i]);
+            this.draw_primitive(node.leafs[i],node.xTex,node.yTex);
         }
 
-        //var ns = new NodeStack();
-        //ns.setValues(mat,text,tg);
+        var ns = new NodeStack();
+        ns.setValues(mat,text,tg);
         for (var i = 0; i < node.children.length; i++) {
-            //this.sceneStack.push(ns);
-            //ns.apply(this);
+            this.sceneStack.push(ns);
+            ns.apply(this,node.textureID);
             this.scene.pushMatrix();
             this.processNode(node.children[i], tg, mat, text);
             this.scene.popMatrix();
-            //ns = this.sceneStack.pop();
+            ns = this.sceneStack.pop();
             
         }
 

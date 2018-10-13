@@ -26,6 +26,18 @@ class MyCylinder extends CGFobject{
         this.cylinder_surface.display();
     };
 
+
+    applyTextures(factorS,factorT){
+        factorS = factorS || 1;
+        factorT = factorT || 1;
+
+        //TODO by Fernando
+
+        this.cylinder_surface.applyTextures(factorS,factorT);
+        this.top_circle.applyTextures(factorS,factorT);
+        this.bot_circle.applyTextures(factorS,factorT);
+    }
+
 }
 
 /**
@@ -85,6 +97,16 @@ class MyCylinderSurface extends CGFobject{
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     };
+
+
+    applyTextures(factorS,factorT){
+        this.texCoords = [];
+
+        //TODO by Fernando
+
+        this.initGLBuffers();
+    }
+
 
 }
 
