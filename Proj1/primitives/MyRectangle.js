@@ -22,11 +22,11 @@ class MyRectangle extends CGFobject{
 
         this.vertices.push(this.x_min, this.y_min, 0);
         this.vertices.push(this.x_max, this.y_min, 0);
-        this.vertices.push(this.x_max, this.y_max, 0);
         this.vertices.push(this.x_min, this.y_max, 0);
+        this.vertices.push(this.x_max, this.y_max, 0);
 
         this.indices = [0, 1, 2,
-                        2, 3, 0];
+                        3, 2, 1];
 
         this.normals = [0, 0, 1,
                         0, 0, 1,

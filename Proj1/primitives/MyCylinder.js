@@ -65,7 +65,7 @@ class MyCylinderSurface extends CGFobject{
         this.normals = [];
 
 
-        for (stack_c = 0; stack_c <= this.stacks; stack_c++) {
+        for (var stack_c = 0; stack_c <= this.stacks; stack_c++) {
             var curr_angle = 0.0;
             var curr_radius = (this.top_rad - this.base_rad) * (stack_c / this.stacks) + this.base_rad;
             var z0 = this.height * stack_c / this.stacks;
@@ -100,11 +100,19 @@ class MyCylinderSurface extends CGFobject{
 
 
     applyTextures(factorS,factorT){
+        factorS = factorS || 1;
+        factorT = factorT || 1;
         this.texCoords = [];
 
-        //TODO by Fernando
+        for (var stack_c = 0; stack_c <= this.stacks; stack_c++) {
+            var v = 1 - (stack_c / this.stacks);
+            for (var slice_c = 0; slice_c <= this.slices; slice_c++) {
+                var u = 1 - (slice_c / this.slices);
+                this.texCoords.push(u, v);
+            }
+        }
 
-        this.initGLBuffers();
+        this.updateTexCoordsGLBuffers();
     }
 
 
