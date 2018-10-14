@@ -9,8 +9,6 @@ class MySphere extends CGFobject{
         this.radius = radius;
         this.slices = slices;
         this.stacks = stacks;
-        //this.text_u = text_u;
-        //this.text_v = text_v;
         this.initBuffers();
     };
 
@@ -27,14 +25,11 @@ class MySphere extends CGFobject{
     
         for (var stack_c = 0; stack_c <= this.stacks; stack_c++) {
             var z = this.radius * Math.cos(vert_ang);
-            //var v = stack_c / this.stacks;
             for (var slice_c = 0; slice_c <= this.slices; slice_c++) {
                 var y = this.radius * Math.sin(vert_ang) * Math.cos(hor_ang);
                 var x = this.radius * Math.sin(vert_ang) * Math.sin(hor_ang);
-                //var u = 1 - (slice_c / this.slices);
                 this.vertices.push(x, y, z);
                 this.normals.push(x, y, z);
-                //this.texCoords.push(u * this.text_u, v * this.text_v);
                 hor_ang += increment;
             }
             hor_ang = 0.0;
@@ -61,10 +56,15 @@ class MySphere extends CGFobject{
         factorT = factorT || 1;
         this.texCoords = [];
 
-        //TODO by Fernando
+        for (var stack_c = 0; stack_c <= this.stacks; stack_c++) {
+            var v = stack_c / this.stacks;
+            for (var slice_c = 0; slice_c <= this.slices; slice_c++) {
+                var u = 1 - (slice_c / this.slices);
+                this.texCoords.push(u * factorS, v * factorT);
+            }
+        }
 
-        this.initGLBuffers();
+        this.updateTexCoordsGLBuffers();
     }
-
 
 }

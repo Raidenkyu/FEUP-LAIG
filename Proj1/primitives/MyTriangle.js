@@ -23,8 +23,6 @@ class MyTriangle extends CGFobject{
 
         this.indices = [0,1,2];
 
-        //TODO: this.normals & this.textures
-
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
 
@@ -36,9 +34,9 @@ class MyTriangle extends CGFobject{
         factorT = factorT || 1;
         this.texCoords = [];
 
-        //TODO by Fernando
+        
 
-        this.initGLBuffers();
+        this.updateTexCoordsGLBuffers();
     }
 
 

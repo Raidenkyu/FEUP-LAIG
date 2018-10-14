@@ -4,18 +4,15 @@
  */
 
 class MyRectangle extends CGFobject{
-    constructor(scene, vert_0, vert_1 /*, text_s, text_t*/) {
+    constructor(scene, vert_0, vert_1) {
         super(scene);
         this.bot_left = vert_0;
         this.top_right = vert_1;
-        //this.text_s = text_s || 1;
-        //this.text_t = text_t || 1;
         this.initBuffers();
     };
 
     initBuffers(){
 
-        
         this.vertices = [];
 
         var x_min = this.bot_left[0];
@@ -36,8 +33,6 @@ class MyRectangle extends CGFobject{
                         0, 0, 1,
                         0, 0, 1] 
         
-        //this.textures
-
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
         
@@ -48,8 +43,16 @@ class MyRectangle extends CGFobject{
         factorT = factorT || 1;
         this.texCoords = [];
 
-        //TODO by Fernando
+        var min_S = 0;
+        var min_T = 0;
+        var max_S = (this.x_max - this.x_min) / factorS;
+        var max_T = (this.y_max - this.y_min) / factorT;
+    
+        this.texCoords.push(min_S, max_T);
+        this.texCoords.push(max_S, max_T);
+        this.texCoords.push(min_S, min_T);
+        this.texCoords.push(max_S, min_T);
 
-        this.initGLBuffers();
+        this.updateTexCoordsGLBuffers();
     }
 }

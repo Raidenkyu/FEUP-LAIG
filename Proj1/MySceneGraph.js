@@ -1371,7 +1371,7 @@ class MySceneGraph {
 
     draw_primitive(id,factorS,factorT) {
         var primitive =  this.primitives[id];
-        //primitive.applyTextures(factorS,factorT);
+        primitive.applyTextures(factorS,factorT);
         primitive.display();
     }
 
