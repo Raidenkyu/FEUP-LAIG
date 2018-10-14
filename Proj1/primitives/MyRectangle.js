@@ -15,15 +15,15 @@ class MyRectangle extends CGFobject{
 
         this.vertices = [];
 
-        var x_min = this.bot_left[0];
-        var y_min = this.bot_left[1];
-        var x_max = this.top_right[0];
-        var y_max = this.top_right[1];
+        this.x_min = this.bot_left[0];
+        this.y_min = this.bot_left[1];
+        this.x_max = this.top_right[0];
+        this.y_max = this.top_right[1];
 
-        this.vertices.push(x_min, y_min, 0);
-        this.vertices.push(x_max, y_min, 0);
-        this.vertices.push(x_max, y_max, 0);
-        this.vertices.push(x_min, y_max, 0);
+        this.vertices.push(this.x_min, this.y_min, 0);
+        this.vertices.push(this.x_max, this.y_min, 0);
+        this.vertices.push(this.x_max, this.y_max, 0);
+        this.vertices.push(this.x_min, this.y_max, 0);
 
         this.indices = [0, 1, 2,
                         2, 3, 0];

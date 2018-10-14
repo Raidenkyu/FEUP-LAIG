@@ -1364,7 +1364,7 @@ class MySceneGraph {
         
         if(this.ready){
         var matId = Object.keys(this.materials)[0];
-        this.processNode(this.idRoot, this.scene.getMatrix(), matId, "none");
+        this.processNode(this.idRoot, matId, "none");
         }
 
     }
@@ -1375,7 +1375,7 @@ class MySceneGraph {
         primitive.display();
     }
 
-    processNode(id, tg,mat, text) {
+    processNode(id,mat, text) {
         
         var node = this.graphNodes[id];
         if (node.materialID != "inherit") {
@@ -1407,12 +1407,12 @@ class MySceneGraph {
         }
 
         var ns = new NodeStack();
-        ns.setValues(mat,text,tg);
+        ns.setValues(mat,text);
         for (var i = 0; i < node.children.length; i++) {
             this.sceneStack.push(ns);
             ns.apply(this,node.textureID);
             this.scene.pushMatrix();
-            this.processNode(node.children[i], tg, mat, text);
+            this.processNode(node.children[i], mat, text);
             this.scene.popMatrix();
             ns = this.sceneStack.pop();
             

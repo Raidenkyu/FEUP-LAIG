@@ -3,7 +3,7 @@ class NodeStack {
         this.material = null;
         this.texture = null;
     }
-    setValues(mat,tex,tg){
+    setValues(mat,tex){
         this.material = mat;
         this.texture = tex;
     }
