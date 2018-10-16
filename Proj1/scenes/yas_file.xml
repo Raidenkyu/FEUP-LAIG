@@ -38,6 +38,8 @@
 
 		<texture id="rocks" file="rocks.jpg" />
 		<texture id="trunk" file="trunk-image.jpg" />
+		<texture id="table" file="table.jpg" />
+		<texture id="chair" file="chair.jpg" />
 
 	</textures>
 		
@@ -225,7 +227,7 @@
 				<material id="inherit" />
 			</materials>
 
-			<texture id="trunk" length_s="1.0" length_t="1.0" /> 
+			<texture id="chair" length_s="1.0" length_t="1.0" /> 
 
 			<children>
 				<componentref id="leg1" />
@@ -248,7 +250,7 @@
 				<material id="inherit" />
 			</materials>
 
-			<texture id="trunk" length_s="1.0" length_t="1.0" /> 
+			<texture id="table" length_s="1.0" length_t="1.0" /> 
 
 			<children>
 				<componentref id="leg_table1" />
