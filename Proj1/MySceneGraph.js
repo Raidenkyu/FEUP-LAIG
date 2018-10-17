@@ -1390,13 +1390,15 @@ class MySceneGraph {
 
         if (node.textureID != "inherit" && node.textureID != "none") {
             text = this.textures[node.textureID];
-            text.bind(0);
+            appearance.setTexture(text);
+            appearance.apply();
         }
         else if (node.textureID == "none") {
-            text.unbind(0);
+            appearance.setTexture(null);
         }
-        else {
-            text.bind(0);
+        else{
+            appearance.setTexture(text);
+            appearance.apply();
         }
 
         this.scene.multMatrix(node.transform);

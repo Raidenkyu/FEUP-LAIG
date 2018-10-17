@@ -10,11 +10,16 @@ class NodeStack {
 
     apply(graph,texID){
         this.material.apply();
+/*
+        appearance.apply();
         if(texID == "none"){
-            this.texture.unbind(0);
+            //this.texture.unbind(0);
+            CGFappearance.setTexture(null);
         }
         else{
-            this.texture.bind(0);
+            //this.texture.bind(0);
+            CGFappearance.setTexture(graph.textures[texID]);
         }
+        */
     }
 }
