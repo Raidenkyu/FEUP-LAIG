@@ -31,11 +31,9 @@ class MyCylinder extends CGFobject{
         factorS = factorS || 1;
         factorT = factorT || 1;
 
-        //TODO by Fernando
-
         this.cylinder_surface.applyTextures(factorS,factorT);
-        this.top_circle.applyTextures(factorS,factorT);
-        this.bot_circle.applyTextures(factorS,factorT);
+        //this.top_circle.applyTextures(factorS,factorT);
+        //this.bot_circle.applyTextures(factorS,factorT);
     }
 
 }

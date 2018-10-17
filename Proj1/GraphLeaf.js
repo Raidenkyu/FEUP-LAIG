@@ -60,7 +60,11 @@ class GraphLeaf {
 
     
     initializeTorus(){
-        console.log("TODO -> Torus primitive");
+        if (this.args_array.length == 5){
+            this.primitive = new MyCylinder(this.scene, this.args_array[1], this.args_array[2], this.args_array[3], 
+                this.args_array[4]);
+        }
+        else console.log("Invalid number of arguments for a Torus");
     }
 
 }

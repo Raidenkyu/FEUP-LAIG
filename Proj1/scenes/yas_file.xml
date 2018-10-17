@@ -8,6 +8,11 @@
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
+		<perspective id="view_P2" near="0.1" far="500" angle="22.92">
+			<from x="20.0" y="20.0" z="20.0" />
+			<to x="0.0" y="0.0" z="0.0" />
+		</perspective>
+
 	</views>
 		
 	<ambient> 
@@ -104,6 +109,11 @@
 			<sphere radius="1.0" slices="15.0" stacks="15.0" />
 		</primitive >
 
+		<primitive id="uni_torus">
+			<torus inner="1.0" outer="1.0" slices="15" loops="15" />
+		</primitive >
+
+
 	</primitives >
 
 	<components>
@@ -127,6 +137,7 @@
 				<componentref id="right_wall" />
 				<componentref id="chair" />
 				<componentref id="table" />
+				<componentref id="torus" />
 			</children>
 		</component>
 
@@ -617,8 +628,23 @@
 			</children>
 		</component> 
 
-	
-	
+
+		<component id="torus">
+			<transformation>
+				<translate x="0.0" y="2.5" z="0.0"/>
+			</transformation>
+
+			<materials>
+				<material id="mat_blue" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="uni_torus" />
+			</children>
+		</component>
+
 	</components>
 	
 </yas>
