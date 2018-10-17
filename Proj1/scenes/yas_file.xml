@@ -13,6 +13,16 @@
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
+		<ortho id="view_O1" near="0.1" far="500" left="5.0" right="5.0" top="5.0" bottom="5.0" >
+			<from x="5.0" y="10.0" z="5.0" />
+			<to x="5.0" y="0.0" z="5.0" />
+		</ortho>
+
+		<ortho id="front_view" near="0.1" far="70" left="-10" right="10" top="10" bottom="-10">
+            <from x="5" y="5" z="20" />
+            <to x="5" y="5" z="0" />
+        </ortho>
+
 	</views>
 		
 	<ambient> 
@@ -45,6 +55,7 @@
 		<texture id="trunk" file="trunk-image.jpg" />
 		<texture id="table" file="table.jpg" />
 		<texture id="chair" file="chair.jpg" />
+		<texture id="wall" file="concrete.jpg" />
 
 	</textures>
 		
@@ -204,7 +215,7 @@
 					<material id="mat_grey" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="wall" length_s="0.33333" length_t="1.0" /> 
 
 			<children>
 				<primitiveref id="quad" />

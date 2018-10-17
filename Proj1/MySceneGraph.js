@@ -251,8 +251,10 @@ class MySceneGraph {
                 continue;
             }
 
+            grandchildren = children[i].children;
+
             if (children[i].nodeName == "perspective") {
-                grandchildren = children[i].children;
+                
 
                 for (var j = 0; j < grandchildren.length; j++) {
                     nodeNames.push(grandchildren[j].nodeName);
@@ -337,7 +339,7 @@ class MySceneGraph {
                     continue;
                 }
 
-                var cam = new CGFcameraOrtho(left,right,top,bottom,near,far,[fx,fy,fz],[tx,ty,tz],[0,1,0]);
+                var cam = new CGFcameraOrtho(left,right,top,bottom,near,far,[fx,fy,fz],[tx,ty,tz],[0,-1,0]);
                 this.views[id] = cam;
             }
             nodeNames = [];
@@ -610,11 +612,9 @@ class MySceneGraph {
             light.push(diffuseIllumination);
             light.push(specularIllumination);
 
-            if (children[0].nodeName == "spot") {
-                light.setSpotCutOff(angle);
-                light.setSpotExponent(exponent);
-                var directionPosition = [targetLight[0]-positionLight[0],targetLight[0]-positionLight[0],targetLight[0]-positionLight[0]];
-                var length = sqrt(directionPosition[0]*directionPosition[0] + directionPosition[1]*directionPosition[1] + directionPosition[2]*directionPosition[2]);
+            if (children[i].nodeName == "spot") {
+                var directionPosition = [targetLight[0]-positionLight[0],targetLight[1]-positionLight[1],targetLight[2]-positionLight[2]];
+                var length = Math.sqrt(directionPosition[0]*directionPosition[0] + directionPosition[1]*directionPosition[1] + directionPosition[2]*directionPosition[2]);
                 directionPosition[0] = directionPosition[0]/length;
                 directionPosition[1] = directionPosition[1]/length;
                 directionPosition[2] = directionPosition[2]/length;
