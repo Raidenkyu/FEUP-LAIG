@@ -1367,7 +1367,7 @@ class MySceneGraph {
         
         if(this.ready){
         var matId = Object.keys(this.materials)[0];
-        this.processNode(this.idRoot, this.materials[matId], null);
+        this.processNode(this.idRoot, this.materials[matId], null,1,1);
         }
 
     }
@@ -1378,7 +1378,7 @@ class MySceneGraph {
         primitive.display();
     }
 
-    processNode(id,mat, text) {
+    processNode(id,mat, text,sLength, tLength) {
         
 
         var node = this.graphNodes[id];
@@ -1395,6 +1395,11 @@ class MySceneGraph {
             mat.setTexture(text);
         }
 
+        if(node.xTex != null && node.yTex != null){
+            sLength = node.xTex;
+            tLength = node.yTex;
+        }
+
         mat.apply();
         mat.setTexture(null);
 
@@ -1404,7 +1409,7 @@ class MySceneGraph {
 
         for (var i = 0; i < node.leafs.length; i++) {
             if (this.primitives[node.leafs[i]] != null)
-                this.draw_primitive(node.leafs[i], node.xTex, node.yTex);
+                this.draw_primitive(node.leafs[i], sLength, tLength);
         }
 
         var ns = new NodeStack();
@@ -1413,7 +1418,7 @@ class MySceneGraph {
             this.sceneStack.push(ns);
             ns.apply(this, node.textureID);
             this.scene.pushMatrix();
-            this.processNode(node.children[i], mat, text);
+            this.processNode(node.children[i], mat, text,sLength,tLength);
             this.scene.popMatrix();
             ns = this.sceneStack.pop();
 
