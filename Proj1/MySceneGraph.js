@@ -842,6 +842,7 @@ class MySceneGraph {
             }
 
             var material = new CGFappearance(this.scene);
+            material.setTextureWrap("REPEAT","REPEAT");
             material.setShininess(shininess);
             material.setEmission(emissionMaterial[0], emissionMaterial[1], emissionMaterial[2], emissionMaterial[3]);
             material.setAmbient(ambientMaterial[0], ambientMaterial[1], ambientMaterial[2], ambientMaterial[3]);
@@ -1364,7 +1365,7 @@ class MySceneGraph {
         
         if(this.ready){
         var matId = Object.keys(this.materials)[0];
-        this.processNode(this.idRoot, matId, "none");
+        this.processNode(this.idRoot, this.materials[matId], null);
         }
 
     }
@@ -1377,29 +1378,23 @@ class MySceneGraph {
 
     processNode(id,mat, text) {
         
-        //var appearance = new CGFappearance(this.scene);
 
         var node = this.graphNodes[id];
         if (node.materialID != "inherit") {
             mat = this.materials[node.materialID];
-            mat.apply();
         }
-        else {
-            mat.apply();
-        }
+
 
         if (node.textureID != "inherit" && node.textureID != "none") {
             text = this.textures[node.textureID];
-            appearance.setTexture(text);
-            appearance.apply();
+            mat.setTexture(text);
         }
-        else if (node.textureID == "none") {
-            appearance.setTexture(null);
+        else if (node.textureID == "inherit") {
+            mat.setTexture(text);
         }
-        else{
-            appearance.setTexture(text);
-            appearance.apply();
-        }
+
+        mat.apply();
+        mat.setTexture(null);
 
         this.scene.multMatrix(node.transform);
 

@@ -56,6 +56,7 @@
 		<texture id="table" file="table.jpg" />
 		<texture id="chair" file="chair.jpg" />
 		<texture id="wall" file="concrete.jpg" />
+		<texture id="square" file="square.png" />
 
 	</textures>
 		
@@ -215,7 +216,7 @@
 					<material id="mat_grey" />
 			</materials>
 
-			<texture id="wall" length_s="0.33333" length_t="1.0" /> 
+			<texture id="square" length_s="0.25" length_t="0.5" /> 
 
 			<children>
 				<primitiveref id="quad" />

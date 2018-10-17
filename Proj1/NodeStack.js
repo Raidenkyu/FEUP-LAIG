@@ -9,7 +9,7 @@ class NodeStack {
     }
 
     apply(graph,texID){
-        this.material.apply();
+        //this.material.apply();
 /*
         appearance.apply();
         if(texID == "none"){
