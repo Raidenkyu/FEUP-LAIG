@@ -35,8 +35,8 @@
 		<omni id="omni_1" enabled="1" >
 			<location x="10" y="10" z="10" w="1.0" />
 			<ambient r="0.0" g="0.0" b="0.0" a="0.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
+			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
 		</omni>
 
 		<spot id="spot_1" enabled="0" angle="15.0" exponent="2.0">
@@ -58,6 +58,7 @@
 		<texture id="wall" file="concrete.jpg" />
 		<texture id="square" file="square.png" />
 		<texture id="copper" file="copper.jpg" />
+		<texture id="bricks" file="brick.jpg" />
 
 	</textures>
 		
@@ -93,9 +94,16 @@
 
 		<material id="mat_black" shininess ="1" >
 			<emission r="0.0" g="0.0" b="0.0" a="0.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="0.0" />
-			<diffuse r="0.0" g="0.0" b="0.0" a="0.0" />
-			<specular r="0.0" g="0.0" b="0.0" a="0.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+			<specular r="0.1" g="0.1" b="0.1" a="1.0" />
+		</material>		
+
+		<material id="mat_yellow" shininess ="1" >
+			<emission r="0.0" g="0.0" b="0.0" a="0.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="0.8" g="0.8" b="0.1" a="1.0" />
+			<specular r="0.8" g="0.8" b="0.1" a="1.0" />
 		</material>				
 
 	</materials>
@@ -103,8 +111,11 @@
 	<transformations> 
 
 		<transformation id="scale_xyz_2">
-			<translate x="8.0" y="1.0" z="2.0" />
 			<scale x="2.0" y="2.0" z="2.0" />
+		</transformation>
+
+		<transformation id="pyramid_face_rotation">
+			<rotate axis="x" angle="-60.0" />
 		</transformation>
 
 	</transformations>
@@ -115,10 +126,10 @@
 			<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
 		</primitive >
 
-		<primitive id="uni_rec_triangle">
-			<triangle x1="0.0" y1="0.0" z1="0.0" 
-					x2="1.0" y2="0.0" z2="0.0" 
-					x3="0.0" y3="1.0" z3="0.0" />
+		<primitive id="isos_triangle">
+			<triangle x1="0.0" y1="0.8" z1="0.0" 
+					x2="-0.5" y2="0.0" z2="0.0" 
+					x3="0.5" y3="0.0" z3="0.0" />
 		</primitive >
 
 		<primitive id="uni_cylinder">
@@ -152,20 +163,22 @@
 			<children>
 				<componentref id="cubic_stand" />
 				<componentref id="spherical_display" />
-				<componentref id="floor" />
+				<componentref id="floor1" />
+				<componentref id="floor2" />
 				<componentref id="left_wall" />
 				<componentref id="right_wall" />
 				<componentref id="chair" />
 				<componentref id="table" />
 				<!--<componentref id="torus" /> !-->
 				<componentref id="testa_coil" />
+				<componentref id="toy_pyramid" />
 			</children>
 		</component>
 
 		<component id="cubic_stand">
 			<transformation>
-				
-				<transformationref id="scale_xyz_2" />
+				<translate x="8.0" y="1.0" z="2.0" />
+				<scale x="2.0" y="2.0" z="2.0" />
 			</transformation>
 
 			<materials>
@@ -196,11 +209,11 @@
 			</children>
 		</component> 
 
-		<component id="floor">
+		<component id="floor1">
 			<transformation>
-				<translate x="10.0" y="0.0" z="5.0" />
+				<translate x="5.0" y="0.0" z="5.0" />
 				<rotate axis="x" angle="-90" />
-				<scale x="20.0" y="10.0" z="1.0" />
+				<scale x="10.0" y="10.0" z="1.0" />
 			</transformation>
 
 			<materials>
@@ -213,6 +226,24 @@
 				<primitiveref id="quad" />
 			</children>
 		</component> 
+
+		<component id="floor2">
+			<transformation>
+				<translate x="15.0" y="0.0" z="5.0" />
+				<rotate axis="x" angle="-90" />
+				<scale x="10.0" y="10.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_blue" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component>
 
 		<component id="left_wall">
 			<transformation>
@@ -868,9 +899,139 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<componentref id="cube_inherit" />
+				<componentref id="cube_no_texture" />
 			</children>
 		</component>
+
+	<!--  			Toy Pyramid				!-->
+
+		<component id="toy_pyramid">
+			<transformation>
+				<translate x="3.75" y="2.65" z="8" />
+				<scale x="0.3" y="0.3" z="0.3" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="bricks" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="toy_pyramid_top"/>
+				<componentref id="toy_pyramid_stand"/>
+			</children>
+		</component> 			
+		
+		<component id="toy_pyramid_top">
+			<transformation>
+				<translate x="0.0" y="0.5" z="0.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_yellow" />
+			</materials>
+
+			<texture id="bricks" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="toy_pyramid_face1"/>
+				<componentref id="toy_pyramid_face2"/>
+				<componentref id="toy_pyramid_face3"/>
+				<componentref id="toy_pyramid_face4"/>
+			</children>
+		</component> 	
+
+		<component id="toy_pyramid_face1">
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.5"/>
+				<rotate axis="x" angle="-38.6822" />
+			</transformation>
+
+			<materials>
+					<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="isos_triangle" />
+			</children>
+		</component>
+
+		<component id="toy_pyramid_face2">
+			<transformation>
+				<translate x="0.5" y="0.0" z="0.0"/>
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="-38.6822" />
+			</transformation>
+
+			<materials>
+					<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="isos_triangle" />
+			</children>
+		</component>
+
+		<component id="toy_pyramid_face3">
+			<transformation>
+				<translate x="0.0" y="0.0" z="-0.5"/>
+				<rotate axis="y" angle="180" />
+				<rotate axis="x" angle="-38.6822" />
+			</transformation>
+
+			<materials>
+					<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="isos_triangle" />
+			</children>
+		</component>
+
+		<component id="toy_pyramid_face4">
+			<transformation>
+				<translate x="-0.5" y="0.0" z="0.0"/>
+				<rotate axis="y" angle="-90" />
+				<rotate axis="x" angle="-38.6822" />
+			</transformation>
+
+			<materials>
+					<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="isos_triangle" />
+			</children>
+		</component>
+
+		<component id="toy_pyramid_stand">
+			<transformation>
+				<translate x="0.0" y="0.25" z="0.0" />
+				<scale x="1.2" y="0.5" z="1.2" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="bricks" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="cube_no_texture"/>
+			</children>
+		</component> 	
+
+
+
 
 	</components>
 	
