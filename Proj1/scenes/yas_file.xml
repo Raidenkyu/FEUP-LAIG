@@ -215,7 +215,7 @@
 					<material id="mat_grey" />
 			</materials>
 
-			<texture id="wall" length_s="0.33333" length_t="1.0" /> 
+			<texture id="wall" length_s="1.0" length_t="1.0" /> 
 
 			<children>
 				<primitiveref id="quad" />
