@@ -221,8 +221,8 @@ class MySceneGraph {
         var indexFrom, indexTo;
         var fx, fy, fz, tx, ty, tz;
         var near, far, angle, left, right, top, bottom;
-        
-        this.defaultView = this.reader.getString(viewsNode,'default');
+
+        this.defaultView = this.reader.getString(viewsNode, 'default');
 
         for (var i = 0; i < children.length; i++) {
 
@@ -254,7 +254,7 @@ class MySceneGraph {
             grandchildren = children[i].children;
 
             if (children[i].nodeName == "perspective") {
-                
+
 
                 for (var j = 0; j < grandchildren.length; j++) {
                     nodeNames.push(grandchildren[j].nodeName);
@@ -339,7 +339,7 @@ class MySceneGraph {
                     continue;
                 }
 
-                var cam = new CGFcameraOrtho(left,right,top,bottom,near,far,[fx,fy,fz],[tx,ty,tz],[0,-1,0]);
+                var cam = new CGFcameraOrtho(left, right, bottom, top, near, far, [fx, fy, fz], [tx, ty, tz], [0, 1, 0]);
                 this.views[id] = cam;
             }
             nodeNames = [];
@@ -613,12 +613,12 @@ class MySceneGraph {
             light.push(specularIllumination);
 
             if (children[i].nodeName == "spot") {
-                var directionPosition = [targetLight[0]-positionLight[0],targetLight[1]-positionLight[1],targetLight[2]-positionLight[2]];
-                var length = Math.sqrt(directionPosition[0]*directionPosition[0] + directionPosition[1]*directionPosition[1] + directionPosition[2]*directionPosition[2]);
-                directionPosition[0] = directionPosition[0]/length;
-                directionPosition[1] = directionPosition[1]/length;
-                directionPosition[2] = directionPosition[2]/length;
-                light.push(angle,exponent,directionPosition);
+                var directionPosition = [targetLight[0] - positionLight[0], targetLight[1] - positionLight[1], targetLight[2] - positionLight[2]];
+                var length = Math.sqrt(directionPosition[0] * directionPosition[0] + directionPosition[1] * directionPosition[1] + directionPosition[2] * directionPosition[2]);
+                directionPosition[0] = directionPosition[0] / length;
+                directionPosition[1] = directionPosition[1] / length;
+                directionPosition[2] = directionPosition[2] / length;
+                light.push(angle, exponent, directionPosition);
             }
 
             this.lights.push(light);
@@ -885,8 +885,8 @@ class MySceneGraph {
             }
 
             var initialTransforms = this.parseTransformation(grandchildren);
-            if(initialTransforms != null){
-            this.transforms[transId] = initialTransforms;
+            if (initialTransforms != null) {
+                this.transforms[transId] = initialTransforms;
             }
         }
 
@@ -896,7 +896,7 @@ class MySceneGraph {
     }
 
 
-    parseTransformation(grandchildren){
+    parseTransformation(grandchildren) {
         var initialTransforms = mat4.create();
         mat4.identity(initialTransforms);
 
@@ -968,7 +968,7 @@ class MySceneGraph {
      * @param {nodes block element} primitivesNode
      */
     parsePrimitives(primitivesNode) {
-        
+
         this.primitives = new Array();
         var children = primitivesNode.children;
         for (var i = 0; i < children.length; i++) {
@@ -1193,13 +1193,13 @@ class MySceneGraph {
                     primArray.push(loops);
             }
             var graphLeaf = new GraphLeaf(this.scene, primArray[0], primArray); //Index 0 is the char that identifies the type of primitive
-            if(graphLeaf.primitive == null){
+            if (graphLeaf.primitive == null) {
                 this.log("Error: Primitive is null");
             }
-            else{
+            else {
                 this.primitives[primId] = graphLeaf.primitive;
             }
-            
+
 
         }
 
@@ -1262,20 +1262,22 @@ class MySceneGraph {
 
         if (transformationIndex != -1) {
             var transformChildren = children[transformationIndex].children;
-            if (transformChildren[0].nodeName == "transformationref") {
-                var transform = transformChildren[0];
-                var transfId = this.reader.getString(transform, 'id');
-                if (this.transforms[transfId] != null) {
-                    mat4.copy(graphNode.transform,this.transforms[transfId]);
+            if (transformChildren.length != 0) {
+                if (transformChildren[0].nodeName == "transformationref") {
+                    var transform = transformChildren[0];
+                    var transfId = this.reader.getString(transform, 'id');
+                    if (this.transforms[transfId] != null) {
+                        mat4.copy(graphNode.transform, this.transforms[transfId]);
+                    }
+                    else {
+                        this.onXMLMinorError("No trasformation for ID : " + transfId);
+                    }
                 }
                 else {
-                    this.onXMLMinorError("No trasformation for ID : " + transfId);
-                }
-            }
-            else{
-                var t = this.parseTransformation(transformChildren);
-                if(t != null){
-                    mat4.copy(graphNode.transform,t);
+                    var t = this.parseTransformation(transformChildren);
+                    if (t != null) {
+                        mat4.copy(graphNode.transform, t);
+                    }
                 }
             }
 
@@ -1370,9 +1372,9 @@ class MySceneGraph {
 
     }
 
-    draw_primitive(id,factorS,factorT) {
-        var primitive =  this.primitives[id];
-        primitive.applyTextures(factorS,factorT);
+    draw_primitive(id, factorS, factorT) {
+        var primitive = this.primitives[id];
+        primitive.applyTextures(factorS, factorT);
         primitive.display();
     }
 
@@ -1398,26 +1400,26 @@ class MySceneGraph {
 
         this.scene.multMatrix(node.transform);
 
-       
 
-        for(var i = 0; i < node.leafs.length;i++){
-            if(this.primitives[node.leafs[i]] != null)
-            this.draw_primitive(node.leafs[i],node.xTex,node.yTex);
+
+        for (var i = 0; i < node.leafs.length; i++) {
+            if (this.primitives[node.leafs[i]] != null)
+                this.draw_primitive(node.leafs[i], node.xTex, node.yTex);
         }
 
         var ns = new NodeStack();
-        ns.setValues(mat,text);
+        ns.setValues(mat, text);
         for (var i = 0; i < node.children.length; i++) {
             this.sceneStack.push(ns);
-            ns.apply(this,node.textureID);
+            ns.apply(this, node.textureID);
             this.scene.pushMatrix();
             this.processNode(node.children[i], mat, text);
             this.scene.popMatrix();
             ns = this.sceneStack.pop();
-            
+
         }
 
-        
+
 
 
 
