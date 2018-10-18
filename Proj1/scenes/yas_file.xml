@@ -64,6 +64,7 @@
 		<texture id="square" file="square.png" />
 		<texture id="copper" file="copper.jpg" />
 		<texture id="bricks" file="brick.jpg" />
+		<texture id="keyboard" file="keyboard.png" />
 
 	</textures>
 		
@@ -1073,6 +1074,7 @@
 				<componentref id="laptop_base"/>
 				<componentref id="laptop_screen"/>
 				<componentref id="laptop_bend"/>
+				<componentref id="laptop_keyboard"/>
 			</children>
 		</component> 	
 
@@ -1095,8 +1097,8 @@
 
 		<component id="laptop_screen">
 			<transformation>
-				<translate x="0.0" y="0.45" z="-0.6" />
-				<rotate axis="x" angle="45" />
+				<translate x="0.0" y="0.35" z="-0.6" />
+				<rotate axis="x" angle="50" />
 				<scale x="1.0" y="0.1" z="0.65" />
 			</transformation>
 
@@ -1113,10 +1115,10 @@
 
 		<component id="laptop_bend">
 			<transformation>
-				<translate x="0.0" y="0.1" z="-0.35" />
+				<translate x="0.0" y="0.075" z="-0.35" />
 				<rotate axis="y" angle="90" />
-				<translate x="0.0" y="0.0" z="-0.525" />
-				<scale x="0.08" y="0.08" z="1.05" />
+				<translate x="0.0" y="0.0" z="-0.505" />
+				<scale x="0.08" y="0.08" z="1.01" />
 			</transformation>
 
 			<materials>
@@ -1147,7 +1149,25 @@
 			<children>
 				<primitiveref id="quad"/>
 			</children>
-		</component>  	
+		</component> 
+
+		<component id="laptop_keyboard">
+			<transformation>
+				<translate x="0.0" y="0.101" z="0.0" />
+				<scale x="1.0" y="0.1" z="0.65" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="keyboard" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component> 	
 
 
 	</components>
