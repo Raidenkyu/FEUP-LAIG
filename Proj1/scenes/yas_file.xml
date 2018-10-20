@@ -51,12 +51,12 @@
 
 	<textures> 
 
-		<texture id="rocks" file="rocks.jpg" />
-		<texture id="trunk" file="trunk-image.jpg" />
-		<texture id="table" file="table.jpg" />
-		<texture id="chair" file="chair.jpg" />
-		<texture id="wall" file="concrete.jpg" />
-		<texture id="square" file="square.png" />
+		<texture id="rocks" file="./scenes/images/rocks.jpg" />
+		<texture id="trunk" file="./scenes/images/trunk-image.jpg" />
+		<texture id="table" file="./scenes/images/table.jpg" />
+		<texture id="chair" file="./scenes/images/chair.jpg" />
+		<texture id="wall" file="./scenes/images/concrete.jpg" />
+		<texture id="square" file="./scenes/images/square.png" />
 
 	</textures>
 		

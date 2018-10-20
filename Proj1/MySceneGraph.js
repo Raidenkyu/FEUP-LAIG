@@ -654,7 +654,7 @@ class MySceneGraph {
                 this.onXMLMinorError("Texture with ID" + texId + "already in use");
             }
 
-            var tex = new CGFtexture(this.scene, './scenes/images/' + this.reader.getString(children[i], 'file'));
+            var tex = new CGFtexture(this.scene, this.reader.getString(children[i], 'file'));
             this.textures[texId] = tex;
         }
 
