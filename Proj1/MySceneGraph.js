@@ -895,12 +895,14 @@ class MySceneGraph {
 
     }
 
-
+    /**
+     * 
+     * @param {XMLnode} grandchildren 
+     */
     parseTransformation(grandchildren) {
         var initialTransforms = mat4.create();
         mat4.identity(initialTransforms);
 
-        //CONFIRMAR ISTO
         for (var j = 0; j < grandchildren.length; j++) {
 
             if (grandchildren[j].nodeName == "translate") {
@@ -1382,6 +1384,14 @@ class MySceneGraph {
         primitive.display();
     }
 
+    /**
+     * 
+     * @param {string} id 
+     * @param {CGFappearance} mat 
+     * @param {CGFtexture} text 
+     * @param {float} sLength 
+     * @param {float} tLength 
+     */
     processNode(id, mat, text, sLength, tLength) {
 
 
@@ -1416,14 +1426,14 @@ class MySceneGraph {
                 this.draw_primitive(node.leafs[i], sLength, tLength);
         }
 
-        var ns = new NodeStack();
-        ns.setValues(mat, text);
+        //var ns = new NodeStack();
+        //ns.setValues(mat, text);
         for (var i = 0; i < node.children.length; i++) {
-            this.sceneStack.push(ns);
+            //this.sceneStack.push(ns);
             this.scene.pushMatrix();
             this.processNode(node.children[i], mat, text, sLength, tLength);
             this.scene.popMatrix();
-            ns = this.sceneStack.pop();
+            //ns = this.sceneStack.pop();
 
         }
 
@@ -1432,7 +1442,9 @@ class MySceneGraph {
 
 
     }
-
+    /**
+     * 
+     */
     nextMaterial(){
         for (var key in this.graphNodes) {
             if (this.graphNodes.hasOwnProperty(key)) {

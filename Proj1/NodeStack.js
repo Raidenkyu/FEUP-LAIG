@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 class NodeStack {
     constructor(nodeID) {
         this.material = null;

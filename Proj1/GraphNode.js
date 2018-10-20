@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 class GraphNode {
     constructor(nodeID) {
         this.nodeID = nodeID;

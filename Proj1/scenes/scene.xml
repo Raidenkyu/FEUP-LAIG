@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Os comentarios devem ter espacos no inicio e no fim, a -->
+<!-- separar dos hifens -->
+<!-- Nao devem ser usados caracteres especiais (p.ex. acentos) -->
+<!-- Todas as tags e atributos sao obrigatorios, exceto onde for -->
+<!-- referido o contrario -->
+<!-- Na descricao abaixo, os simbolos utilizados tem o seguinte significado: -->
+<!-- ii: integer value -->
+<!-- ff: float value -->
+<!-- ss: string value -->
+<!-- cc: character "x" or "y" or "z" -->
+<!-- tt: "0" or "1" with Boolean significance -->
+<yas>
+   <!-- deve definir-se um objeto para raiz da arvore, assim -->
+   <!-- como o comprimento dos tres eixos (cilindros) -->
+   <scene root="JohnyDepp" axis_length="5.0"/>
+
+   <views default="perspective1" >
+      <!-- tem de existir, pelo menos, uma vista de -->
+      <!-- entre as seguintes (perspective ou ortho) -->
+      <perspective id="perspective1" near="0.1" far="500.0" angle="10.0" >
+         <from x="20.0" y="20.0" z="20.0" />
+         <to x="0.0" y="0.0" z="0.0" />
+      </perspective>
+
+      <ortho id="ortho1" near="0.1" far="500.0" left="-5.0" right="5.0" top="5.0" bottom="-5.0" >
+        <from x="20.0" y="20.0" z="20.0" />
+        <to x="0.0" y="0.0" z="0.0" />
+      </ortho> 
+   </views>
+
+   <ambient>
+      <ambient r="0.2" g="0.2" b="0.2" a="1" />   
+      <background r="0" g="0" b="0" a="1" />
+   </ambient>
+
+   <lights>
+      <!-- Deve existir um ou mais blocos "omni" ou "spot" -->
+      <!-- Os identificadores "id" nao podem ser repetidos -->
+      <omni id="light0" enabled="0">
+         <location x="0" y="100" z="10" w="1"/>
+         <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
+         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />  
+         <specular r="1.0" g="1.0" b="1.0" a="1.0"/>
+      </omni>
+
+      <omni id="light1" enabled="0">
+         <location x="200" y="100" z="10" w="1"/>
+         <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
+         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />  
+         <specular r="1.0" g="1.0" b="1.0" a="1.0"/>
+      </omni>
+
+      <omni id="light2" enabled="0">
+         <location x="-50" y="75" z="100" w="1"/>
+         <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
+         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />  
+         <specular r="1.0" g="1.0" b="1.0" a="1.0"/>
+      </omni>
+
+      <omni id="light3" enabled="1">
+         <location x="250" y="75" z="100" w="1"/>
+         <ambient r="0.2" g="0.2" b="0.2" a="1.0"/>
+         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />  
+         <specular r="1.0" g="1.0" b="1.0" a="1.0"/>
+      </omni>
+
+      <spot id="light4" enabled="1" angle="13.1" exponent="1.0">
+         <!-- atencao, "target" e' diferente de "direction" -->
+         <location x="6.0" y="6.0" z="6.0" w="0.0" />
+         <target x="1.3" y="1.3" z="0.0" />
+         <ambient r="0.8" g="0.4" b="0.2" a="1.0" />
+         <diffuse r="0.5" g="0.3" b="0.7" a="1.0" />
+         <specular r="0.5" g="0.2" b="0.4" a="1.0" />
+      </spot>
+
+   </lights>
+
+   <textures>
+      <!-- Deve existir um ou mais blocos "texture" -->
+      <!-- Os identificadores "id" nao podem ser repetidos -->
+      <texture id="bank" file="./scenes/images/bank.jpg" />
+   </textures>
+
+   <materials>
+      <!-- Deve existir um ou mais blocos "material" -->
+      <!-- Os identificadores "id" nao podem ser repetidos -->
+      <material id="material1" shininess="0.5">
+         <emission r="0.75" g="0.56" b="0.23" a="1.0" />
+         <ambient r="0.5" g="0.2" b="0.4" a="1.0" />
+         <diffuse r="0.8" g="0.4" b="0.2" a="1.0" />
+         <specular r="0.71" g="0.36" b="0.93" a="1.0" />
+      </material>
+
+      <material id="material2" shininess="0.7">
+         <emission r="0.55" g="0.76" b="0.93" a="0.7" />
+         <ambient r="0.3" g="0.4" b="0.6" a="0.5" />
+         <diffuse r="0.4" g="0.7" b="0.5" a="1.0" />
+         <specular r="0.37" g="0.80" b="0.66" a="1.0" />
+      </material>
+   </materials>
+
+   <transformations>
+      <!-- Deve existir um ou mais blocos "transformation" -->
+      <!-- Os identificadores "id" nao podem ser repetidos -->
+      <!-- Os angulos sao expressos em graus -->
+      <transformation id="transformation1">
+         <!-- instrucoes a usar sem limite nem ordem -->
+         <!-- deve existir pelo menos uma transformacao -->
+         <translate x="12.2" y="-2.9" z="0.0" />
+         <rotate axis="x" angle="45" />
+         <rotate axis="y" angle="90" />
+         <rotate axis="z" angle="0" />
+         <scale x="1.0" y="1.0" z="2.0" />
+      </transformation>
+
+      <transformation id="360">
+         <rotate axis="y" angle="90" />
+         <rotate axis="y" angle="90" />
+         <rotate axis="y" angle="180" />
+      </transformation>
+
+      <transformation id="Upwards">
+         <rotate axis="z" angle="90" />
+      </transformation>
+
+
+   </transformations>
+
+   <primitives>
+      <!-- Uma "primitive" e' uma primitiva e pode ser usada em nos folha -->
+      <!-- Deve existir um ou mais blocos "primitive" -->
+      <!-- Os identificadores "id" nao podem ser repetidos -->
+    <!-- <primitive id="rectangle1">
+           apenas pode existir UMA das seguintes tags: 
+           rectangle, triangle, cylinder, sphere, torus 
+           os parametros devem ser interpretados, genericamente, 
+           como em WebGL; o cilindro deve adicionalmente ter tampas 
+         <rectangle x1="0" y1="0" x2="1" y2="1" />
+      </primitive> -->
+
+      <primitive id="triangle">
+         <triangle x1="10" y1="10" z1="10"
+                   x2="15" y2="15" z2="15"
+                   x3="12" y3="12" z3="12" />
+      </primitive> 
+
+      
+      <primitive id="sphere">
+         <sphere radius="5.0" slices="20" stacks="20" />
+      </primitive> 
+
+      <primitive id="base">
+         <cylinder base="4" top="4" height="10" slices="20" stacks="20" />
+      </primitive> 
+
+      <primitive id="propulsor_base">
+         <cylinder base="2.5" top="0" height="4" slices="20" stacks="20" />
+      </primitive>
+
+      <primitive id="conector">
+         <cylinder base="4" top="2" height="2" slices="20" stacks="20" />
+      </primitive>
+
+      <primitive id="second_base">
+         <cylinder base="2" top="2" height="4" slices="20" stacks="20" />
+      </primitive>
+
+      <primitive id="tip">
+         <cylinder base="2" top="0" height="3" slices="20" stacks="20" />
+      </primitive>
+
+      <primitive id="fuel_tank">
+         <cylinder base="1" top="1" height="2.5" slices="20" stacks="20" />
+      </primitive>
+
+      <primitive id="propulsor_fuel_tanks">
+         <cylinder base="0.5" top="0" height="1.5" slices="20" stacks="20" />
+      </primitive>
+
+   </primitives>
+
+   <components>
+
+      <component id="JohnyDepp"> <!-- root -->
+         <transformation>
+            <transformationref id = "360" />
+         </transformation>
+         <materials>
+            <material id="material1" />
+            <material id="material2" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <componentref id="base" />
+            <componentref id="propulsor_base" />
+            <componentref id="conector" />
+            <componentref id="second_base" />
+            <componentref id="tip" />
+            <componentref id="rocket1" />
+            <componentref id="rocket2" />
+            <componentref id="rocket3" />
+            <componentref id="rocket4" /> 
+         </children>
+      </component>
+
+      <component id="base"> 
+         <transformation>
+            <transformationref id = "Upwards" />
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <primitiveref id="base"/>
+         </children>
+      </component>
+
+      <component id="propulsor_base"> 
+         <transformation>
+            <translate x="0" y="0" z="0"/> 
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <primitiveref id="propulsor_base"/>
+         </children>
+      </component>
+
+      <component id="conector"> 
+         <transformation>
+            <translate x="0" y="1" z="0"/> 
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <primitiveref id="conector"/>
+         </children>
+      </component>
+
+      <component id="second_base"> 
+         <transformation>
+             <translate x="0" y="2" z="0"/> 
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <primitiveref id="second_base"/>
+         </children>
+      </component>
+
+      <component id="tip"> 
+         <transformation>
+             <translate x="0" y="1.5" z="0"/> 
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <primitiveref id="tip"/>
+         </children>
+      </component>
+
+      <component id="rocket1"> 
+         <transformation>
+            <translate x="-2.5" y="6" z="0"/>
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <componentref id="rocket" />
+         </children>
+      </component>
+
+      <component id="rocket2"> 
+         <transformation>
+            <translate x="2.5" y="6" z="0"/>
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <componentref id="rocket" />
+         </children>
+      </component>
+
+      <component id="rocket3"> 
+         <transformation>
+            <translate x="0" y="6" z="-2.5"/>
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <componentref id="rocket" />
+         </children>
+      </component>
+
+      <component id="rocket4"> 
+         <transformation>
+            <translate x="0" y="6" z="2.5"/>
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <componentref id="rocket" />
+         </children>
+      </component>
+
+      <component id="rocket"> 
+         <transformation>
+            
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <componentref id="rcylinder" />
+            <componentref id="rcone" />
+         </children>
+      </component>
+
+      <component id="rcylinder"> 
+         <transformation>
+            <translate x="0" y="1.25" z="0" />
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <primitiveref id="fuel_tank" />
+         </children>
+      </component>
+
+      <component id="rcone"> 
+         <transformation>
+            <translate x="0" y="-0.75" z="0" />
+         </transformation>
+         <materials>
+            <material id="material1" />
+         </materials>
+         <texture id="bank" length_s="0.3" length_t="0.3" />
+         <children>
+            <primitiveref id="propulsor_fuel_tanks" />
+         </children>
+      </component>  
+   </components>
+   
+</yas>
