@@ -1303,8 +1303,8 @@ class MySceneGraph {
         if (textureIndex != -1) {
             var texture = children[textureIndex];
             var texId = this.reader.getString(texture, 'id');
-            var xTex = this.reader.getFloat(texture, 'length_s');
-            var yTex = this.reader.getFloat(texture, 'length_t');
+            var xTex = this.reader.getFloat(texture, 'length_s',false);
+            var yTex = this.reader.getFloat(texture, 'length_t',false);
             if (texId == "none" || texId == "inherit" || this.textures[texId] != null) {
                 graphNode.textureID = texId;
                 graphNode.xTex = xTex;
