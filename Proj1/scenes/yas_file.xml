@@ -209,6 +209,7 @@
 
 			<materials>
 					<material id="mat_blue" />
+					<material id="mat_red" />
 			</materials>
 
 			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
@@ -957,6 +958,7 @@
 
 			<materials>
 					<material id="mat_yellow" />
+					<material id="mat_blue" />
 			</materials>
 
 			<texture id="bricks" length_s="1.0" length_t="1.0" /> 

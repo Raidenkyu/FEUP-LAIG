@@ -94,6 +94,7 @@ class XMLscene extends CGFscene {
         this.gl.clearColor(this.graph.backgroundR, this.graph.backgroundG, this.graph.backgroundB, this.graph.backgroundA);
 
         this.initLights();
+        this.interface.initKeys();
 
         // Adds lights group.
         this.interface.addLightsGroup(this.graph.lights);
@@ -167,5 +168,13 @@ class XMLscene extends CGFscene {
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
+    }
+
+    update(currTime){
+        this.checkKeys();
+    }
+
+    updateMaterial(){
+        this.graph.nextMaterial();
     }
 }

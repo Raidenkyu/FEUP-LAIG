@@ -842,7 +842,7 @@ class MySceneGraph {
             }
 
             var material = new CGFappearance(this.scene);
-            material.setTextureWrap("REPEAT","REPEAT");
+            material.setTextureWrap("REPEAT", "REPEAT");
             material.setShininess(shininess);
             material.setEmission(emissionMaterial[0], emissionMaterial[1], emissionMaterial[2], emissionMaterial[3]);
             material.setAmbient(ambientMaterial[0], ambientMaterial[1], ambientMaterial[2], ambientMaterial[3]);
@@ -1285,13 +1285,17 @@ class MySceneGraph {
         }
 
         if (materialIndex != -1) {
-            var material = children[materialIndex].children[0];
-            var matId = this.reader.getString(material, 'id');
-            if (matId == "inherit" || this.materials[matId] != null) {
-                graphNode.materialID = matId;
-            }
-            else {
-                this.onXMLMinorError("No material for ID : " + matId);
+            var materialChildren = children[materialIndex].children;
+            for (var j = 0; j < materialChildren.length; j++) {
+                var material = materialChildren[j];
+                var matId = this.reader.getString(material, 'id');
+                
+                if (matId == "inherit" || this.materials[matId] != null) {
+                    graphNode.materialsID.push(matId);
+                }
+                else {
+                    this.onXMLMinorError("No material for ID : " + matId);
+                }
             }
 
         }
@@ -1364,10 +1368,10 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
-        if(this.ready){
-        var matId = Object.keys(this.materials)[0];
-        this.processNode(this.idRoot, this.materials[matId], null,1,1);
+
+        if (this.ready) {
+            var matId = Object.keys(this.materials)[0];
+            this.processNode(this.idRoot, this.materials[matId], null, 1, 1);
         }
 
     }
@@ -1378,12 +1382,12 @@ class MySceneGraph {
         primitive.display();
     }
 
-    processNode(id,mat, text,sLength, tLength) {
-        
+    processNode(id, mat, text, sLength, tLength) {
+
 
         var node = this.graphNodes[id];
-        if (node.materialID != "inherit") {
-            mat = this.materials[node.materialID];
+        if (node.materialsID[node.materialsIndex] != "inherit") {
+            mat = this.materials[node.materialsID[node.materialsIndex]];
         }
 
 
@@ -1395,7 +1399,7 @@ class MySceneGraph {
             mat.setTexture(text);
         }
 
-        if(node.xTex != null && node.yTex != null){
+        if (node.xTex != null && node.yTex != null) {
             sLength = node.xTex;
             tLength = node.yTex;
         }
@@ -1416,9 +1420,8 @@ class MySceneGraph {
         ns.setValues(mat, text);
         for (var i = 0; i < node.children.length; i++) {
             this.sceneStack.push(ns);
-            ns.apply(this, node.textureID);
             this.scene.pushMatrix();
-            this.processNode(node.children[i], mat, text,sLength,tLength);
+            this.processNode(node.children[i], mat, text, sLength, tLength);
             this.scene.popMatrix();
             ns = this.sceneStack.pop();
 
@@ -1428,5 +1431,13 @@ class MySceneGraph {
 
 
 
+    }
+
+    nextMaterial(){
+        for (var key in this.graphNodes) {
+            if (this.graphNodes.hasOwnProperty(key)) {
+                this.graphNodes[key].nextMaterial();
+            }
+        }
     }
 }
