@@ -25,7 +25,6 @@ class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         scene.graph = this;
-        this.sceneStack = new Array();
 
         this.nodes = [];
 
@@ -621,7 +620,7 @@ class MySceneGraph {
                 light.push(angle, exponent, directionPosition);
             }
 
-            this.lights.push(light);
+            this.lights[lightId] =light;
             numLights++;
         }
 
@@ -1426,14 +1425,10 @@ class MySceneGraph {
                 this.draw_primitive(node.leafs[i], sLength, tLength);
         }
 
-        //var ns = new NodeStack();
-        //ns.setValues(mat, text);
         for (var i = 0; i < node.children.length; i++) {
-            //this.sceneStack.push(ns);
             this.scene.pushMatrix();
             this.processNode(node.children[i], mat, text, sLength, tLength);
             this.scene.popMatrix();
-            //ns = this.sceneStack.pop();
 
         }
 

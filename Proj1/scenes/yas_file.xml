@@ -65,7 +65,7 @@
 			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
 		</omni>
 
-		<omni id="omni_2" enabled="0" >
+		<omni id="omni_3" enabled="0" >
 			<location x="20" y="10" z="10" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
