@@ -17,7 +17,6 @@ class MySphere extends CGFobject{
         this.vertices = [];
         this.indices = [];
         this.normals = [];
-        //this.texCoords = [];
     
         var vert_ang = 0.0;
         var hor_ang = 0.0;

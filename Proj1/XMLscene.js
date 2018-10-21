@@ -4,6 +4,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
  * XMLscene class, representing the scene that is to be rendered.
  */
 class XMLscene extends CGFscene {
+    
     /**
      * @constructor
      * @param {MyInterface} myinterface 
@@ -42,6 +43,7 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -83,7 +85,8 @@ class XMLscene extends CGFscene {
     }
 
 
-    /* Handler called when the graph is finally loaded. 
+    /**
+     * Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
@@ -105,12 +108,18 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
-
+    /**
+     * Initializes the default view
+     */
     initViews(){
         this.camera = this.graph.views[this.graph.defaultView];
         this.interface.setActiveCamera(this.camera);
     }
 
+    /**
+     * Selects a view
+     * @param {string} id
+     */
     selectView(id){
         this.camera = this.graph.views[id];
         this.interface.setActiveCamera(this.camera);
@@ -171,7 +180,7 @@ class XMLscene extends CGFscene {
     }
 
     /**
-     * updates de scene
+     * Updates de scene
      * @param {time} currTime 
      */
     update(currTime){
@@ -179,7 +188,7 @@ class XMLscene extends CGFscene {
     }
 
     /**
-     * updates the materials of the objects
+     * Updates the materials of the objects
      */
     updateMaterial(){
         this.graph.nextMaterial();

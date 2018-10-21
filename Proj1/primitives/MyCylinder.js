@@ -67,14 +67,11 @@ class MyCylinderSurface extends CGFobject{
             var curr_angle = 0.0;
             var curr_radius = (this.top_rad - this.base_rad) * (stack_c / this.stacks) + this.base_rad;
             var z0 = this.height * stack_c / this.stacks;
-            //var v = 1 - (stack_c / this.stacks);
             for (slice_c = 0; slice_c <= this.slices; slice_c++) {
                 var x = Math.cos(curr_angle) * curr_radius;
                 var y = Math.sin(curr_angle) * curr_radius;
-                //var u = 1 - (slice_c / this.slices);
                 this.vertices.push(x, y, z0);
                 this.normals.push(x, y, 0);
-                //this.texCoords.push(u, v);
                 curr_angle += angle;
             }
         }

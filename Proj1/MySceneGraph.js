@@ -15,6 +15,7 @@ var COMPONENTS_INDEX = 8;
  * MySceneGraph class, representing the scene graph.
  */
 class MySceneGraph {
+    
     /**
      * @constructor
      */
@@ -203,6 +204,7 @@ class MySceneGraph {
 
     /**
      * Parses the <scene> block.
+     * @param {scene block element} SceneNode
      */
     parseScene(SceneNode) {
         this.idRoot = this.reader.getString(SceneNode, 'root');
@@ -211,6 +213,10 @@ class MySceneGraph {
         this.log("Parsed scene");
     }
 
+    /**
+     * Parses the <views> block.
+     * @param {views block element} viewsNode
+     */
     parseViews(viewsNode) {
         this.views = new Array();
         var children = viewsNode.children;
@@ -347,6 +353,10 @@ class MySceneGraph {
         this.log("Parsed views");
     }
 
+    /**
+     * Parses the <ambient> block.
+     * @param {ambient block element} ambientNode
+     */
     parseAmbient(ambientNode) {
         var children = ambientNode.children;
         var nodeNames = [];
@@ -369,6 +379,10 @@ class MySceneGraph {
 
     }
 
+    /**
+     * Parses the <lights> block.
+     * @param {light block element} lightsNode
+     */
     parseLights(lightsNode) {
 
         var children = lightsNode.children;
@@ -895,7 +909,7 @@ class MySceneGraph {
     }
 
     /**
-     * 
+     * Parses a single <transformations> block.
      * @param {XMLnode} grandchildren 
      */
     parseTransformation(grandchildren) {
@@ -1209,9 +1223,9 @@ class MySceneGraph {
     }
 
     /**
- * Parses the <components> block.
- * @param {components block element} componentsNode
- */
+    * Parses the <components> block.
+    * @param {components block element} componentsNode
+    */
     parseComponents(componentsNode) {
         var children = componentsNode.children;
         this.components = new Array();
@@ -1246,7 +1260,6 @@ class MySceneGraph {
      * Parses the nodes of the graph
      * @param {nodes ID} nodeId
      */
-
     parseNodes(nodeId) {
         var graphNode = new GraphNode(nodeId);
         this.graphNodes[nodeId];
@@ -1339,7 +1352,7 @@ class MySceneGraph {
     }
 
 
-    /*
+    /**
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
      */
@@ -1377,6 +1390,12 @@ class MySceneGraph {
 
     }
 
+    /**
+     * Displays a primitive
+     * @param {string} id 
+     * @param {float} sLength 
+     * @param {float} tLength 
+     */
     draw_primitive(id, factorS, factorT) {
         var primitive = this.primitives[id];
         primitive.applyTextures(factorS, factorT);
@@ -1384,7 +1403,7 @@ class MySceneGraph {
     }
 
     /**
-     * 
+     * Recursive function that processes the scene graph and draws it
      * @param {string} id 
      * @param {CGFappearance} mat 
      * @param {CGFtexture} text 
@@ -1437,8 +1456,9 @@ class MySceneGraph {
 
 
     }
+
     /**
-     * 
+     * Changes every material to the next one in every component
      */
     nextMaterial(){
         for (var key in this.graphNodes) {
