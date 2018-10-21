@@ -170,13 +170,6 @@ class XMLscene extends CGFscene {
         // ---- END Background, camera and axis setup
     }
 
-    /**
-     * updates de scene
-     * @param {time} currTime 
-     */
-    update(currTime){
-        this.checkKeys();
-    }
 
     /**
      * updates the materials of the objects
