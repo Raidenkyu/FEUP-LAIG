@@ -43,7 +43,6 @@ class MyCircle extends CGFobject{
             this.normals.push(0,0,1);
             this.normals.push(0,0,1);
 
-            //texCoords
 
         }
 
@@ -58,7 +57,6 @@ class MyCircle extends CGFobject{
         factorT = factorT || 1;
         this.texCoords = [];
 
-        //TODO by Fernando
 
         this.initGLBuffers();
     }

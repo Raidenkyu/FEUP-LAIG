@@ -2,6 +2,7 @@
 * MyInterface class, creating a GUI interface.
 */
 class MyInterface extends CGFinterface {
+    
     /**
      * @constructor
      */
@@ -59,16 +60,27 @@ class MyInterface extends CGFinterface {
         group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
     }
 
+    /**
+     * Initializes the keys
+     */
     initKeys() {
 		this.scene.gui=this;
 		this.processKeyboard=function(){};
         this.activeKeys={};
 	}
 
+    /**
+     * Processes a pressed key
+     * @param {event} event
+     */
 	processKeyDown(event) {
         this.activeKeys[event.code]=true;
 	};
 
+    /**
+     * Processes a released key
+     * @param {event} event
+     */
 	processKeyUp(event) {
         this.activeKeys[event.code]=false;
         if(event.code == "KeyM"){
@@ -76,6 +88,10 @@ class MyInterface extends CGFinterface {
         }
 	};
 
+    /**
+     * Informs if a given key is pressed
+     * @param {event} event
+     */
 	isKeyPressed(keyCode) {
 		return this.activeKeys[keyCode] || false;
 	}
