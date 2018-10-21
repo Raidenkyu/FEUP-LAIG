@@ -19,6 +19,10 @@ class MyTorus extends CGFobject{
         this.vertices = [];
         this.normals = [];
         this.indices = [];
+        this.initTexCoords = [];
+        this.texCoords = [];
+        var s = 1 / this.stacks;
+		var t = 1 / this.slices;
 
         for (var stack_c = 0; stack_c <= this.stacks; stack_c++)                     
           {  var ang = stack_c * 2 * Math.PI / this.stacks;
@@ -30,21 +34,13 @@ class MyTorus extends CGFobject{
                 var y = (this.outer_r + this.inner_r * Math.cos(phi)) * Math.sin(ang);
                 var z = this.inner_r * Math.sin(phi);
 
-                this.vertices.push(x);
-                this.vertices.push(y);
-                this.vertices.push(z);
+                this.vertices.push(x,y,z);
+                this.normals.push(x,y,z);
 
-                this.normals.push(x);
-                this.normals.push(y);
-                this.normals.push(z);
+				var factorS = stack_c*s;
+				var factorT = slice_c*t;
 
-                /*
-                var u = 1 - (longNumber / longitudeBands);
-                var v = 1 - (latNumber / latitudeBands);
-
-                textureCoordData.push(u);
-                textureCoordData.push(v);
-                */
+				this.initTexCoords.push(factorS, factorT);
 
             }
         }
@@ -59,7 +55,7 @@ class MyTorus extends CGFobject{
         }
 
 
-        
+        this.texCoords = this.initTexCoords.slice();
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
@@ -69,7 +65,11 @@ class MyTorus extends CGFobject{
         factorS = factorS || 1;
         factorT = factorT || 1;
 
-        //TODO by Fernando
+        for (var i = 0; i < this.texCoords.length;) {
+			this.texCoords[i] = this.initTexCoords[i] / factorS;
+            this.texCoords[i+1] = this.initTexCoords[i+1] / factorT;
+            i += 2;
+		}
 
     }
 
