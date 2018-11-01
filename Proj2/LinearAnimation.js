@@ -1,0 +1,52 @@
+/**
+ * LinearAnimation class, representing a linear animation.
+ */
+class LinearAnimation extends Animation {
+    /**
+     * @constructor
+     */
+    constructor(animationId, controlPoints, time) {
+        this.animationId = animationId;
+        this.controlPoints = controlPoints;
+        this.time = time;
+        this.index = 0;
+
+        
+    }
+
+    initAnimation(){
+        var totalD = 0;
+        this.vectors = [];
+        this.arrayDist = [];
+        for(var i = 0; i < this.controlPoints.length - 1 ;i++){
+            var aux = Math.sqrt(Math.pow(controlPoints[i+1][0] - controlPoints[i][0],2) + 
+                        Math.pow(controlPoints[i+1][1] - controlPoints[i][1],2) + 
+                        Math.pow(controlPoints[i+1][2] - controlPoints[i][2],2));
+            this.vectors.push([this.controlPoints[i+1][0] - this.controlPoints[i][0],
+                            this.controlPoints[i+1][1] - this.controlPoints[i][1],
+                            this.controlPoints[i+1][2] - this.controlPoints[i][2]]);
+            this.arrayDist.push(aux);
+            totalD += aux;                
+        }
+        this.totalD = totalD;
+
+    }
+
+    /**
+     * updates the actual position of the animation
+     */
+    update(deltaTime){
+        var deltaD = (this.totalD * deltaTime)/this.time;
+
+
+    }
+
+    getMatrix(deltaTime){
+        var transform = mat4.create();
+        mat4.identity(transform);
+        var x = this.vectors[this.index][0]*deltaTime;
+        var y = this.vectors[this.index][1]*deltaTime;
+        var z = this.vectors[this.index][2]*deltaTime;
+        mat4.translate(transform,transform,[x,y,z]);
+    }
+}

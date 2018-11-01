@@ -1,4 +1,5 @@
 var DEGREE_TO_RAD = Math.PI / 180;
+var FPS = 1000/60;
 
 /**
  * XMLscene class, representing the scene that is to be rendered.
@@ -35,6 +36,7 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
+        this.setUpdatePeriod(FPS);
     }
 
     /**
@@ -177,6 +179,11 @@ class XMLscene extends CGFscene {
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
+    }
+
+    update(currTime){
+        var deltaTime = currTime - this.lastTime;
+        this.lastTime = currTime;
     }
 
 

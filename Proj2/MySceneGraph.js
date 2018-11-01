@@ -8,14 +8,15 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+var ANIMATIONS_INDEX = 7;
+var PRIMITIVES_INDEX = 8;
+var COMPONENTS_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
  */
 class MySceneGraph {
-    
+
     /**
      * @constructor
      */
@@ -166,13 +167,25 @@ class MySceneGraph {
 
         // <transformations>
         if ((index = nodeNames.indexOf("transformations")) == -1)
-            return "tag <materials> missing";
+            return "tag <transformations> missing";
         else {
             if (index != TRANSFORMATIONS_INDEX)
-                this.onXMLMinorError("tag <materials> out of order");
+                this.onXMLMinorError("tag <transformations> out of order");
 
             //Parse transformations block
             if ((error = this.parseTransformations(nodes[index])) != null)
+                return error;
+        }
+
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return "tag <animations> missing";
+        else {
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse transformations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
                 return error;
         }
 
@@ -634,7 +647,7 @@ class MySceneGraph {
                 light.push(angle, exponent, directionPosition);
             }
 
-            this.lights[lightId] =light;
+            this.lights[lightId] = light;
             numLights++;
         }
 
@@ -979,6 +992,14 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <animations> block.
+     * @param {animations block element} animationsNode
+     */
+    parseAnimations(animationsNode){
+
+    }
+
+    /**
      * Parses the <primitives> block.
      * @param {nodes block element} primitivesNode
      */
@@ -1303,7 +1324,7 @@ class MySceneGraph {
             for (var j = 0; j < materialChildren.length; j++) {
                 var material = materialChildren[j];
                 var matId = this.reader.getString(material, 'id');
-                
+
                 if (matId == "inherit" || this.materials[matId] != null) {
                     graphNode.materialsID.push(matId);
                 }
@@ -1317,8 +1338,8 @@ class MySceneGraph {
         if (textureIndex != -1) {
             var texture = children[textureIndex];
             var texId = this.reader.getString(texture, 'id');
-            var xTex = this.reader.getFloat(texture, 'length_s',false);
-            var yTex = this.reader.getFloat(texture, 'length_t',false);
+            var xTex = this.reader.getFloat(texture, 'length_s', false);
+            var yTex = this.reader.getFloat(texture, 'length_t', false);
             if (texId == "none" || texId == "inherit" || this.textures[texId] != null) {
                 graphNode.textureID = texId;
                 graphNode.xTex = xTex;
@@ -1460,7 +1481,7 @@ class MySceneGraph {
     /**
      * Changes every material to the next one in every component
      */
-    nextMaterial(){
+    nextMaterial() {
         for (var key in this.graphNodes) {
             if (this.graphNodes.hasOwnProperty(key)) {
                 this.graphNodes[key].nextMaterial();
