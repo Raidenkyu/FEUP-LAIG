@@ -16,6 +16,8 @@ class GraphNode {
         this.xTex = null;
         this.yTex = null;
         this.transform = mat4.create();
+        this.animationsID = [];
+        this.animationsIdex = 0;
     }
 
     /**

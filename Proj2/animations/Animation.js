@@ -6,8 +6,13 @@ class Animation {
     /**
      * @constructor
      */
-    constructor() {}
+    constructor(id, span) {
+        this.animationId = id;
+        this.time = span;
+    }
 
     update(deltaTime){}
+
+    apply(){}
 
 }

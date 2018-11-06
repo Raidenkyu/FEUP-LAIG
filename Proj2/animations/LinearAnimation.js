@@ -5,10 +5,9 @@ class LinearAnimation extends Animation {
     /**
      * @constructor
      */
-    constructor(animationId, controlPoints, time) {
-        this.animationId = animationId;
+    constructor(animationId, time,controlPoints) {
+        super(animationId,time);
         this.controlPoints = controlPoints;
-        this.time = time;
         this.index = 0;
 
         
@@ -49,4 +48,6 @@ class LinearAnimation extends Animation {
         var z = this.vectors[this.index][2]*deltaTime;
         mat4.translate(transform,transform,[x,y,z]);
     }
+
+    apply(){}
 }

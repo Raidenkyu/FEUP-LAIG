@@ -996,7 +996,69 @@ class MySceneGraph {
      * @param {animations block element} animationsNode
      */
     parseAnimations(animationsNode){
+        this.animations = new Array();
+        var children = animationsNode.children;
+        for(var i = 0; i < children.length;i++){
+            var animId = this.reader.getString(children[i],'id');
+            var time = this.reader.getFloat(children[i],'span');
+            var animation;
 
+            if(id == null){
+                this.onXMLMinorError("Null ID");
+                continue
+            }
+            
+            if(this.animations[animId] != null){
+                this.onXMLMinorError("Id already in use:" + animId);
+                continue
+            }
+
+            if(time == null || time < 0){
+                this.onXMLMinorError("Invalid value for span time: " + time);
+                continue
+            }
+
+            if(children[i].nodeName == "linear"){
+                var grandchildren = children[i].children;
+                var controlpoints = [];
+
+                for(var j = 0; j < grandchildren.length;j++){
+                    if(grandchildren[j].nodeName == "controlpoint"){
+                        var x = this.reader.getFloat(grandchildren[j],'xx');
+                        var y = this.reader.getFloat(grandchildren[j],'yy');
+                        var z = this.reader.getFloat(grandchildren[j],'zz');
+
+                        if(x == null || y == null || z == null){
+                            this.onXMLMinorError("failed to parse coordinates of controlpoint");
+                            continue;
+                        }
+                        controlpoints.push([x,y,z]);
+                    }
+                    else{
+                        this.onXMLMinorError("Invalid controlpoint tag: <" + grandchildren[j].nodeName + ">");
+                    }
+                    
+                }
+                if(controlpoints.length < 2){
+                    this.onXMLMinorError("Number of controlpoints must be higher than 1");
+                    continue;
+                }
+                animation = new LinearAnimation(animId,time,controlpoints);
+
+            }
+            else if(children[i].nodeName == "circular"){
+                var centerString = this.reader.getString(children[i],'center');
+                var centerCoords = centerString.split(' ').map(Number);
+                var radius = this.reader.getFloat(children[i],"radius");
+                var startang = this.reader.getFloat(children[i],"startang");
+                var rotang = this.reader.getFloat(children[i],"rotang");
+                animation = new CircularAnimation(animId,time,centerCoords,radius,startang,rotang);
+            }
+            else{
+                this.onXMLMinorError("Invalid Animation tag: <" + children[i].nodeName + ">");
+            }
+            this.animations[animId] = animation;
+        }
     }
 
     /**
@@ -1294,6 +1356,7 @@ class MySceneGraph {
         var materialIndex = nodeNames.indexOf("materials");
         var textureIndex = nodeNames.indexOf("texture");
         var grandchildrenIndex = nodeNames.indexOf("children");
+        var animationsIndex = nodeNames.indexOf("animations");
 
         if (transformationIndex != -1) {
             var transformChildren = children[transformationIndex].children;
@@ -1317,6 +1380,22 @@ class MySceneGraph {
             }
 
 
+        }
+
+        if(animationsIndex != -1){
+            var animationsChildren = children[animationsIndex].children;
+            for(var j = 0; j < animationsChildren.length;j++){
+                if(animationsChildren[j].nodeName != "animationref"){
+                    this.onXMLMinorError("Invalid tag for animation: <" + animationsChildren[j].nodeName + ">");
+                }
+                var animId = this.reader.getString(animationsChildren[j],'id');
+                if(this.animations[animId] != null){
+                    graphNode.animationsID.push(animId);
+                }
+                else {
+                    this.onXMLMinorError("No animation for ID : " + animId);
+                }
+            }
         }
 
         if (materialIndex != -1) {
