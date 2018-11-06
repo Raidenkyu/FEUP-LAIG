@@ -1003,7 +1003,7 @@ class MySceneGraph {
             var time = this.reader.getFloat(children[i],'span');
             var animation;
 
-            if(id == null){
+            if(animId == null){
                 this.onXMLMinorError("Null ID");
                 continue
             }

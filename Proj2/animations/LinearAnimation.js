@@ -9,6 +9,8 @@ class LinearAnimation extends Animation {
         super(animationId,time);
         this.controlPoints = controlPoints;
         this.index = 0;
+        this.dist = 0;
+        this.initAnimation();
 
         
     }
@@ -18,9 +20,9 @@ class LinearAnimation extends Animation {
         this.vectors = [];
         this.arrayDist = [];
         for(var i = 0; i < this.controlPoints.length - 1 ;i++){
-            var aux = Math.sqrt(Math.pow(controlPoints[i+1][0] - controlPoints[i][0],2) + 
-                        Math.pow(controlPoints[i+1][1] - controlPoints[i][1],2) + 
-                        Math.pow(controlPoints[i+1][2] - controlPoints[i][2],2));
+            var aux = Math.sqrt(Math.pow(this.controlPoints[i+1][0] - this.controlPoints[i][0],2) + 
+                        Math.pow(this.controlPoints[i+1][1] - this.controlPoints[i][1],2) + 
+                        Math.pow(this.controlPoints[i+1][2] - this.controlPoints[i][2],2));
             this.vectors.push([this.controlPoints[i+1][0] - this.controlPoints[i][0],
                             this.controlPoints[i+1][1] - this.controlPoints[i][1],
                             this.controlPoints[i+1][2] - this.controlPoints[i][2]]);
@@ -28,6 +30,7 @@ class LinearAnimation extends Animation {
             totalD += aux;                
         }
         this.totalD = totalD;
+        this.speed = this.totalD/this.time;
 
     }
 
@@ -36,18 +39,25 @@ class LinearAnimation extends Animation {
      */
     update(deltaTime){
         var deltaD = (this.totalD * deltaTime)/this.time;
+        this.dist += deltaD;
+        if(this.dist > this.arrayDist[this.index]){
+            this.index++;
+            if(this.index >= this.controlPoints.length){
+                this.terminated = true;
+            }
+            this.dist = 0;
+        }
 
 
     }
 
-    getMatrix(deltaTime){
+    apply(deltaTime){
         var transform = mat4.create();
         mat4.identity(transform);
-        var x = this.vectors[this.index][0]*deltaTime;
-        var y = this.vectors[this.index][1]*deltaTime;
-        var z = this.vectors[this.index][2]*deltaTime;
+        var x = (this.vectors[this.index][0]/this.arrayDist[index])*this.speed*deltaTime;
+        var y = (this.vectors[this.index][1]/this.arrayDist[index])*this.speed*deltaTime;
+        var z = (this.vectors[this.index][2]/this.arrayDist[index])*this.speed*deltaTime;
         mat4.translate(transform,transform,[x,y,z]);
+        return transform;
     }
-
-    apply(){}
 }

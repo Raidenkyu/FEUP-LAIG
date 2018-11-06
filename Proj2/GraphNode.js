@@ -17,7 +17,7 @@ class GraphNode {
         this.yTex = null;
         this.transform = mat4.create();
         this.animationsID = [];
-        this.animationsIdex = 0;
+        this.animationsIndex = 0;
     }
 
     /**
@@ -43,4 +43,7 @@ class GraphNode {
         this.materialsIndex++;
         this.materialsIndex = this.materialsIndex % this.materialsID.length;
     }
+
+    
+
 }

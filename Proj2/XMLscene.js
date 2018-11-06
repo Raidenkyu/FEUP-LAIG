@@ -183,7 +183,25 @@ class XMLscene extends CGFscene {
 
     update(currTime){
         var deltaTime = currTime - this.lastTime;
+        this.updateAnimations(deltaTime/1000);
         this.lastTime = currTime;
+    }
+
+
+    updateAnimations(deltaTime){
+        for (var key in this.graph.graphNodes){
+            var node = this.graph.graphNodes[key];
+            if(node.animationsIndex < node.animationsID.length){
+                var animation = this.graph.animations[node.animationsID[node.animationsIndex]];
+                if(animation.terminated){
+                    node.animationsIndex++;
+                }
+                else{
+                    animation.update(deltaTime);
+                    mat4.multiply(node.transform,animation.apply(deltaTime),node.transform);
+                }
+            }
+        }
     }
 
 

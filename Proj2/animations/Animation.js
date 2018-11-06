@@ -9,6 +9,7 @@ class Animation {
     constructor(id, span) {
         this.animationId = id;
         this.time = span;
+        this.terminated = false;
     }
 
     update(deltaTime){}
