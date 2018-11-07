@@ -42,7 +42,7 @@ class LinearAnimation extends Animation {
         this.dist += deltaD;
         if(this.dist > this.arrayDist[this.index]){
             this.index++;
-            if(this.index >= this.controlPoints.length){
+            if(this.index >= this.vectors.length){
                 this.terminated = true;
             }
             this.dist = 0;
@@ -54,9 +54,9 @@ class LinearAnimation extends Animation {
     apply(deltaTime){
         var transform = mat4.create();
         mat4.identity(transform);
-        var x = (this.vectors[this.index][0]/this.arrayDist[index])*this.speed*deltaTime;
-        var y = (this.vectors[this.index][1]/this.arrayDist[index])*this.speed*deltaTime;
-        var z = (this.vectors[this.index][2]/this.arrayDist[index])*this.speed*deltaTime;
+        var x = (this.vectors[this.index][0]/this.arrayDist[this.index])*this.speed*deltaTime;
+        var y = (this.vectors[this.index][1]/this.arrayDist[this.index])*this.speed*deltaTime;
+        var z = (this.vectors[this.index][2]/this.arrayDist[this.index])*this.speed*deltaTime;
         mat4.translate(transform,transform,[x,y,z]);
         return transform;
     }

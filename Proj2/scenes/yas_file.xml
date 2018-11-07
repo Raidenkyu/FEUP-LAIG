@@ -158,6 +158,7 @@
 		<linear id="linear1" span="10.0">
 			<controlpoint xx="1.0" yy="1.0" zz="1.0"/>
 			<controlpoint xx="8.0" yy="8.0" zz="8.0"/>
+			<controlpoint xx="1.0" yy="1.0" zz="1.0"/>
 		</linear>
 	</animations>
 
