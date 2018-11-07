@@ -42,7 +42,7 @@ class LinearAnimation extends Animation {
         this.dist += deltaD;
         if(this.dist > this.arrayDist[this.index]){
             this.index++;
-            if(this.index >= this.controlPoints.length){
+            if(this.index >= this.vectors.length){
                 this.terminated = true;
             }
             this.dist = 0;
