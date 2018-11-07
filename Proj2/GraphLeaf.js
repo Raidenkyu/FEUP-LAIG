@@ -27,7 +27,25 @@ class GraphLeaf {
                 break;
             case 'o':
                 this.initializeTorus();
+                break;
+            case 'p':
+                //TODO
+                break;
+            case 'a':
+                //TODO
                 break;    
+            case 'v':
+                //TODO
+                break;
+            case 'n':
+                //TODO
+                break;
+            case 'g':
+                //TODO
+                break;       
+            case 'h':
+                //TODO
+                break;           
         }
 
     };

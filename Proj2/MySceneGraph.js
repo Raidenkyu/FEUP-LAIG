@@ -1290,6 +1290,173 @@ class MySceneGraph {
                 else
                     primArray.push(loops);
             }
+
+            if (primNode.nodeName == "plane") {
+                primArray.push('p');
+
+                // U
+                var u_value = this.reader.getFloat(primNode, 'npartsU');
+                if (!(u_value != null && !isNaN(u_value)))
+                    return "unable to parse npartsU from the primitive ID " + primId;
+                else
+                    primArray.push(u_value);
+
+                // V
+                var v_value = this.reader.getFloat(primNode, 'npartsV');
+                if (!(v_value != null && !isNaN(v_value)))
+                    return "unable to parse npartsV from the primitive ID " + primId;
+                else
+                    primArray.push(v_value);
+            }
+
+            if (primNode.nodeName == "patch") {
+                primArray.push('a');
+
+                // U points
+                var u_points = this.reader.getFloat(primNode, 'npointsU');
+                if (!(u_points != null && !isNaN(u_points)))
+                    return "unable to parse npointsU from the primitive ID " + primId;
+                else
+                    primArray.push(u_points);
+
+                // V points
+                var v_points = this.reader.getFloat(primNode, 'npointsV');
+                if (!(v_points != null && !isNaN(v_points)))
+                    return "unable to parse npointsV from the primitive ID " + primId;
+                else
+                    primArray.push(v_points);
+
+                // U parts
+                var u_value = this.reader.getFloat(primNode, 'npartsU');
+                if (!(u_value != null && !isNaN(u_value)))
+                    return "unable to parse npartsU from the primitive ID " + primId;
+                else
+                    primArray.push(u_value);
+
+                // V parts
+                var v_value = this.reader.getFloat(primNode, 'npartsV');
+                if (!(v_value != null && !isNaN(v_value)))
+                    return "unable to parse npartsV from the primitive ID " + primId;
+                else
+                    primArray.push(v_value);
+
+                //TODO: CONTROL POINTS    
+            }
+
+            if (primNode.nodeName == "vehicle") {
+                primArray.push('v');
+            }
+
+            if (primNode.nodeName == "cylinder2") {
+                primArray.push('n');
+
+                // base
+                var base = this.reader.getFloat(primNode, 'base');
+                if (!(base != null && !isNaN(base)))
+                    return "unable to parse base radius from the primitive ID " + primId;
+                else
+                    primArray.push(base);
+
+                // top
+                var top = this.reader.getFloat(primNode, 'top');
+                if (!(top != null && !isNaN(top)))
+                    return "unable to parse top radius from the primitive ID " + primId;
+                else
+                    primArray.push(top);
+
+                // height
+                var height = this.reader.getFloat(primNode, 'height');
+                if (!(height != null && !isNaN(height)))
+                    return "unable to parse the height from the primitive ID " + primId;
+                else
+                    primArray.push(height);
+
+                // slices
+                var slices = this.reader.getFloat(primNode, 'slices');
+                if (!(slices != null && !isNaN(slices)))
+                    return "unable to parse the number of slices from the primitive ID " + primId;
+                else
+                    primArray.push(slices);
+
+                // stacks
+                var stacks = this.reader.getFloat(primNode, 'stacks');
+                if (!(stacks != null && !isNaN(stacks)))
+                    return "unable to parse the number of stacks from the primitive ID " + primId;
+                else
+                    primArray.push(stacks);
+            }
+
+            if (primNode.nodeName == "terrain") {
+                primArray.push('g');
+
+                // idtexture
+                var idText = this.reader.getString(primNode, 'idtexture');
+                if (!(idText != null && !isNaN(idText)))
+                    return "unable to parse idtexture from the primitive ID " + primId;
+                else
+                    primArray.push(idText);
+
+                // idheightmap
+                var idHeightMap = this.reader.getString(primNode, 'idheightmap');
+                if (!(idHeightMap != null && !isNaN(idHeightMap)))
+                    return "unable to parse idheightmap from the primitive ID " + primId;
+                else
+                    primArray.push(idHeightMap);
+
+                // parts
+                var parts = this.reader.getFloat(primNode, 'parts');
+                if (!(parts != null && !isNaN(parts)))
+                    return "unable to parse the parts from the primitive ID " + primId;
+                else
+                    primArray.push(parts);
+
+                // heightscale
+                var heightscale = this.reader.getFloat(primNode, 'heightscale');
+                if (!(heightscale != null && !isNaN(heightscale)))
+                    return "unable to parse the heightscale from the primitive ID " + primId;
+                else
+                    primArray.push(heightscale);
+            }
+
+            if (primNode.nodeName == "water") {
+                primArray.push('h');
+
+                // idtexture
+                var idText = this.reader.getString(primNode, 'idtexture');
+                if (!(idText != null && !isNaN(idText)))
+                    return "unable to parse idtexture from the primitive ID " + primId;
+                else
+                    primArray.push(idText);
+
+                // idwavemap
+                var idwavemap = this.reader.getString(primNode, 'idwavemap');
+                if (!(idwavemap != null && !isNaN(idwavemap)))
+                    return "unable to parse idWaveMap from the primitive ID " + primId;
+                else
+                    primArray.push(idwavemap);
+
+                // parts
+                var parts = this.reader.getFloat(primNode, 'parts');
+                if (!(parts != null && !isNaN(parts)))
+                    return "unable to parse the parts from the primitive ID " + primId;
+                else
+                    primArray.push(parts);
+
+                // heightscale
+                var heightscale = this.reader.getFloat(primNode, 'heightscale');
+                if (!(heightscale != null && !isNaN(heightscale)))
+                    return "unable to parse the heightscale from the primitive ID " + primId;
+                else
+                    primArray.push(heightscale);
+
+                // texscale
+                var texscale = this.reader.getFloat(primNode, 'texscale');
+                if (!(texscale != null && !isNaN(texscale)))
+                    return "unable to parse the texscale from the primitive ID " + primId;
+                else
+                    primArray.push(texscale);
+            }
+
             var graphLeaf = new GraphLeaf(this.scene, primArray[0], primArray); //Index 0 is the char that identifies the type of primitive
             if (graphLeaf.primitive == null) {
                 this.log("Error: Primitive is null");

@@ -161,7 +161,7 @@
 			<controlpoint xx="8.0" yy="1.0" zz="8.0"/>
 			<controlpoint xx="8.0" yy="1.0" zz="1.0"/>
 		</linear>
-		<circular id="circular1" span="5.0" center="0.0 0.0 0.0" radius="10.0" startang="0.0" rotang="360.0"/>
+		<circular id="circular1" span="25.0" center="0.0 0.0 0.0" radius="10.0" startang="0.0" rotang="1800.0"/>
 	</animations>
 
 	<primitives> 
