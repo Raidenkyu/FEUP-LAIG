@@ -4,7 +4,7 @@
 	<views default="view_start" >
 
 		<perspective id="view_start" near="0.1" far="500" angle="22.92">
-			<from x="30.0" y="20.0" z="30.0" />
+			<from x="50.0" y="40.0" z="50.0" />
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
@@ -161,7 +161,7 @@
 			<controlpoint xx="8.0" yy="1.0" zz="8.0"/>
 			<controlpoint xx="8.0" yy="1.0" zz="1.0"/>
 		</linear>
-		<circular id="circular1" span="5.0" center="1.0 1.0 1.0" radius="7.0" startang="0.0" rotang="90.0"/>
+		<circular id="circular1" span="5.0" center="0.0 0.0 0.0" radius="10.0" startang="0.0" rotang="360.0"/>
 	</animations>
 
 	<primitives> 

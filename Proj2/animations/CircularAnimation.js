@@ -57,9 +57,9 @@ class CircularAnimation extends Animation {
         mat4.identity(transform);
 
         var deltaAng = this.startang + this.ang_speed * deltaTime;
-        mat4.translate(transform,transform,[this.x_center,this.y_center,this.z_center]);
+        //mat4.translate(transform,transform,[this.x_center,this.y_center,this.z_center]);
         mat4.rotate(transform, transform, deltaAng, [0, 1, 0]);
-        mat4.translate(transform, transform, [this.radius, 0, 0]);
+        //mat4.translate(transform, transform, [this.radius, 0, 0]);
         
         return transform;
     }
