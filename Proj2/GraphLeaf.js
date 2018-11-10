@@ -32,13 +32,13 @@ class GraphLeaf {
                 this.initializePlane();
                 break;
             case 'a':
-                //TODO
+                this.initializePatch();
                 break;    
             case 'v':
                 //TODO
                 break;
             case 'n':
-                //TODO
+                this.initializeCylinder2();
                 break;
             case 'g':
                 //TODO
@@ -114,6 +114,27 @@ class GraphLeaf {
         }
         else console.log("Invalid number of arguments for a Plane");
     }
+
+    /**
+     * Initializes a patch primitive.
+     */
+    initializePatch(){
+        if (this.args_array.length == 6){
+            this.primitive = new MyPatch(this.scene, this.args_array[1], this.args_array[2], this.args_array[3], this.args_array[4], this.args_array[5]);
+        }
+        else console.log("Invalid number of arguments for a Patch");
+    }
+
+    /**
+     * Initializes a cylinder2 primitive.
+     */
+    initializeCylinder2(){
+        if (this.args_array.length == 6){
+            this.primitive = new MyCylinder2(this.scene, this.args_array[1], this.args_array[2], this.args_array[3], 
+                this.args_array[4], this.args_array[5]);
+        }
+        else console.log("Invalid number of arguments for a Cylinder2");
+    };
 
 }
 

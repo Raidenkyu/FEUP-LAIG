@@ -196,6 +196,18 @@
 			<plane npartsU="5.0" npartsV="5.0" />
 		</primitive >
 
+		<primitive id="nurbs_patch_5x5">
+			<patch npointsU="5.0" npointsV="5.0" npartsU="5.0" npartsV="5.0" >
+				<!--<controlpoint xx="0.0", yy="0.0", zz="0.0" />
+				 TODO -->
+			</patch>
+		</primitive >
+
+		<primitive id="uni_cylinder2">
+			<cylinder2 base="1.0" top="1.0" height="1.0" slices="12.0" stacks="2.0" />
+		</primitive >
+		
+
 
 	</primitives >
 
@@ -226,7 +238,7 @@
 				<componentref id="toy_pyramid" />
 				<componentref id="laptop" />
 				<componentref id="stand_cone" />
-				<componentref id="nurbs_test" />
+				<componentref id="prim_test" />
 			</children>
 		</component>
 
@@ -1234,9 +1246,9 @@
 			</children>
 		</component> 	
 
-		<!--		 	NURBS Test				-->
+		<!--		 	 Test				-->
 
-		<component id="nurbs_test">
+		<component id="prim_test">
 			<transformation>
 				<translate x="0.0" y="5.0" z="0.0" />
 			</transformation>
@@ -1249,7 +1261,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="nurbs_5x5"/>
+				<primitiveref id="uni_cylinder2"/>
 			</children>
 		</component> 	
 

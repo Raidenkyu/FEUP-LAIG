@@ -9,7 +9,6 @@ class CircularAnimation extends Animation {
      */
     constructor(animationId, time, center,radius,startang,rotang) {
         super(animationId,time);
-        console.log(center);
         this.x_center = center[0];
         this.y_center = center[1];
         this.z_center = center[2];
