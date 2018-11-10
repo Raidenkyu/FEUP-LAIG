@@ -192,6 +192,10 @@
 			<cylinder base="1.5" top="1.0" height="1.0" slices="12.0" stacks="2.0" />
 		</primitive >
 
+		<primitive id="nurbs_5x5">
+			<plane npartsU="5.0" npartsV="5.0" />
+		</primitive >
+
 
 	</primitives >
 
@@ -222,6 +226,7 @@
 				<componentref id="toy_pyramid" />
 				<componentref id="laptop" />
 				<componentref id="stand_cone" />
+				<componentref id="nurbs_test" />
 			</children>
 		</component>
 
@@ -1229,6 +1234,24 @@
 			</children>
 		</component> 	
 
+		<!--		 	NURBS Test				-->
+
+		<component id="nurbs_test">
+			<transformation>
+				<translate x="0.0" y="5.0" z="0.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_red" />
+					<material id="mat_green" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="nurbs_5x5"/>
+			</children>
+		</component> 	
 
 	</components>
 	

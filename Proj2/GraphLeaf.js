@@ -29,7 +29,7 @@ class GraphLeaf {
                 this.initializeTorus();
                 break;
             case 'p':
-                //TODO
+                this.initializePlane();
                 break;
             case 'a':
                 //TODO
@@ -103,6 +103,16 @@ class GraphLeaf {
                 this.args_array[4]);
         }
         else console.log("Invalid number of arguments for a Torus");
+    }
+
+    /**
+     * Initializes a plane primitive.
+     */
+    initializePlane(){
+        if (this.args_array.length == 3){
+            this.primitive = new MyPlane(this.scene, this.args_array[1], this.args_array[2]);
+        }
+        else console.log("Invalid number of arguments for a Plane");
     }
 
 }
