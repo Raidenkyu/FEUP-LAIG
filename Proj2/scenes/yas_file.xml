@@ -86,6 +86,7 @@
 		<texture id="bricks" file="./scenes/images/brick.jpg" />
 		<texture id="keyboard" file="./scenes/images/keyboard.png" />
 		<texture id="screen" file="./scenes/images/screen_windows.jpg" />
+		<texture id="grid" file="./scenes/images/grid.jpg" />
 
 	</textures>
 		
@@ -202,7 +203,23 @@
 				<controlpoint xx="0.5" yy="0.0" zz="-0.5" />
 				<controlpoint xx="-0.5" yy="0.0" zz="0.5" />
 				<controlpoint xx="0.5" yy="0.0" zz="0.5" />
-				<!-- TODO -->
+			</patch>
+		</primitive >
+
+		<primitive id="nurbs_patch_2x3">
+			<patch npointsU="2.0" npointsV="3.0" npartsU="20.0" npartsV="20.0" >
+				<controlpoint xx="-2.0" yy="-2.0" zz="1.0" />
+				<controlpoint xx="-2.0" yy="-1.0" zz="-2.0" />
+				<controlpoint xx="-2.0" yy="1.0" zz="5.0" />
+				<controlpoint xx="-2.0" yy="2.0" zz="-1.0" />
+				<controlpoint xx="0.0" yy="-2.0" zz="0.0" />
+				<controlpoint xx="0.0" yy="-1.0" zz="-1.0" />
+				<controlpoint xx="0.0" yy="1.0" zz="1.5" />
+				<controlpoint xx="0.0" yy="2.0" zz="0.0" />
+				<controlpoint xx="2.0" yy="-2.0" zz="-1.0" />
+				<controlpoint xx="2.0" yy="-1.0" zz="2.0" />
+				<controlpoint xx="2.0" yy="1.0" zz="-5.0" />
+				<controlpoint xx="2.0" yy="2.0" zz="1.0" />				
 			</patch>
 		</primitive >
 
@@ -1253,18 +1270,19 @@
 
 		<component id="prim_test">
 			<transformation>
-				<translate x="0.0" y="5.0" z="0.0" />
+				<translate x="0.0" y="6.0" z="0.0" />
+				<scale x="2.0" y="1.0" z="2.0" />
+				<rotate axis="x" angle="-90" />
 			</transformation>
 
 			<materials>
-					<material id="mat_red" />
-					<material id="mat_green" />
+					<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="grid" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="nurbs_patch_1x1"/>
+				<primitiveref id="nurbs_patch_2x3"/>
 			</children>
 		</component> 	
 
