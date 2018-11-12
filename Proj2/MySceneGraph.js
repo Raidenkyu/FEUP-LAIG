@@ -1339,8 +1339,29 @@ class MySceneGraph {
                     return "unable to parse npartsV from the primitive ID " + primId;
                 else
                     primArray.push(v_value);
+                
+                var grandchildren = primNode.children;
+                //console.log(grandchildren);
+                if(grandchildren.length != (u_points+1)*(v_points+1)){
+                    return "Invalid amount of controlpoints in the primitive ID " + primId;
+                }
+                else{
+                    var controlVertexes = new Array(u_points+1);
 
-                //TODO: CONTROL POINTS    
+                    for(var u = 0; u < (u_points+1);u++){
+                        controlVertexes[u] = new Array(v_points+1);
+                        for(var v = 0; v < (v_points+1);v++){
+                            //console.log(u*(v_points+1)+v);
+                            var x = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'xx');
+                            var y = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'yy');
+                            var z = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'zz');
+                            controlVertexes[u][v] = [x,y,z,1];
+                        }
+                    }
+                    //console.log(controlVertexes);
+                    primArray.push(controlVertexes);
+                }
+
             }
 
             if (primNode.nodeName == "vehicle") {

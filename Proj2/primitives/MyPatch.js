@@ -8,8 +8,7 @@ class MyPatch extends CGFobject{
 		super(scene);
 							
 		var nurbsSurface = new CGFnurbsSurface(npointsU, npointsV, controlvertexes);
-		this.obj = new CGFnurbsObject(scene, degree1, degree2, nurbsSurface); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
-							
+		this.obj = new CGFnurbsObject(scene, degree1, degree2, nurbsSurface); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)					
 	}
 	
 	display(){

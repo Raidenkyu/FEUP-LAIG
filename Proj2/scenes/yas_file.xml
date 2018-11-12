@@ -196,10 +196,13 @@
 			<plane npartsU="5.0" npartsV="5.0" />
 		</primitive >
 
-		<primitive id="nurbs_patch_5x5">
-			<patch npointsU="5.0" npointsV="5.0" npartsU="5.0" npartsV="5.0" >
-				<!--<controlpoint xx="0.0", yy="0.0", zz="0.0" />
-				 TODO -->
+		<primitive id="nurbs_patch_1x1">
+			<patch npointsU="1.0" npointsV="1.0" npartsU="5.0" npartsV="5.0" >
+				<controlpoint xx="-0.5" yy="0.0" zz="-0.5" />
+				<controlpoint xx="0.5" yy="0.0" zz="-0.5" />
+				<controlpoint xx="-0.5" yy="0.0" zz="0.5" />
+				<controlpoint xx="0.5" yy="0.0" zz="0.5" />
+				<!-- TODO -->
 			</patch>
 		</primitive >
 
@@ -1261,7 +1264,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="uni_cylinder2"/>
+				<primitiveref id="nurbs_patch_1x1"/>
 			</children>
 		</component> 	
 
