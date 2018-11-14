@@ -16,7 +16,7 @@ class CircularAnimation extends Animation {
         this.startang = startang * DEGREE_TO_RAD;
         this.rotang = rotang * DEGREE_TO_RAD;
         this.initAnimation();
-        
+        this.temp = true;
     }
 
     initAnimation(){
@@ -30,6 +30,8 @@ class CircularAnimation extends Animation {
         }
 
         this.elapsedTime = 0; //maybe temporary
+        this.elapsedAngle = 0;
+        this.deltaAng = 0;
 
     }
 
@@ -39,8 +41,11 @@ class CircularAnimation extends Animation {
     update(deltaTime){
         
         //maybe temporary, use dist instead of time?
-        this.elapsedTime += deltaTime;
-        if(this.elapsedTime >= this.time){
+
+        this.elapsedAngle += this.ang_speed * deltaTime;
+
+        //this.elapsedTime += deltaTime;
+        if(this.elapsedAngle > this.rotang){
             this.terminated = true;
         }
 
@@ -55,11 +60,15 @@ class CircularAnimation extends Animation {
         var transform = mat4.create();
         mat4.identity(transform);
 
-        var deltaAng = this.startang + this.ang_speed * deltaTime;
-        //mat4.translate(transform,transform,[this.x_center,this.y_center,this.z_center]);
-        mat4.rotate(transform, transform, deltaAng, [0, 1, 0]);
-        //mat4.translate(transform, transform, [this.radius, 0, 0]);
+
+        mat4.rotate(transform, transform, this.elapsedAng, [0, 1, 0]);
+        mat4.translate(transform,transform,[-this.x_center-this.radius*Math.cos(this.elapsedAngle),
+                                            -this.y_center,
+                                            -this.z_center-this.radius*Math.sin(this.elapsedAngle)]);
+
         
+        
+        //console.log(transform);
         return transform;
     }
 }
