@@ -32,6 +32,7 @@ class LinearAnimation extends Animation {
         this.totalD = totalD;
         this.speed = this.totalD/this.time;
         this.rotationAngle = 0;
+        this.elapsedTime = 0;
 
     }
 

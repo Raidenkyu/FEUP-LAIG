@@ -162,7 +162,7 @@
 			<controlpoint xx="8.0" yy="1.0" zz="8.0"/>
 			<controlpoint xx="8.0" yy="1.0" zz="1.0"/>
 		</linear>
-		<circular id="circular1" span="25.0" center="0.0 0.0 0.0" radius="10.0" startang="0.0" rotang="1800.0"/>
+		<circular id="circular1" span="10.0" center="3.0 0.0 3.0" radius="1.0" startang="0.0" rotang="360.0"/>
 	</animations>
 
 	<primitives> 
@@ -224,7 +224,7 @@
 		</primitive >
 
 		<primitive id="uni_cylinder2">
-			<cylinder2 base="1.0" top="1.0" height="1.0" slices="12.0" stacks="2.0" />
+			<cylinder2 base="1.0" top="1.0" height="1.0" slices="12.0" stacks="12.0" />
 		</primitive >
 		
 
@@ -237,6 +237,10 @@
 			<transformation>
 				<translate x="0.0" y="0.0" z="0.0" />
 			</transformation>
+
+			<animations>
+				<!--<animationref id="circular1" />-->
+			</animations>
 
 			<materials>
 					<material id="mat_white" />
@@ -1271,8 +1275,8 @@
 		<component id="prim_test">
 			<transformation>
 				<translate x="0.0" y="6.0" z="0.0" />
-				<scale x="2.0" y="1.0" z="2.0" />
-				<rotate axis="x" angle="-90" />
+				<scale x="1.0" y="1.0" z="4.0" />
+				<!--<rotate axis="x" angle="-90" />-->
 			</transformation>
 
 			<materials>
@@ -1282,7 +1286,7 @@
 			<texture id="grid" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="nurbs_patch_2x3"/>
+				<primitiveref id="uni_cylinder2"/>
 			</children>
 		</component> 	
 

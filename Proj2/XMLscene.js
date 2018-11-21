@@ -196,8 +196,8 @@ class XMLscene extends CGFscene {
                 if(animation.terminated){
                     node.animationsIndex++;
                 }
-                else{
-                    mat4.multiply(node.transform,animation.apply(deltaTime),node.transform);
+                else{               //TODO \/ 
+                    mat4.multiply(node.transform,node.transform,animation.apply(deltaTime));
                     animation.update(deltaTime);
                 }
             }
