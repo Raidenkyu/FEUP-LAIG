@@ -10,7 +10,7 @@ class MyTerrain extends CGFobject{
         this.scene = scene;
         this.idTexture = idTexture;
 
-        this.testShader = new CGFshader(scene.gl, "shaders/flat.vert", "shaders/flat.frag");
+        this.testShader = new CGFshader(scene.gl, "shaders/texture1.vert", "shaders/texture1.frag");
 
 		var controlvertexes = [	// U = 0
 								[ // V = 0..1;

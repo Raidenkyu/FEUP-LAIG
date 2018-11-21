@@ -224,7 +224,7 @@
 		</primitive >
 
 		<primitive id="uni_cylinder2">
-			<cylinder2 base="2.0" top="1.0" height="1.0" slices="24.0" stacks="2.0" />
+			<cylinder2 base="1.0" top="1.0" height="1.0" slices="24.0" stacks="2.0" />
 		</primitive >
 
 		
@@ -1290,9 +1290,28 @@
 			<texture id="grid" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="uni_cylinder2"/>
+				<primitiveref id="terrainTest"/>
 			</children>
 		</component> 	
+
+<!--
+			<component id="prim_test2">
+			<transformation>
+				<translate x="0.0" y="6.0" z="0.0" />
+				<scale x="1.0" y="1.0" z="3.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="grid" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="uni_cylinder"/>
+			</children>
+		</component> 	-->
+		
 
 	</components>
 	
