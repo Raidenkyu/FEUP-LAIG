@@ -910,8 +910,8 @@
 			</transformation>
 
 			<animations>
-				<!--<animationref id="linear1" />-->
-				<animationref id="circular1" />
+				<animationref id="linear1" />
+				<!--<animationref id="circular1" />-->
 			</animations>
 
 			<materials>

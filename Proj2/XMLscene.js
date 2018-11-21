@@ -191,8 +191,8 @@ class XMLscene extends CGFscene {
     updateAnimations(deltaTime){
         for (var key in this.graph.graphNodes){
             var node = this.graph.graphNodes[key];
-            if(node.animationsIndex < node.animationsID.length){
-                var animation = this.graph.animations[node.animationsID[node.animationsIndex]];
+            if(node.animationsIndex < node.animations.length){
+                var animation = node.animations[node.animationsIndex];
                 if(animation.terminated){
                     node.animationsIndex++;
                 }
