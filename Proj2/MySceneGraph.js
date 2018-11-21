@@ -1732,6 +1732,7 @@ class MySceneGraph {
         mat.setTexture(null);
 
         this.scene.multMatrix(node.transform);
+        this.scene.multMatrix(node.animMatrix);
 
 
 
