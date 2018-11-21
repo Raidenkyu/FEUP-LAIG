@@ -1584,7 +1584,7 @@ class MySceneGraph {
                         var animation = new LinearAnimation(animationArray[1],animationArray[2],animationArray[3]);
                         graphNode.animations.push(animation);
                     }
-                    else if(animationArray[0] == 'l'){
+                    else if(animationArray[0] == 'c'){
                         var animation = new CircularAnimation(animationArray[1],animationArray[2],animationArray[3],animationArray[4],animationArray[5],animationArray[6]);
                         graphNode.animations.push(animation);
                     }
