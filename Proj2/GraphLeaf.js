@@ -41,7 +41,7 @@ class GraphLeaf {
                 this.initializeCylinder2();
                 break;
             case 'g':
-                //TODO
+                this.initializeTerrain();
                 break;       
             case 'h':
                 //TODO
@@ -135,6 +135,19 @@ class GraphLeaf {
         }
         else console.log("Invalid number of arguments for a Cylinder2");
     };
+
+
+    /**
+     * Initializes a terrain primitive.
+     */
+    initializeTerrain(){
+        if (this.args_array.length == 5){
+            this.primitive = new MyTerrain(this.scene, this.args_array[1], this.args_array[2], this.args_array[3], 
+                this.args_array[4]);
+        }
+        else console.log("Invalid number of arguments for a Terrain");
+    };
+
 
 }
 

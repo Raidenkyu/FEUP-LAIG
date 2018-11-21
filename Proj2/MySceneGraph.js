@@ -1412,14 +1412,15 @@ class MySceneGraph {
 
                 // idtexture
                 var idText = this.reader.getString(primNode, 'idtexture');
-                if (!(idText != null && !isNaN(idText)))
+                console.log(idText);
+                if (idText == null)
                     return "unable to parse idtexture from the primitive ID " + primId;
                 else
                     primArray.push(idText);
 
                 // idheightmap
                 var idHeightMap = this.reader.getString(primNode, 'idheightmap');
-                if (!(idHeightMap != null && !isNaN(idHeightMap)))
+                if (idHeightMap == null)
                     return "unable to parse idheightmap from the primitive ID " + primId;
                 else
                     primArray.push(idHeightMap);
@@ -1433,7 +1434,7 @@ class MySceneGraph {
 
                 // heightscale
                 var heightscale = this.reader.getFloat(primNode, 'heightscale');
-                if (!(heightscale != null && !isNaN(heightscale)))
+                if (heightscale == null)
                     return "unable to parse the heightscale from the primitive ID " + primId;
                 else
                     primArray.push(heightscale);
