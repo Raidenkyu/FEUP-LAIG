@@ -1043,7 +1043,7 @@ class MySceneGraph {
                     this.onXMLMinorError("Number of controlpoints must be higher than 1");
                     continue;
                 }
-                animation = new LinearAnimation(animId,time,controlpoints);
+                animation = ['l',animId,time,controlpoints];
 
             }
             else if(children[i].nodeName == "circular"){
@@ -1052,7 +1052,7 @@ class MySceneGraph {
                 var radius = this.reader.getFloat(children[i],"radius");
                 var startang = this.reader.getFloat(children[i],"startang");
                 var rotang = this.reader.getFloat(children[i],"rotang");
-                animation = new CircularAnimation(animId,time,centerCoords,radius,startang,rotang);
+                animation = ['c',animId,time,centerCoords,radius,startang,rotang];
             }
             else{
                 this.onXMLMinorError("Invalid Animation tag: <" + children[i].nodeName + ">");
@@ -1579,7 +1579,15 @@ class MySceneGraph {
                 }
                 var animId = this.reader.getString(animationsChildren[j],'id');
                 if(this.animations[animId] != null){
-                    graphNode.animationsID.push(animId);
+                    var animationArray = this.animations[animId];
+                    if(animationArray[0] == 'l'){
+                        var animation = new LinearAnimation(animationArray[1],animationArray[2],animationArray[3]);
+                        graphNode.animations.push(animation);
+                    }
+                    else if(animationArray[0] == 'l'){
+                        var animation = new CircularAnimation(animationArray[1],animationArray[2],animationArray[3],animationArray[4],animationArray[5],animationArray[6]);
+                        graphNode.animations.push(animation);
+                    }
                 }
                 else {
                     this.onXMLMinorError("No animation for ID : " + animId);

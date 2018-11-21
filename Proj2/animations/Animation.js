@@ -14,6 +14,6 @@ class Animation {
 
     update(deltaTime){}
 
-    apply(){}
+    apply(deltaTime){}
 
 }

@@ -31,6 +31,7 @@ class LinearAnimation extends Animation {
         }
         this.totalD = totalD;
         this.speed = this.totalD/this.time;
+        this.rotationAngle = 0;
         this.elapsedTime = 0;
 
     }
@@ -45,8 +46,10 @@ class LinearAnimation extends Animation {
             this.index++;
             if(this.index >= this.vectors.length){
                 this.terminated = true;
+                return;
             }
             this.dist = 0;
+            this.rotationAngle = vec3.angle(this.vectors[this.index],[0,1,0]);
         }
 
 
