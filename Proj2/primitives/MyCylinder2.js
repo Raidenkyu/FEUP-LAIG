@@ -4,7 +4,65 @@
  */
 
 class MyCylinder2 extends CGFobject{
-    constructor(scene, base_rad, top_rad, height, slices, stacks) {
+    
+	constructor(scene, base_rad, top_rad, height, slices, stacks) {
+        super(scene);
+        
+        let controlvertexes1 = [
+            // U = 0
+            [ // V = 0..5;
+                [-base_rad, 0, 0, 1 ],
+                [-base_rad, base_rad, 0, 1],
+                [0, base_rad, 0, 1 ],
+                [base_rad, base_rad, 0, 1],
+                [base_rad, 0, 0, 1 ]
+            ],
+            // U = 1
+            [ // V = 0..5
+                [-top_rad, 0, height, 1 ],
+                [-top_rad, top_rad, height, 1],
+                [0, top_rad, height, 1 ],
+                [top_rad, top_rad, height, 1],
+                [top_rad, 0, height, 1 ]						 
+            ]
+        ];
+
+        let controlvertexes2 = [
+            // U = 0
+            [ // V = 0..5;
+                [base_rad, 0, 0, 1 ],
+                [base_rad, -base_rad, 0, 1],
+                [0, -base_rad, 0, 1 ],
+                [-base_rad, -base_rad, 0, 1],
+                [-base_rad, 0, 0, 1 ]
+            ],
+            // U = 1
+            [ // V = 0..5
+                [top_rad, 0, height, 1 ],
+                [top_rad, -top_rad, height, 1],
+                [0, -top_rad, height, 1 ],
+                [-top_rad, -top_rad, height, 1],
+                [-top_rad, 0, height, 1 ]						 
+            ]
+        ];
+							
+		var nurbsSurface1 = new CGFnurbsSurface(1, 4, controlvertexes1);
+        this.side1 = new CGFnurbsObject(scene, slices, stacks, nurbsSurface1); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)			
+        var nurbsSurface2 = new CGFnurbsSurface(1, 4, controlvertexes2);
+		this.side2 = new CGFnurbsObject(scene, slices, stacks, nurbsSurface2); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)							
+	}
+	
+	display(){
+        this.side1.display();
+        this.side2.display();
+	}
+
+	applyTextures(){
+		//Stub, not used
+	}
+
+
+    /*constructor(scene, base_rad, top_rad, height, slices, stacks) {
         super(scene);
         this.base_rad = base_rad;
         this.top_rad = top_rad;
@@ -64,6 +122,8 @@ class MyCylinder2 extends CGFobject{
 
         this.updateTexCoordsGLBuffers();
     }
+
+*/
 
 }
 
