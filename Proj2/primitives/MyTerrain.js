@@ -11,6 +11,7 @@ class MyTerrain extends CGFobject{
         this.idTexture = idTexture;
 
         this.testShader = new CGFshader(scene.gl, "shaders/texture1.vert", "shaders/texture1.frag");
+		this.testShader.setUniformsValues({uSampler2: 1});
 
 		var controlvertexes = [	// U = 0
 								[ // V = 0..1;
@@ -34,18 +35,12 @@ class MyTerrain extends CGFobject{
 
         this.scene.setActiveShader(this.testShader);
     
-        //this.textures[this.idTexture].bind(1);
+        this.scene.graph.textures[this.idTexture].bind(1);
     
-        /*
-        this.scene.translate(0,-6,0);
-        this.scene.scale(0.5,0.5,0.5);
-        this.scene.rotate(-Math.PI/2, 1, 0, 0);	
-        */
-
-        
+       
         this.obj.display();
     
-        this.scene.setActiveShader(this.scene.defaultShader);
+		this.scene.setActiveShader(this.scene.defaultShader);
 	}
 
 	applyTextures(){

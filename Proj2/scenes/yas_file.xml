@@ -157,10 +157,10 @@
 
 	<animations>
 		<linear id="linear1" span="10.0">
-			<controlpoint xx="12.0" yy="1.0" zz="3.0"/>
-			<controlpoint xx="20.0" yy="8.0" zz="10.0"/>
-			<controlpoint xx="20.0" yy="1.0" zz="10.0"/>
-			<controlpoint xx="20.0" yy="1.0" zz="3.0"/>
+			<controlpoint xx="12.0" yy="0.0" zz="3.0"/>
+			<controlpoint xx="18.0" yy="8.0" zz="8.0"/>
+			<controlpoint xx="18.0" yy="1.0" zz="8.0"/>
+			<controlpoint xx="18.0" yy="1.0" zz="3.0"/>
 		</linear>
 		<circular id="circular1" span="10.0" center="3.0 0.0 3.0" radius="1.0" startang="0.0" rotang="360.0"/>
 	</animations>
@@ -918,7 +918,7 @@
 			</transformation>
 
 			<animations>
-				<!--<animationref id="linear1" />-->
+				<animationref id="linear1" />
 				<animationref id="circular1" />
 			</animations>
 
