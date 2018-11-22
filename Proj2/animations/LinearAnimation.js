@@ -30,9 +30,11 @@ class LinearAnimation extends Animation {
             totalD += aux;                
         }
         this.totalD = totalD;
+        this.currentDistance = 0;
         this.speed = this.totalD/this.time;
         this.rotationAngle = 0;
         this.elapsedTime = 0;
+        this.currentDistance = 0;
 
     }
 
@@ -40,28 +42,38 @@ class LinearAnimation extends Animation {
      * updates the actual position of the animation
      */
     update(deltaTime){
-        var deltaD = (this.totalD * deltaTime)/this.time;
-        this.dist += deltaD;
-        if(this.dist > this.arrayDist[this.index]){
-            this.index++;
-            if(this.index >= this.vectors.length){
-                this.terminated = true;
-                return;
-            }
-            this.dist = 0;
-            this.rotationAngle = vec3.angle(this.vectors[this.index],[0,1,0]);
-        }
 
+        this.elapsedTime += deltaTime;
+        this.currentDistance = this.speed * this.elapsedTime;
+        var i = 0;
+        while(i < this.arrayDist.length && this.currentDistance > this.arrayDist[i]){
+            this.currentDistance -= this.arrayDist[i];
+            i++
+        }
+        this.index = i % this.vectors.length;
+        let vectorLength = vec3.length(this.vectors[this.index],[0,0,0]);
+        let cosAngle = vec3.dot(this.vectors[this.index], [0,0,1])/vectorLength;
+        this.rotationAngle = Math.acos(cosAngle);
+        console.log(this.elapsedTime);
+        console.log(this.time);
+        if(this.elapsedTime >= this.time){
+            this.terminated = true;
+            
+            return;
+        }
 
     }
 
     apply(deltaTime){
         var transform = mat4.create();
         mat4.identity(transform);
-        var x = (this.vectors[this.index][0]/this.arrayDist[this.index])*this.speed*deltaTime;
-        var y = (this.vectors[this.index][1]/this.arrayDist[this.index])*this.speed*deltaTime;
-        var z = (this.vectors[this.index][2]/this.arrayDist[this.index])*this.speed*deltaTime;
+        var relativeDistance = this.currentDistance/this.arrayDist[this.index];
+        var x = (this.controlPoints[this.index][0]-this.controlPoints[0][0]) + this.vectors[this.index][0]*relativeDistance;
+        var y = (this.controlPoints[this.index][1]-this.controlPoints[0][1]) + this.vectors[this.index][1]*relativeDistance;
+        var z = (this.controlPoints[this.index][2]-this.controlPoints[0][2]) + this.vectors[this.index][2]*relativeDistance;
         mat4.translate(transform,transform,[x,y,z]);
+        mat4.rotate(transform,transform,this.rotationAngle,[0,1,0]);
         return transform;
+
     }
 }

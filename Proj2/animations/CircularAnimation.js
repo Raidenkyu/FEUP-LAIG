@@ -16,22 +16,19 @@ class CircularAnimation extends Animation {
         this.startang = startang * DEGREE_TO_RAD;
         this.rotang = rotang * DEGREE_TO_RAD;
         this.initAnimation();
-        this.temp = true;
     }
 
     initAnimation(){
-        this.dist = Math.abs(this.rotang) * this.radius;
-        this.speed = this.dist/this.time;
+    
         if(this.rotang > 0){
-            this.ang_speed = this.speed / this.radius;
+            this.direction = 1;
         }
         else{
-            this.ang_speed = -this.speed / this.radius;
+            this.direction = -1;
         }
 
-        this.elapsedTime = 0; //maybe temporary
+        this.elapsedTime = 0; 
         this.elapsedAngle = 0;
-        this.deltaAng = 0;
 
     }
 
@@ -39,36 +36,27 @@ class CircularAnimation extends Animation {
      * updates the actual position of the animation
      */
     update(deltaTime){
-        
-        //maybe temporary, use dist instead of time?
+        this.elapsedTime += deltaTime;
+        this.elapsedAngle = this.direction*(this.elapsedTime/this.time)*this.rotang;
+        this.elapsedAngle += this.startang;
 
-        this.elapsedAngle += this.ang_speed * deltaTime;
-
-        //this.elapsedTime += deltaTime;
-        if(this.elapsedAngle > this.rotang){
+        if(this.elapsedAngle >= this.rotang){
             this.terminated = true;
         }
 
     }
 
-    getMatrix(deltaTime){
-        console.log("Lonely");
-    }
 
     apply(deltaTime){
-       
+       console.log(this.elapsedAngle);
         var transform = mat4.create();
         mat4.identity(transform);
+        mat4.translate(transform, transform, [this.x_center,this.y_center,this.z_center]);
+        mat4.rotate(transform, transform, this.elapsedAngle, [0, 1, 0]);
 
-
-        mat4.rotate(transform, transform, this.elapsedAng, [0, 1, 0]);
-        mat4.translate(transform,transform,[-this.x_center-this.radius*Math.cos(this.elapsedAngle),
-                                            -this.y_center,
-                                            -this.z_center-this.radius*Math.sin(this.elapsedAngle)]);
+        mat4.translate(transform,transform,[this.radius,0,0]);
 
         
-        
-        //console.log(transform);
         return transform;
     }
 }
