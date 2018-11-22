@@ -157,10 +157,10 @@
 
 	<animations>
 		<linear id="linear1" span="10.0">
-			<controlpoint xx="12.0" yy="1.0" zz="3.0"/>
-			<controlpoint xx="20.0" yy="8.0" zz="10.0"/>
-			<controlpoint xx="20.0" yy="1.0" zz="10.0"/>
-			<controlpoint xx="20.0" yy="1.0" zz="3.0"/>
+			<controlpoint xx="12.0" yy="0.0" zz="3.0"/>
+			<controlpoint xx="18.0" yy="8.0" zz="8.0"/>
+			<controlpoint xx="18.0" yy="1.0" zz="8.0"/>
+			<controlpoint xx="18.0" yy="1.0" zz="3.0"/>
 		</linear>
 		<circular id="circular1" span="10.0" center="3.0 0.0 3.0" radius="1.0" startang="0.0" rotang="360.0"/>
 	</animations>
@@ -1279,8 +1279,26 @@
 		<component id="prim_test">
 			<transformation>
 				<translate x="0.0" y="6.0" z="0.0" />
-				<scale x="1.0" y="1.0" z="4.0" />
+				<scale x="2.0" y="2.0" z="2.0" />
 				<!--<rotate axis="x" angle="-90" />-->
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="terrainTest"/>
+			</children>
+		</component> 	
+
+<!--
+			<component id="prim_test2">
+			<transformation>
+				<translate x="0.0" y="6.0" z="0.0" />
+				<scale x="1.0" y="1.0" z="3.0" />
 			</transformation>
 
 			<materials>
@@ -1290,9 +1308,10 @@
 			<texture id="grid" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="uni_cylinder2"/>
+				<primitiveref id="uni_cylinder"/>
 			</children>
-		</component> 	
+		</component> 	-->
+		
 
 	</components>
 	
