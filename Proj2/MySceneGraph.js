@@ -1445,14 +1445,14 @@ class MySceneGraph {
 
                 // idtexture
                 var idText = this.reader.getString(primNode, 'idtexture');
-                if (!(idText != null && !isNaN(idText)))
+                if (idText == null)
                     return "unable to parse idtexture from the primitive ID " + primId;
                 else
                     primArray.push(idText);
 
                 // idwavemap
                 var idwavemap = this.reader.getString(primNode, 'idwavemap');
-                if (!(idwavemap != null && !isNaN(idwavemap)))
+                if (idwavemap == null)
                     return "unable to parse idWaveMap from the primitive ID " + primId;
                 else
                     primArray.push(idwavemap);

@@ -44,7 +44,7 @@ class GraphLeaf {
                 this.initializeTerrain();
                 break;       
             case 'h':
-                //TODO
+                this.initializeWater();
                 break;           
         }
 
@@ -157,6 +157,18 @@ class GraphLeaf {
         }
         else console.log("Invalid number of arguments for a Terrain");
     };
+
+    /**
+     * Initializes a water primitive.
+     */
+    initializeWater(){
+        if (this.args_array.length == 6){
+            this.primitive = new MyWater(this.scene, this.args_array[1], this.args_array[2], this.args_array[3], 
+                this.args_array[4]);
+        }
+        else console.log("Invalid number of arguments for a Water");
+    };
+
 
 }
 

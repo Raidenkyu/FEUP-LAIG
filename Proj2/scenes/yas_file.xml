@@ -87,6 +87,10 @@
 		<texture id="keyboard" file="./scenes/images/keyboard.png" />
 		<texture id="screen" file="./scenes/images/screen_windows.jpg" />
 		<texture id="grid" file="./scenes/images/grid.jpg" />
+		<texture id="waterText" file="./scenes/images/water1.jpg" />
+		<texture id="waterHeight" file="./scenes/images/water1hm.jpg" />
+		<texture id="terrainText" file="./scenes/images/terrain.jpg" />
+		<texture id="terrainHeight" file="./scenes/images/terrainhm.png" />
 		<texture id="spaceship" file="./scenes/images/spaceship.jpg" />
 
 	</textures>
@@ -230,8 +234,13 @@
 
 		
 		<primitive id="terrainTest">
-			<terrain idtexture="grid" idheightmap="grid" parts="5.0" heightscale="2.0" />
+			<terrain idtexture="terrainText" idheightmap="terrainHeight" parts="100.0" heightscale="3.0" />
 		</primitive >
+
+		<primitive id="waterTest">
+			<water idtexture="waterText" idwavemap="waterHeight" parts="100.0" heightscale="2.0" texscale="2.0" />
+		</primitive >
+
 
 		<primitive id="ship_prim">
 			<vehicle/>
@@ -272,6 +281,8 @@
 				<componentref id="laptop" />
 				<componentref id="stand_cone" />-->
 				<componentref id="ship" />
+				<componentref id="water_surface" />
+				<componentref id="terrain_surface" />
 			</children>
 		</component>
 
@@ -1256,6 +1267,47 @@
 				<primitiveref id="quad"/>
 			</children>
 		</component> 	
+
+		<!-- 			Testing				-->
+
+		<!--		 	 Test				-->
+
+		<component id="water_surface">
+			<transformation>
+				<translate x="0.0" y="6.0" z="0.0" />
+				<scale x="20.0" y="2.0" z="20.0" />
+				<!--<rotate axis="x" angle="-90" />-->
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="waterTest"/>
+			</children>
+		</component> 
+
+
+		<component id="terrain_surface">
+			<transformation>
+				<translate x="0.0" y="5.6" z="0.0" />
+				<scale x="15.0" y="2.0" z="15.0" />
+				<!--<rotate axis="x" angle="-90" />-->
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="terrainTest"/>
+			</children>
+		</component> 
 
 
 		<!-- 			Stand Cone				-->

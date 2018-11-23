@@ -184,6 +184,10 @@ class XMLscene extends CGFscene {
     update(currTime){
         var deltaTime = currTime - this.lastTime;
         this.updateAnimations(deltaTime/1000);
+        if(this.sceneInited){
+            //console.log(this.graph.primitives);
+            (this.graph.primitives["waterTest"]).update(currTime);
+        }
         this.lastTime = currTime;
     }
 

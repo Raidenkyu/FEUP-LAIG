@@ -1,9 +1,9 @@
 /**
- * MyTerrain
+ * MyWater
  * @constructor
  */
 
-class MyTerrain extends CGFobject{
+class MyWater extends CGFobject{
 	constructor(scene, idTexture, idHeightMap, parts, heightScale) {
         super(scene);
         
@@ -14,7 +14,7 @@ class MyTerrain extends CGFobject{
 		this.parts = parts;
 		this.heightScale = heightScale;
 
-        this.testShader = new CGFshader(scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
+        this.testShader = new CGFshader(scene.gl, "shaders/water.vert", "shaders/water.frag");
 		this.testShader.setUniformsValues({uSampler1: 0});
 		this.testShader.setUniformsValues({uSampler2: 1});
 		this.testShader.setUniformsValues({normScale: heightScale});
@@ -39,10 +39,12 @@ class MyTerrain extends CGFobject{
 	
 	display(){
 
-		this.scene.setActiveShader(this.testShader);
+        this.scene.setActiveShader(this.testShader);
+	
 		
 		this.scene.graph.textures[this.idTexture].bind(0);
 		this.scene.graph.textures[this.idHeightMap].bind(1);
+    
        
         this.obj.display();
     
@@ -51,6 +53,12 @@ class MyTerrain extends CGFobject{
 
 	applyTextures(){
 		//Stub, not used
+	}
+
+	update(time) {
+		//(Math.sin((time * 1.0) % 3141 * 0.002)+1.0)*.1;
+		var factor = ((time % 20000)*0.0004)*0.05;
+		this.testShader.setUniformsValues({timeFactor: factor});
 	}
 
 }
