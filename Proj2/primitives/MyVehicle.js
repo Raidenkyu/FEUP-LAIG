@@ -10,9 +10,9 @@ class MyVehicle extends CGFobject{
         this.body = new MyCylinder2(scene,3,2,5.0,5,1);
         this.back = new MyCylinder2(scene,3,3,1.0,5,1);
         this.exhaust = new MyCylinder2(scene,0,3,0.1,5,1);
-        this.wingUp = new MyTriangle(scene,[0,0,1],[1,0,0],[0,0.5,0]);
-        this.wingDown = new MyTriangle(scene,[0,0,0],[0,0,1],[1,0,0]);
-        this.wingBack = new MyTriangle(scene,[0,0,0],[0,0.5,0],[1,0,0]);
+        this.wingUp = new MyTriangle(scene,[0,0,5],[5,0,0],[0,2.5,0]);
+        this.wingDown = new MyTriangle(scene,[0,0,0],[5,0,0],[0,0,5]);
+        this.wingBack = new MyTriangle(scene,[0,0,0],[0,2.5,0],[5,0,0]);
     };
 
     display(){
@@ -21,11 +21,11 @@ class MyVehicle extends CGFobject{
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.displayWing
+            this.displayWing();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.scene.scale(-1,0,0);
+            this.scene.scale(-1,1,1);
             this.displayWing();
         this.scene.popMatrix();
     };
@@ -56,7 +56,7 @@ class MyVehicle extends CGFobject{
     }
 
     displayWing(){
-        this.scene.translate(3,0,0);
+        this.scene.translate(2,0,0);
         this.wingUp.display();
         this.wingDown.display();
         this.wingBack.display();
@@ -64,6 +64,10 @@ class MyVehicle extends CGFobject{
 
 
     applyTextures(factorS,factorT){
-
+        let wingS = factorS*10;
+        let wingT = factorT*10;
+        this.wingUp.applyTextures(wingS,wingT);
+        this.wingDown.applyTextures(wingS,wingT);
+        this.wingBack.applyTextures(wingS,wingT);
     }
 }
