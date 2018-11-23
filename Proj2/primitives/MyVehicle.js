@@ -9,7 +9,7 @@ class MyVehicle extends CGFobject{
         this.front = new MyCylinder2(scene,2,0,5.0,5,1);
         this.body = new MyCylinder2(scene,3,2,5.0,5,1);
         this.back = new MyCylinder2(scene,3,3,1.0,5,1);
-        this.exhaust = new MyCylinder(scene,3,3,0.1,5,1);
+        this.exhaust = new MyCylinder2(scene,0,3,0.1,5,1);
         this.wingUp = new MyTriangle(scene,[0,0,1],[1,0,0],[0,0.5,0]);
         this.wingDown = new MyTriangle(scene,[0,0,0],[0,0,1],[1,0,0]);
         this.wingBack = new MyTriangle(scene,[0,0,0],[0,0.5,0],[1,0,0]);
@@ -40,6 +40,11 @@ class MyVehicle extends CGFobject{
 
         this.scene.popMatrix();
         
+        this.scene.pushMatrix();
+            this.scene.translate(0,0,-1.1);
+            this.exhaust.display();
+        this.scene.popMatrix();
+
         this.scene.pushMatrix();
             this.body.display();
         this.scene.popMatrix();
