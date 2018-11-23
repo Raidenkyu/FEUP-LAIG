@@ -35,7 +35,7 @@ class GraphLeaf {
                 this.initializePatch();
                 break;    
             case 'v':
-                //TODO
+                this.initializeVehicle();
                 break;
             case 'n':
                 this.initializeCylinder2();
@@ -148,6 +148,15 @@ class GraphLeaf {
         else console.log("Invalid number of arguments for a Terrain");
     };
 
+     /**
+     * Initializes a vehicle primitive.
+     */
+    initializeVehicle(){
+        if (this.args_array.length == 1){
+            this.primitive = new MyVehicle(this.scene);
+        }
+        else console.log("Invalid number of arguments for a Terrain");
+    };
 
 }
 
