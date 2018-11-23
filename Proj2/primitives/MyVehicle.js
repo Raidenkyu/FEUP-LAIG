@@ -10,9 +10,14 @@ class MyVehicle extends CGFobject{
         this.body = new MyCylinder2(scene,3,2,5.0,5,1);
         this.back = new MyCylinder2(scene,3,3,1.0,5,1);
         this.exhaust = new MyCylinder2(scene,0,3,0.1,5,1);
-        this.wingUp = new MyTriangle(scene,[0,0,5],[5,0,0],[0,2.5,0]);
-        this.wingDown = new MyTriangle(scene,[0,0,0],[5,0,0],[0,0,5]);
-        this.wingBack = new MyTriangle(scene,[0,0,0],[0,2.5,0],[5,0,0]);
+        this.leftWingSide = new MyTriangle(scene,[0,0,5],[0,2.5,0],[0,0,0]);
+        this.leftWingUp = new MyTriangle(scene,[0,0,5],[5,0,0],[0,2.5,0]);
+        this.leftWingDown = new MyTriangle(scene,[0,0,0],[5,0,0],[0,0,5]);
+        this.leftWingBack = new MyTriangle(scene,[0,0,0],[0,2.5,0],[5,0,0]);
+        this.rightWingSide = new MyTriangle(scene,[0,0,5],[0,0,0],[0,2.5,0]);
+        this.rightWingUp = new MyTriangle(scene,[0,0,5],[0,2.5,0],[-5,0,0]);
+        this.rightWingDown = new MyTriangle(scene,[0,0,0],[0,0,5],[-5,0,0]);
+        this.rightWingBack = new MyTriangle(scene,[0,0,0],[-5,0,0],[0,2.5,0]);
     };
 
     display(){
@@ -21,12 +26,11 @@ class MyVehicle extends CGFobject{
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.displayWing();
+            this.displayLeftWing();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.scene.scale(-1,1,1);
-            this.displayWing();
+            this.displayRightWing();
         this.scene.popMatrix();
     };
 
@@ -55,19 +59,34 @@ class MyVehicle extends CGFobject{
         this.scene.popMatrix();
     }
 
-    displayWing(){
+    displayLeftWing(){
         this.scene.translate(2,0,0);
-        this.wingUp.display();
-        this.wingDown.display();
-        this.wingBack.display();
+        this.leftWingUp.display();
+        this.leftWingDown.display();
+        this.leftWingBack.display();
+        this.leftWingSide.display();
+    }
+
+    displayRightWing(){
+        this.scene.translate(-2,0,0);
+        this.rightWingUp.display();
+        this.rightWingDown.display();
+        this.rightWingBack.display();
+        this.rightWingSide.display();
     }
 
 
     applyTextures(factorS,factorT){
         let wingS = factorS*10;
         let wingT = factorT*10;
-        this.wingUp.applyTextures(wingS,wingT);
-        this.wingDown.applyTextures(wingS,wingT);
-        this.wingBack.applyTextures(wingS,wingT);
+        this.rightWingUp.applyTextures(wingS,wingT);
+        this.rightWingDown.applyTextures(wingS,wingT);
+        this.rightWingBack.applyTextures(wingS,wingT);
+        this.rightWingSide.applyTextures(wingS,wingT);
+
+        this.leftWingUp.applyTextures(wingS,wingT);
+        this.leftWingDown.applyTextures(wingS,wingT);
+        this.leftWingBack.applyTextures(wingS,wingT);
+        this.leftWingSide.applyTextures(wingS,wingT);
     }
 }
