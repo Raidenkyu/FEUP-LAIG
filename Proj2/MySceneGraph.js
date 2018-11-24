@@ -1351,7 +1351,6 @@ class MySceneGraph {
                     for(var u = 0; u < (u_points+1);u++){
                         controlVertexes[u] = new Array(v_points+1);
                         for(var v = 0; v < (v_points+1);v++){
-                            //console.log(u*(v_points+1)+v);
                             var x = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'xx');
                             var y = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'yy');
                             var z = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'zz');

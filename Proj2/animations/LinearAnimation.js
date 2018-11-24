@@ -68,9 +68,9 @@ class LinearAnimation extends Animation {
         var transform = mat4.create();
         mat4.identity(transform);
         var relativeDistance = this.currentDistance/this.arrayDist[this.index];
-        var x = (this.controlPoints[this.index][0]-this.controlPoints[0][0]) + this.vectors[this.index][0]*relativeDistance;
-        var y = (this.controlPoints[this.index][1]-this.controlPoints[0][1]) + this.vectors[this.index][1]*relativeDistance;
-        var z = (this.controlPoints[this.index][2]-this.controlPoints[0][2]) + this.vectors[this.index][2]*relativeDistance;
+        var x = this.controlPoints[this.index][0] + this.vectors[this.index][0]*relativeDistance;
+        var y = this.controlPoints[this.index][1] + this.vectors[this.index][1]*relativeDistance;
+        var z = this.controlPoints[this.index][2] + this.vectors[this.index][2]*relativeDistance;
         mat4.translate(transform,transform,[x,y,z]);
         mat4.rotate(transform,transform,this.rotationAngle,[0,1,0]);
         return transform;
