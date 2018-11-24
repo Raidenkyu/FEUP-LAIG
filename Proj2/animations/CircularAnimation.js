@@ -50,7 +50,6 @@ class CircularAnimation extends Animation {
 
 
     apply(deltaTime){
-       //console.log(this.elapsedAngle);
         var transform = mat4.create();
         mat4.identity(transform);
 

@@ -184,6 +184,10 @@
 		<circular id="ship_circular" span="3.0" center="50.0 50.0 150.0" radius="50.0" startang="180.0" rotang="180.0"/>
 
 		<circular id="ship_circular2" span="3.0" center="50.0 50.0 0.0" radius="50.0" startang="0.0" rotang="180.0"/>
+
+		<circular id="ship_rotation" span="3.0" center="0.0 50.0 0.0" radius="0.0" startang="90.0" rotang="-90.0"/>
+
+		<circular id="ship_rotation2" span="3.0" center="0.0 50.0 0.0" radius="0.0" startang="-180.0" rotang="90.0"/>
 	</animations>
 
 	<primitives> 
@@ -272,10 +276,6 @@
 				<translate x="0.0" y="0.0" z="0.0" />
 			</transformation>
 
-			<animations>
-				<!--<animationref id="circular1" />-->
-			</animations>
-
 			<materials>
 					<material id="mat_white" />
 			</materials>
@@ -283,7 +283,27 @@
 			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<!--<componentref id="cubic_stand" />
+				<!--<componentref id="ship" />
+				<componentref id="water_surface" />
+				<componentref id="terrain_surface" />
+				<componentref id="office" />-->
+				<componentref id="pier" />
+			</children>
+		</component>
+
+		<component id="office">
+			<transformation>
+				<translate x="0.0" y="10.0" z="0.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="cubic_stand" />
 				<componentref id="spherical_display" />
 				<componentref id="floor1" />
 				<componentref id="floor2" />
@@ -295,10 +315,40 @@
 				<componentref id="testa_coil2" />
 				<componentref id="toy_pyramid" />
 				<componentref id="laptop" />
-				<componentref id="stand_cone" />-->
-				<componentref id="ship" />
-				<componentref id="water_surface" />
-				<componentref id="terrain_surface" />
+				<componentref id="stand_cone" />
+			</children>
+		</component>
+
+		<component id="pier">
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="platform"/>
+			</children>
+		</component>
+
+		<component id="platform">
+			<transformation>
+				<translate x="0.0" y="10.0" z="0.0" />
+				<scale x="10.0" y="0.1" z="10.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="cube_inherit" />
 			</children>
 		</component>
 
@@ -949,11 +999,6 @@
 				<translate x="12.0" y="0.0" z="2.0"/>
 			</transformation>
 
-			<animations>
-				<animationref id="linear1" />
-				<animationref id="circular1" />
-			</animations>
-
 			<materials>
 				<material id="mat_red" />
 			</materials>
@@ -961,9 +1006,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<componentref id="tesla_coil_top" />
-				<componentref id="tesla_coil_body" />
-				<componentref id="tesla_coil_stand" />
+				<componentref id="tesla_coil_proto" />
 			</children>
 		</component>
 
@@ -979,11 +1022,29 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
+				<componentref id="tesla_coil_proto" />
+			</children>
+		</component>
+
+
+		<component id="tesla_coil_proto">
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.0"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
 				<componentref id="tesla_coil_top" />
 				<componentref id="tesla_coil_body" />
 				<componentref id="tesla_coil_stand" />
 			</children>
 		</component>
+
 
 		<component id="tesla_coil_body">
 			<transformation>
@@ -1356,10 +1417,12 @@
 
 			<animations>
 				<animationref id="ship_flying" />
+				<animationref id="ship_rotation" />
 				<animationref id="ship_linear" />
 				<animationref id="ship_circular" />
 				<animationref id="ship_linear2" />
 				<animationref id="ship_circular2" />
+				<animationref id="ship_rotation2" />
 				<animationref id="ship_landing" />
 			</animations>
 

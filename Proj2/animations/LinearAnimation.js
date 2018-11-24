@@ -54,8 +54,7 @@ class LinearAnimation extends Animation {
         let vectorLength = vec3.length(this.vectors[this.index],[0,0,0]);
         let cosAngle = vec3.dot(this.vectors[this.index], [0,0,1])/vectorLength;
         this.rotationAngle = Math.acos(cosAngle);
-        //console.log(this.elapsedTime);
-        //console.log(this.time);
+
         if(this.elapsedTime >= this.time){
             this.terminated = true;
             
