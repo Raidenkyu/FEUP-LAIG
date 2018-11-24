@@ -164,7 +164,7 @@ class GraphLeaf {
     initializeWater(){
         if (this.args_array.length == 6){
             this.primitive = new MyWater(this.scene, this.args_array[1], this.args_array[2], this.args_array[3], 
-                this.args_array[4]);
+                this.args_array[4],this.args_array[5]);
         }
         else console.log("Invalid number of arguments for a Water");
     };

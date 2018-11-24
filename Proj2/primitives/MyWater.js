@@ -4,7 +4,7 @@
  */
 
 class MyWater extends CGFobject{
-	constructor(scene, idTexture, idHeightMap, parts, heightScale) {
+	constructor(scene, idTexture, idHeightMap, parts, heightScale, texScale) {
         super(scene);
         
         this.scene = scene;
@@ -18,6 +18,7 @@ class MyWater extends CGFobject{
 		this.testShader.setUniformsValues({uSampler1: 0});
 		this.testShader.setUniformsValues({uSampler2: 1});
 		this.testShader.setUniformsValues({normScale: heightScale});
+		this.testShader.setUniformsValues({texScale: texScale});
 
 		var controlvertexes = [	// U = 0
 								[ // V = 0..1;
@@ -58,7 +59,7 @@ class MyWater extends CGFobject{
 	update(time) {
 		//(Math.sin((time * 1.0) % 3141 * 0.002)+1.0)*.1;
 		var factor = ((time % 200000)*0.00002);
-		console.log(factor);
+		//console.log(factor);
 		this.testShader.setUniformsValues({timeFactor: factor});
 	}
 
