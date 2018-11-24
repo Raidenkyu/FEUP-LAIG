@@ -1,15 +1,16 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_start" >
+	<views default="view_office" >
 
-		<perspective id="view_start" near="0.1" far="500" angle="22.92">
-			<from x="50.0" y="40.0" z="50.0" />
-			<to x="0.0" y="0.0" z="0.0" />
+		
+		<perspective id="view_office" near="0.1" far="500" angle="22.92">
+			<from x="0.0" y="5.0" z="0.0" />
+			<to x="-10.0" y="0.0" z="-10.0" />
 		</perspective>
-
-		<perspective id="view_back" near="0.1" far="500" angle="22.92">
-			<from x="40.0" y="12.0" z="12.0" />
+		
+		<perspective id="view_far" near="0.1" far="500" angle="22.92">
+			<from x="40.0" y="35.0" z="40.0" />
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
