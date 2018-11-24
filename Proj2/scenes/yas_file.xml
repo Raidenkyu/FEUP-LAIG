@@ -87,10 +87,10 @@
 		<texture id="keyboard" file="./scenes/images/keyboard.png" />
 		<texture id="screen" file="./scenes/images/screen_windows.jpg" />
 		<texture id="grid" file="./scenes/images/grid.jpg" />
-		<texture id="waterText" file="./scenes/images/water1.jpg" />
+		<texture id="waterText" file="./scenes/images/water2.jpg" />
 		<texture id="waterHeight" file="./scenes/images/water1hm.jpg" />
-		<texture id="terrainText" file="./scenes/images/terrain.jpg" />
-		<texture id="terrainHeight" file="./scenes/images/terrainhm.png" />
+		<texture id="terrainText" file="./scenes/images/terrain1.jpg" />
+		<texture id="terrainHeight" file="./scenes/images/terrain1hm.png" />
 		<texture id="spaceship" file="./scenes/images/spaceship.jpg" />
 
 	</textures>
@@ -234,11 +234,11 @@
 
 		
 		<primitive id="terrainTest">
-			<terrain idtexture="terrainText" idheightmap="terrainHeight" parts="100.0" heightscale="3.0" />
+			<terrain idtexture="terrainText" idheightmap="terrainHeight" parts="100.0" heightscale="5.0" />
 		</primitive >
 
 		<primitive id="waterTest">
-			<water idtexture="waterText" idwavemap="waterHeight" parts="100.0" heightscale="2.0" texscale="2.0" />
+			<water idtexture="waterText" idwavemap="waterHeight" parts="100.0" heightscale="2.0" texscale="3.0" />
 		</primitive >
 
 
@@ -1274,8 +1274,8 @@
 
 		<component id="water_surface">
 			<transformation>
-				<translate x="0.0" y="6.0" z="0.0" />
-				<scale x="20.0" y="2.0" z="20.0" />
+				<translate x="0.0" y="5.0" z="0.0" />
+				<scale x="30.0" y="2.0" z="30.0" />
 				<!--<rotate axis="x" angle="-90" />-->
 			</transformation>
 
@@ -1293,8 +1293,8 @@
 
 		<component id="terrain_surface">
 			<transformation>
-				<translate x="0.0" y="5.6" z="0.0" />
-				<scale x="15.0" y="2.0" z="15.0" />
+				<translate x="0.0" y="4.3" z="0.0" />
+				<scale x="23.0" y="2.0" z="23.0" />
 				<!--<rotate axis="x" angle="-90" />-->
 			</transformation>
 

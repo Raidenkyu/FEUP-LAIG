@@ -11,5 +11,5 @@ void main() {
 
 	vec2 coords = vec2(vTextureCoord.st);
 
-	gl_FragColor = texture2D(uSampler1, coords + (timeFactor+1.0));
+	gl_FragColor = texture2D(uSampler1, coords + (timeFactor));
 }

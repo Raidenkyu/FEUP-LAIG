@@ -57,7 +57,8 @@ class MyWater extends CGFobject{
 
 	update(time) {
 		//(Math.sin((time * 1.0) % 3141 * 0.002)+1.0)*.1;
-		var factor = ((time % 20000)*0.0004)*0.05;
+		var factor = ((time % 200000)*0.00002);
+		console.log(factor);
 		this.testShader.setUniformsValues({timeFactor: factor});
 	}
 
