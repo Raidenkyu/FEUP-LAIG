@@ -248,11 +248,11 @@
 
 		
 		<primitive id="terrainTest">
-			<terrain idtexture="terrainText" idheightmap="terrainHeight" parts="100.0" heightscale="5.0" />
+			<terrain idtexture="terrainText" idheightmap="terrainHeight" parts="100.0" heightscale="7.0" />
 		</primitive >
 
 		<primitive id="waterTest">
-			<water idtexture="waterText" idwavemap="waterHeight" parts="100.0" heightscale="2.0" texscale="3.0" />
+			<water idtexture="waterText" idwavemap="waterHeight" parts="100.0" heightscale="2.0" texscale="1.0" />
 		</primitive >
 
 
