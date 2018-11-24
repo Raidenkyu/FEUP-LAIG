@@ -1723,6 +1723,10 @@ class MySceneGraph {
         else if (node.textureID == "inherit") {
             mat.setTexture(text);
         }
+        else{
+            text = null;
+            mat.setTexture(null);
+        }
 
         if (node.xTex != null && node.yTex != null) {
             sLength = node.xTex;

@@ -6,7 +6,7 @@
 		
 		<perspective id="view_office" near="0.1" far="500" angle="22.92">
 			<from x="0.0" y="5.0" z="0.0" />
-			<to x="-10.0" y="0.0" z="-10.0" />
+			<to x="-7.0" y="0.0" z="-7.0" />
 		</perspective>
 		
 		<perspective id="view_far" near="0.1" far="500" angle="22.92">
@@ -527,7 +527,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -545,7 +545,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component>
 
@@ -563,7 +563,7 @@
 			<texture id="square" length_s="0.25" length_t="0.5" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -580,7 +580,7 @@
 			<texture id="square" length_s="0.125" length_t="0.5" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -686,7 +686,7 @@
 			<texture id="inherit" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -704,7 +704,7 @@
 			<texture id="inherit"  /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -722,7 +722,7 @@
 			<texture id="inherit"  /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -740,7 +740,7 @@
 			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -758,7 +758,7 @@
 			<texture id="inherit"  /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -776,7 +776,7 @@
 			<texture id="inherit"/> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -794,7 +794,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -812,7 +812,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -830,7 +830,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -848,7 +848,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -866,7 +866,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -884,7 +884,7 @@
 			<texture id="none" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad" />
+				<componentref id="plane_prim" />
 			</children>
 		</component> 
 
@@ -1449,7 +1449,7 @@
 			<texture id="screen" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad"/>
+				<componentref id="plane_prim"/>
 			</children>
 		</component> 
 
@@ -1467,7 +1467,7 @@
 			<texture id="keyboard" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="quad"/>
+				<componentref id="plane_prim"/>
 			</children>
 		</component> 	
 
@@ -1562,6 +1562,24 @@
 				<primitiveref id="ship_prim" />
 			</children>
 		</component>
+
+		<component id="plane_prim">
+			<transformation>
+				<rotate axis="x" angle="90.0" />
+			</transformation>
+
+			<materials>
+					<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" /> 
+
+			<children>
+				<primitiveref id="nurbs_5x5" />
+			</children>
+		</component>
+
+
 	</components>
 	
 </yas>
