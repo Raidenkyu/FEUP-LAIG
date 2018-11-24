@@ -181,7 +181,7 @@
 
 		<linear id="ship_landing" span="3.0">
 			<controlpoint xx="0.0" yy="50.0" zz="0.0"/>
-			<controlpoint xx="0.0" yy="0.0" zz="0.0"/>
+			<controlpoint xx="0.0" yy="1.0" zz="0.0"/>
 		</linear>
 
 		<circular id="ship_circular" span="3.0" center="50.0 50.0 50.0" radius="50.0" startang="180.0" rotang="180.0"/>
