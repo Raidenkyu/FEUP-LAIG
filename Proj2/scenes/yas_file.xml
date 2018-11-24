@@ -1290,7 +1290,7 @@
 
 		<component id="water_surface">
 			<transformation>
-				<translate x="0.0" y="5.0" z="0.0" />
+				<translate x="0.0" y="0.0" z="0.0" />
 				<scale x="30.0" y="2.0" z="30.0" />
 				<!--<rotate axis="x" angle="-90" />-->
 			</transformation>
@@ -1309,7 +1309,7 @@
 
 		<component id="terrain_surface">
 			<transformation>
-				<translate x="0.0" y="4.3" z="0.0" />
+				<translate x="0.0" y="-0.7" z="0.0" />
 				<scale x="23.0" y="2.0" z="23.0" />
 				<!--<rotate axis="x" angle="-90" />-->
 			</transformation>
