@@ -200,13 +200,12 @@ class XMLscene extends CGFscene {
             var node = this.graph.graphNodes[key];
             if(node.animationsIndex < node.animations.length){
                 var animation = node.animations[node.animationsIndex];
+                animation.update(deltaTime);
+                mat4.copy(node.animMatrix,animation.apply());
+                
+
                 if(animation.terminated){
                     node.animationsIndex++;
-                }
-                else{
-                    mat4.copy(node.animMatrix,animation.apply(deltaTime));
-                    animation.update(deltaTime);
-                    
                 }
             }
         }

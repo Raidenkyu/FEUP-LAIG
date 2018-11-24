@@ -28,7 +28,7 @@ class CircularAnimation extends Animation {
         }
 
         this.elapsedTime = 0; 
-        this.elapsedAngle = 0;
+        this.elapsedAngle = this.startang;
 
     }
 
@@ -49,7 +49,7 @@ class CircularAnimation extends Animation {
     }
 
 
-    apply(deltaTime){
+    apply(){
         var transform = mat4.create();
         mat4.identity(transform);
 
@@ -61,7 +61,6 @@ class CircularAnimation extends Animation {
         if(this.direction == 1){
             mat4.rotate(transform,transform,Math.PI,[0,1,0]);
         }
-        
         return transform;
     }
 }

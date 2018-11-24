@@ -46,6 +46,13 @@ class LinearAnimation extends Animation {
         this.elapsedTime += deltaTime;
         this.currentDistance = this.speed * this.elapsedTime;
         var i = 0;
+
+        if(this.currentDistance >= this.totalD){
+            this.terminated = true;
+            
+            return;
+        }
+
         while(i < this.arrayDist.length && this.currentDistance > this.arrayDist[i]){
             this.currentDistance -= this.arrayDist[i];
             i++
@@ -55,15 +62,11 @@ class LinearAnimation extends Animation {
         let cosAngle = vec3.dot(this.vectors[this.index], [0,0,1])/vectorLength;
         this.rotationAngle = Math.acos(cosAngle);
 
-        if(this.elapsedTime >= this.time){
-            this.terminated = true;
-            
-            return;
-        }
+ 
 
     }
 
-    apply(deltaTime){
+    apply(){
         var transform = mat4.create();
         mat4.identity(transform);
         var relativeDistance = this.currentDistance/this.arrayDist[this.index];
