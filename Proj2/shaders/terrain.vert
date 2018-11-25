@@ -7,10 +7,10 @@ uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 
 varying vec2 vTextureCoord;
-uniform sampler2D uSampler1;
-uniform sampler2D uSampler2;
+uniform sampler2D uSampler1; // terrain texture
+uniform sampler2D uSampler2; // terrain heightmap
 
-uniform float normScale;
+uniform float normScale; // height scale
 
 /**
 * Main function, updates the y coordinate of terrain according to the corresponding heightmap

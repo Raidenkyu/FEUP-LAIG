@@ -7,15 +7,15 @@ uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 
 varying vec2 vTextureCoord;
-uniform sampler2D uSampler1;
-uniform sampler2D uSampler2;
-uniform float timeFactor;
+uniform sampler2D uSampler1; // texture
+uniform sampler2D uSampler2; // heightmap
+uniform float timeFactor; // time factor used for animating the water
 
-uniform float normScale; //the height scale
+uniform float normScale; // the height scale
 uniform float texScale; // the texture scale
 
 /**
-* Main function, updates the y coordinate of water based on the corresponding heightmap
+* Main function, updates the y coordinate of water based on the corresponding heightmap and changes with time
 */
 void main() {
 

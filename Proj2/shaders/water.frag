@@ -3,10 +3,10 @@ precision highp float;
 #endif
 
 varying vec2 vTextureCoord;
-uniform sampler2D uSampler1;
-uniform sampler2D uSampler2;
-uniform float timeFactor;
-uniform float texScale;
+uniform sampler2D uSampler1; // water texture
+uniform sampler2D uSampler2; // water heightmap
+uniform float timeFactor; // time factor used for animating the water
+uniform float texScale; // texture scale
 
 /**
 * Main function, displays the texture of water that changes with time
