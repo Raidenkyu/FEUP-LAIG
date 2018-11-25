@@ -9,12 +9,12 @@
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
-		<perspective id="view_office" near="0.1" far="500" angle="22.92">
-			<from x="2.0" y="5.0" z="2.0" />
+		<perspective id="view_base" near="0.1" far="500" angle="22.92">
+			<from x="5.0" y="8.0" z="5.0" />
 			<to x="-7.0" y="0.0" z="-7.0" />
 		</perspective>
 		
-		<perspective id="view_garage" near="0.1" far="500" angle="22.92">
+		<perspective id="view_office" near="0.1" far="500" angle="22.92">
 			<from x="5.0" y="3.0" z="-3.5" />
 			<to x="-5.0" y="2.7" z="-3.5" />
 		</perspective>
@@ -24,9 +24,14 @@
 			<to x="-2.3" y="1.5" z="-2.7" />
 		</perspective>
 
-		<ortho id="front_view" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
-            <from x="0" y="6" z="20" />
-            <to x="0" y="4" z="0" />
+		<ortho id="ortho_view_waves" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
+            <from x="0" y="7" z="20" />
+            <to x="0" y="3" z="0" />
+        </ortho>
+
+		<ortho id="ortho_view_top" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
+            <from x="0" y="20.0" z="0" />
+            <to x="-0.1" y="3" z="0" />
         </ortho>
 
 	</views>
@@ -45,7 +50,7 @@
 			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
 		</omni>
 
-		<omni id="omni_garage" enabled="0" >
+		<omni id="omni_office" enabled="0" >
 			<location x="-4.3" y="2.8" z="-3.5" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
@@ -1726,7 +1731,7 @@
 
 		<component id="water_surface">
 			<transformation>
-				<translate x="0.0" y="0.0" z="0.0" />
+				<translate x="0.0" y="-0.3" z="0.0" />
 				<scale x="30.0" y="2.0" z="30.0" />
 				<!--<rotate axis="x" angle="-90" />-->
 			</transformation>
@@ -1745,7 +1750,7 @@
 
 		<component id="terrain_surface">
 			<transformation>
-				<translate x="0.0" y="-0.9" z="0.0" />
+				<translate x="0.0" y="-1.2" z="0.0" />
 				<scale x="23.0" y="2.0" z="23.0" />
 				<!--<rotate axis="x" angle="-90" />-->
 			</transformation>
