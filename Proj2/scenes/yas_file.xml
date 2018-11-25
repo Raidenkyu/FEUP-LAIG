@@ -524,7 +524,7 @@
 					<material id="mat_red" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="none" /> 
 
 			<children>
 				<componentref id="plane_prim" />
@@ -542,7 +542,7 @@
 					<material id="mat_blue" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="none" /> 
 
 			<children>
 				<componentref id="plane_prim" />
