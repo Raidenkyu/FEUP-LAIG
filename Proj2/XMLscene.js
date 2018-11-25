@@ -180,7 +180,10 @@ class XMLscene extends CGFscene {
         this.popMatrix();
         // ---- END Background, camera and axis setup
     }
-
+    /**
+     * Updates the scene to be displayed, including its primitives and animations
+     * @param {Time} currTime 
+     */
     update(currTime){
         var deltaTime = currTime - this.lastTime;
         this.updateAnimations(deltaTime/1000);
@@ -194,7 +197,10 @@ class XMLscene extends CGFscene {
         this.lastTime = currTime;
     }
 
-
+    /**
+     * Updates the animations of every component with the given time span.
+     * @param {Number} deltaTime 
+     */
     updateAnimations(deltaTime){
         for (var key in this.graph.graphNodes){
             var node = this.graph.graphNodes[key];

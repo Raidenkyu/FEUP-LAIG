@@ -12,8 +12,15 @@ class Animation {
         this.terminated = false;
     }
 
+    /**
+     * Updates the animation with the given time span.
+     * @param {Number} deltaTime 
+     */
     update(deltaTime){}
 
+    /**
+     * Returns the transformation matrix resultant from the animation
+     */
     apply(){}
 
 }
