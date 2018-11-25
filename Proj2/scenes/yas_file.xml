@@ -95,6 +95,8 @@
 		<texture id="spaceship" file="./scenes/images/spaceship.jpg" />
 		<texture id="pierFloor" file="./scenes/images/pierFloor.png" />
 		<texture id="helipad" file="./scenes/images/helipad.jpg" />
+		<texture id="metalWall" file="./scenes/images/metalWall.jpg" />
+		<texture id="baseDoor" file="./scenes/images/garageDoor.jpg" />
 
 	</textures>
 		
@@ -352,6 +354,12 @@
 				<componentref id="floor2" />
 				<componentref id="left_wall" />
 				<componentref id="right_wall" />
+				<componentref id="other_wall" />
+				<componentref id="left_base_wall" />
+				<componentref id="right_base_wall" />
+				<componentref id="front_base_wall" />
+				<componentref id="base_roof" />
+				<componentref id="base_door" />
 				<componentref id="chair" />
 				<componentref id="table" />
 				<componentref id="testa_coil1" />
@@ -549,10 +557,118 @@
 			</children>
 		</component>
 
+		<component id="right_base_wall">
+			<transformation>
+				<translate x="20.55" y="3.0" z="5.0" />
+				<rotate axis="y" angle="90" />
+				<scale x="10.0" y="6.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="metalWall" length_s="0.25" length_t="0.5" /> 
+
+			<children>
+				<componentref id="cube_inherit" />
+			</children>
+		</component> 
+
+		<component id="left_base_wall">
+			<transformation>
+				<translate x="-0.55" y="3.0" z="5.0" />
+				<rotate axis="y" angle="90" />
+				<scale x="10.0" y="6.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="metalWall" length_s="0.25" length_t="0.5" /> 
+
+			<children>
+				<componentref id="cube_inherit" />
+			</children>
+		</component> 
+
+		<component id="front_base_wall">
+			<transformation>
+				<translate x="10.0" y="3.0" z="-0.55" />
+				<scale x="22.0" y="6.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="metalWall" length_s="0.125" length_t="0.5" /> 
+
+			<children>
+				<componentref id="cube_inherit" />
+			</children>
+		</component> 
+
+		<component id="base_door">
+			<transformation>
+				<translate x="10.0" y="5.5" z="10" />
+				<scale x="20.15" y="1.0" z="0.1" />
+				<rotate axis="z" angle="90" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="baseDoor" length_s="1.0" length_t="3.0" /> 
+
+			<children>
+				<componentref id="cube_inherit" />
+			</children>
+		</component> 
+
+		<component id="base_roof">
+			<transformation>
+				<translate x="10.0" y="6.5" z="4.5" />
+				<rotate axis="x" angle="90" />
+				<scale x="22.0" y="11.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="metalWall" length_s="0.125" length_t="0.5" /> 
+
+			<children>
+				<componentref id="cube_inherit" />
+			</children>
+		</component> 
+
 		<component id="left_wall">
 			<transformation>
 				<translate x="0.0" y="3.0" z="5.0" />
 				<rotate axis="y" angle="90" />
+				<scale x="10.0" y="6.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_grey" />
+			</materials>
+
+			<texture id="square" length_s="0.25" length_t="0.5" /> 
+
+			<children>
+				<componentref id="plane_prim" />
+			</children>
+		</component> 
+
+				
+		<component id="other_wall">
+			<transformation>
+				<translate x="20.0" y="3.0" z="5.0" />
+				<rotate axis="y" angle="-90" />
 				<scale x="10.0" y="6.0" z="1.0" />
 			</transformation>
 
