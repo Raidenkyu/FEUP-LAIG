@@ -1534,7 +1534,7 @@ class MySceneGraph {
     parseNodes(nodeId) {
         var graphNode = new GraphNode(nodeId);
         this.graphNodes[nodeId];
-       console.log(nodeId);
+        //console.log(nodeId);
         var children = this.components[nodeId].children;
         var nodeNames = [];
         for (var i = 0; i < children.length; i++) {

@@ -1,11 +1,11 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_office" >
+	<views default="view_far" >
 
 		
 		<perspective id="view_office" near="0.1" far="500" angle="22.92">
-			<from x="0.0" y="5.0" z="0.0" />
+			<from x="2.0" y="5.0" z="2.0" />
 			<to x="-7.0" y="0.0" z="-7.0" />
 		</perspective>
 		
@@ -14,9 +14,9 @@
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
-		<perspective id="view_side_top" near="0.1" far="500" angle="22.92">
-			<from x="10.0" y="20.0" z="30.0" />
-			<to x="10.0" y="0.0" z="0.0" />
+		<perspective id="view_garage" near="0.1" far="500" angle="22.92">
+			<from x="5.0" y="3.0" z="-3.5" />
+			<to x="-5.0" y="2.7" z="-3.5" />
 		</perspective>
 
 		<perspective id="view_toy_pyramid" near="0.1" far="500" angle="22.92">
@@ -60,7 +60,7 @@
 		</spot>
 
 		<omni id="omni_2" enabled="0" >
-			<location x="20" y="10" z="-1" w="1.0" />
+			<location x="-2.0" y="2.8" z="-3.5" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
 			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
