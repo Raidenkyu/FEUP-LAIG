@@ -12,23 +12,22 @@ uniform sampler2D uSampler2;
 uniform float timeFactor;
 
 uniform float normScale;
+uniform float texScale;
 
 void main() {
 
-	vec3 offset=vec3(0.0, 0.0, 0.0);
-	
-	vTextureCoord = aTextureCoord;
-	
-	vec3 colorArray = texture2D(uSampler2, vec2(0.0,0.0) + vTextureCoord + (timeFactor-4.0)).rgb;
-	//vec3 colorArray = texture2D(uSampler2, vec2(0.0,0.0) + vTextureCoord).rgb;
+ 	vTextureCoord = aTextureCoord;
 
-	//vec3 colorArray = texture2D(uSampler2, vec2(timeFactor,timeFactor) + vTextureCoord).rgb;
+	vec3 colorArray = texture2D(uSampler2, vec2(0.0,0.0) + mod(vTextureCoord*texScale + timeFactor, 1.0)).rgb;
 
 	float avgColor = (colorArray[0] + colorArray[1] + colorArray[2]) / 3.0;
 
-	offset = aVertexNormal * normScale * avgColor * 0.5;
+	vec3 newPos = aVertexPosition;
 
-	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition + offset, 1.0);
+	newPos.y = normScale * avgColor * 0.5;
+
+	gl_Position = uPMatrix * uMVMatrix * vec4(newPos, 1.0);
+	
 
 }
 
