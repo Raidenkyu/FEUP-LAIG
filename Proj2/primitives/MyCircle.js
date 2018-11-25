@@ -1,9 +1,14 @@
 /**
  * MyCircle
- * @constructor
  */
 
 class MyCircle extends CGFobject{
+    /**
+     * @constructor
+     * @param {CGFscene} scene 
+     * @param {Number} radius 
+     * @param {Number} slices 
+     */
     constructor(scene, radius, slices) {
         super(scene);
         this.radius = radius;
@@ -11,6 +16,9 @@ class MyCircle extends CGFobject{
         this.initBuffers();
     };
 
+    /**
+     * Inits the primitive buffers
+     */
     initBuffers(){
 
         var angle = 2.0 * Math.PI / this.slices;
@@ -52,6 +60,11 @@ class MyCircle extends CGFobject{
         this.initGLBuffers();
     };
 
+    /**
+     * Applies the texture coordinates to the primitives
+     * @param {Number} factorS 
+     * @param {Number} factorT 
+     */
     applyTextures(factorS,factorT){
         factorS = factorS || 1;
         factorT = factorT || 1;
