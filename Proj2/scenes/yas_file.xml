@@ -4,35 +4,29 @@
 	<views default="view_far" >
 
 		
-		<perspective id="view_office" near="0.1" far="500" angle="22.92">
-			<from x="2.0" y="5.0" z="2.0" />
-			<to x="-7.0" y="0.0" z="-7.0" />
-		</perspective>
-		
 		<perspective id="view_far" near="0.1" far="500" angle="22.92">
 			<from x="40.0" y="35.0" z="40.0" />
 			<to x="0.0" y="0.0" z="0.0" />
 		</perspective>
 
+		<perspective id="view_office" near="0.1" far="500" angle="22.92">
+			<from x="2.0" y="5.0" z="2.0" />
+			<to x="-7.0" y="0.0" z="-7.0" />
+		</perspective>
+		
 		<perspective id="view_garage" near="0.1" far="500" angle="22.92">
 			<from x="5.0" y="3.0" z="-3.5" />
 			<to x="-5.0" y="2.7" z="-3.5" />
 		</perspective>
 
-		<perspective id="view_toy_pyramid" near="0.1" far="500" angle="22.92">
-			<from x="3.75" y="6.0" z="12.0" />
-			<to x="3.75" y="3.0" z="8.0" />
-		</perspective>
-
 		<perspective id="view_desktop" near="0.1" far="500" angle="22.92">
-			<from x="5.0" y="5.0" z="3.0" />
-			<to x="5.0" y="3.3" z="7" />
+			<from x="-4.4" y="2.8" z="-2.7" />
+			<to x="-2.3" y="1.5" z="-2.7" />
 		</perspective>
-
 
 		<ortho id="front_view" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
-            <from x="5" y="5" z="20" />
-            <to x="5" y="5" z="0" />
+            <from x="0" y="6" z="20" />
+            <to x="0" y="4" z="0" />
         </ortho>
 
 	</views>
@@ -44,34 +38,35 @@
 
 	<lights>
 
-		<omni id="omni_1" enabled="1" >
+		<omni id="omni_global" enabled="1" >
 			<location x="10" y="10" z="10" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
 			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
 		</omni>
 
-		<spot id="spot_1" enabled="0" angle="10.0" exponent="1.0">
-			<location x="3.75" y="4.0" z="8.0" w="1.0" />
-			<target x="3.75" y="1.0" z="8.0" />
+		<omni id="omni_garage" enabled="0" >
+			<location x="-4.3" y="2.8" z="-3.5" w="1.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
+			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+		</omni>
+
+		<spot id="spot_desktop" enabled="0" angle="5.0" exponent="1.0">
+			<location x="-4.0" y="3.2" z="-2.7" w="1.0" />
+			<target x="-4.0" y="0.8" z="-2.7" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
 			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
 		</spot>
 
-		<omni id="omni_2" enabled="0" >
-			<location x="-2.0" y="2.8" z="-3.5" w="1.0" />
+		<spot id="spot_pyramid" enabled="0" angle="5.0" exponent="1.0">
+			<location x="-3.8" y="2.7" z="-2.5" w="1.0" />
+			<target x="-3.8" y="0.8" z="-2.5" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
-		</omni>
-
-		<omni id="omni_3" enabled="0" >
-			<location x="20" y="10" z="10" w="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
-		</omni>
+			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
+		</spot>
 
 	</lights>
 
@@ -193,6 +188,9 @@
 		<circular id="ship_rotation" span="3.0" center="0.0 50.0 0.0" radius="0.0" startang="90.0" rotang="-90.0"/>
 
 		<circular id="ship_rotation2" span="3.0" center="0.0 50.0 0.0" radius="0.0" startang="-180.0" rotang="90.0"/>
+
+		<circular id="rotate_static" span="300.0" center="0.0 0.0 0.0" radius="0.0" startang="0.0" rotang="36000.0"/>
+
 	</animations>
 
 	<primitives> 
@@ -508,6 +506,10 @@
 			<transformation>
 				<translate x="8.0" y="3.0" z="2.0" />
 			</transformation>
+
+			<animations>
+				<animationref id="rotate_static" />
+			</animations>
 
 			<materials>
 					<material id="mat_blue" />
@@ -1480,6 +1482,10 @@
 				<scale x="0.3" y="0.3" z="0.3" />
 			</transformation>
 
+			<animations>
+				<animationref id="rotate_static" />
+			</animations>
+
 			<materials>
 					<material id="mat_white" />
 			</materials>
@@ -1694,7 +1700,7 @@
 			<texture id="screen" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<componentref id="plane_prim"/>
+				<primitiveref id="quad"/>
 			</children>
 		</component> 
 
@@ -1712,11 +1718,9 @@
 			<texture id="keyboard" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<componentref id="plane_prim"/>
+				<primitiveref id="quad"/>
 			</children>
 		</component> 	
-
-		<!-- 			Testing				-->
 
 		<!--		 	 Test				-->
 
