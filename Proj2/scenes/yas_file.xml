@@ -499,7 +499,7 @@
 			<texture id="rocks" length_s="3.0" length_t="3.0" /> 
 
 			<children>
-				<componentref id="cube_inherit" />
+				<componentref id="cube_quad" />
 			</children>
 		</component> 	
 
@@ -614,17 +614,16 @@
 			<transformation>
 				<translate x="10.0" y="5.5" z="10" />
 				<scale x="20.15" y="1.0" z="0.1" />
-				<rotate axis="z" angle="90" />
 			</transformation>
 
 			<materials>
 					<material id="mat_grey" />
 			</materials>
 
-			<texture id="baseDoor" length_s="1.0" length_t="3.0" /> 
+			<texture id="baseDoor" length_s="1.0" length_t="5.0" /> 
 
 			<children>
-				<componentref id="cube_inherit" />
+				<componentref id="cube_quad" />
 			</children>
 		</component> 
 
@@ -660,7 +659,7 @@
 			<texture id="square" length_s="0.25" length_t="0.5" /> 
 
 			<children>
-				<componentref id="plane_prim" />
+				<primitiveref id="quad" />
 			</children>
 		</component> 
 
@@ -679,7 +678,7 @@
 			<texture id="square" length_s="0.25" length_t="0.5" /> 
 
 			<children>
-				<componentref id="plane_prim" />
+				<primitiveref id="quad" />
 			</children>
 		</component> 
 
@@ -696,7 +695,7 @@
 			<texture id="square" length_s="0.125" length_t="0.5" /> 
 
 			<children>
-				<componentref id="plane_prim" />
+				<primitiveref id="quad" />
 			</children>
 		</component> 
 
@@ -788,6 +787,28 @@
 				<componentref id="cube_face6_nt" />
 			</children>
 		</component> 
+
+		<component id="cube_quad">
+
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.0" />
+			</transformation>
+
+			<materials>
+					<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" /> 
+
+			<children>
+				<componentref id="cube_quad_face1" />
+				<componentref id="cube_quad_face2" />
+				<componentref id="cube_quad_face3" />
+				<componentref id="cube_quad_face4" />
+				<componentref id="cube_quad_face5" />
+				<componentref id="cube_quad_face6" />
+			</children>
+		</component>
 
 		<component id="cube_face1">
 
@@ -895,6 +916,114 @@
 				<componentref id="plane_prim" />
 			</children>
 		</component> 
+
+		<component id="cube_quad_face1">
+
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.5" />
+			</transformation>
+
+			<materials>
+					<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_quad_face2">
+
+			<transformation>
+				<rotate axis="y" angle="90.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit"  /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_quad_face3">
+
+			<transformation>
+				<rotate axis="y" angle="180.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit"  /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_quad_face4">
+
+			<transformation>
+				<rotate axis="y" angle="-90.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_quad_face5">
+
+			<transformation>
+				<rotate axis="x" angle="90.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit"  /> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="cube_quad_face6">
+
+			<transformation>
+				<rotate axis="x" angle="-90.0" />
+				<translate x="0.0" y="0.0" z="0.5" />
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="inherit"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
 
 		
 		<component id="cube_face1_nt">
