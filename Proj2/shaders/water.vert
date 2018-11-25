@@ -15,12 +15,6 @@ uniform float normScale; //the height scale
 uniform float texScale; // the texture scale
 
 /**
- * Sets the value of the y coordinate, according to the given values of timeFactor 
- * which updates the color of the height texture.
- */
-
-
-/**
 * Main function, updates the y coordinate of water based on the corresponding heightmap
 */
 void main() {
