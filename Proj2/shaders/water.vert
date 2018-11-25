@@ -14,6 +14,10 @@ uniform float timeFactor;
 uniform float normScale;
 uniform float texScale;
 
+
+/**
+* Main function, updates the y coordinate of water based on the corresponding heightmap
+*/
 void main() {
 
  	vTextureCoord = aTextureCoord;

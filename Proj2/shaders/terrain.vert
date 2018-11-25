@@ -12,6 +12,9 @@ uniform sampler2D uSampler2;
 
 uniform float normScale;
 
+/**
+* Main function, updates the y coordinate of terrain according to the corresponding heightmap
+*/
 void main() {
 
 	vec3 offset=vec3(0.0, 0.0, 0.0);

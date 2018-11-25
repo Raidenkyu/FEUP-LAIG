@@ -8,6 +8,9 @@ uniform sampler2D uSampler2;
 uniform float timeFactor;
 uniform float texScale;
 
+/**
+* Main function, displays the texture of water that changes with time
+*/
 void main() {
 
 	vec2 coords = vec2(vTextureCoord.st);
