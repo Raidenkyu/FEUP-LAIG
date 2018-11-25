@@ -1,9 +1,17 @@
 /**
  * MyCylinder
- * @constructor
  */
 
 class MyCylinder extends CGFobject{
+    /**
+     * @constructor
+     * @param {CGFscene} scene 
+     * @param {float} base_rad 
+     * @param {float} top_rad 
+     * @param {float} height 
+     * @param {number} slices 
+     * @param {number} stacks 
+     */
     constructor(scene, base_rad, top_rad, height, slices, stacks) {
         super(scene);
         this.cylinder_surface = new MyCylinderSurface(scene, base_rad, top_rad, height, slices, stacks);
@@ -12,6 +20,9 @@ class MyCylinder extends CGFobject{
         this.height = height;
     };
 
+    /**
+     * Renders the primitive
+     */
     display(){
         this.scene.pushMatrix();
         this.scene.translate(0, 0, this.height);
@@ -26,7 +37,11 @@ class MyCylinder extends CGFobject{
         this.cylinder_surface.display();
     };
 
-
+    /**
+     * Applies the texture coordinates to the primitives
+     * @param {Number} factorS 
+     * @param {Number} factorT 
+     */
     applyTextures(factorS,factorT){
         factorS = factorS || 1;
         factorT = factorT || 1;
@@ -40,10 +55,18 @@ class MyCylinder extends CGFobject{
 
 /**
  * MyCylinderSurface
- * @constructor
  */
 
 class MyCylinderSurface extends CGFobject{
+    /**
+     * @constructor
+     * @param {CGFscene} scene 
+     * @param {float} base_rad 
+     * @param {float} top_rad 
+     * @param {float} height 
+     * @param {number} slices 
+     * @param {number} stacks 
+     */
     constructor(scene, base_rad, top_rad, height, slices, stacks/*, text_s, text_t*/) {
         super(scene);
         this.base_rad = base_rad;
@@ -54,6 +77,9 @@ class MyCylinderSurface extends CGFobject{
         this.initBuffers();
     };
 
+    /**
+     * Inits the primitive buffers
+     */
     initBuffers(){
 
         var angle = 2.0 * Math.PI / this.slices;
@@ -93,7 +119,11 @@ class MyCylinderSurface extends CGFobject{
         this.initGLBuffers();
     };
 
-
+    /**
+     * Applies the texture coordinates to the primitives
+     * @param {Number} factorS 
+     * @param {Number} factorT 
+     */
     applyTextures(factorS,factorT){
         factorS = factorS || 1;
         factorT = factorT || 1;

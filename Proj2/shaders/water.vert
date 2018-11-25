@@ -11,8 +11,13 @@ uniform sampler2D uSampler1;
 uniform sampler2D uSampler2;
 uniform float timeFactor;
 
-uniform float normScale;
-uniform float texScale;
+uniform float normScale; //the height scale
+uniform float texScale; // the texture scale
+
+/**
+ * Sets the value of the y coordinate, according to the given values of timeFactor 
+ * which updates the color of the height texture.
+ */
 
 
 /**

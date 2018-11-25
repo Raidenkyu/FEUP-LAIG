@@ -15,6 +15,9 @@ class LinearAnimation extends Animation {
         
     }
 
+    /**
+     * Inits the animation
+     */
     initAnimation(){
         var totalD = 0;
         this.vectors = [];
@@ -66,6 +69,9 @@ class LinearAnimation extends Animation {
 
     }
 
+    /**
+     * Returns the transformation matrix of the animation
+     */
     apply(){
         var transform = mat4.create();
         mat4.identity(transform);

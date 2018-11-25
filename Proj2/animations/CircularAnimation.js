@@ -18,6 +18,9 @@ class CircularAnimation extends Animation {
         this.initAnimation();
     }
 
+    /**
+     * Inits the animation
+     */
     initAnimation(){
     
         if(this.rotang > 0){
@@ -48,7 +51,9 @@ class CircularAnimation extends Animation {
 
     }
 
-
+    /**
+     * Returns the transformation matrix of the animation
+     */
     apply(){
         var transform = mat4.create();
         mat4.identity(transform);
