@@ -19,7 +19,8 @@ void main() {
 	
 	vTextureCoord = aTextureCoord;
 	
-	vec3 colorArray = texture2D(uSampler2, vec2(0.0,0.0) + vTextureCoord).rgb;
+	vec3 colorArray = texture2D(uSampler2, vec2(0.0,0.0) + vTextureCoord + (timeFactor-4.0)).rgb;
+	//vec3 colorArray = texture2D(uSampler2, vec2(0.0,0.0) + vTextureCoord).rgb;
 
 	//vec3 colorArray = texture2D(uSampler2, vec2(timeFactor,timeFactor) + vTextureCoord).rgb;
 
