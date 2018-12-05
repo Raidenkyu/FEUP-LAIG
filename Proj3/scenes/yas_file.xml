@@ -98,6 +98,8 @@
 		<texture id="metalWall" file="./scenes/images/metalWall.jpg" />
 		<texture id="baseDoor" file="./scenes/images/garageDoor.jpg" />
 		<texture id="textGrid" file="./scenes/images/boardCross.png" />
+		<texture id="letterF" file="./scenes/images/letterF.png" />
+		<texture id="cornerText" file="./scenes/images/blankCorner.png" />
 
 	</textures>
 		
@@ -278,6 +280,11 @@
 				<componentref id="whiteP" />
 				<componentref id="blackP" />
 				<componentref id="boardGrid" />
+				<componentref id="boardTop" />
+				<componentref id="cornerTL" />
+				<componentref id="cornerTR" />
+				<componentref id="cornerBL" />
+				<componentref id="cornerBR" />
 				
 				<!--<componentref id="patch1" />
 				<componentref id="patch2" />
@@ -335,7 +342,7 @@
 
 		<component id="boardGrid">
 			<transformation>
-				<translate x="9.5" y="0.0" z="9.5" />
+				<translate x="10.5" y="0.0" z="10.5" />
 				<scale x="19.0" y="1.0" z="19.0" />
 				<rotate axis="x" angle="-90" />
 			</transformation>
@@ -351,7 +358,91 @@
 			</children>
 		</component>
 
+		<component id="boardTop">
+			<transformation>
+				<translate x="10.5" y="0.0" z="0.5" />
+				<scale x="19.0" y="1.0" z="1.0" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
 
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="letterF" length_s="0.05263" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="cornerTL">
+			<transformation>
+				<translate x="0.5" y="0.0" z="0.5" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="cornerText" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="cornerTR">
+			<transformation>
+				<translate x="20.5" y="0.0" z="0.5" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="cornerText" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="cornerBL">
+			<transformation>
+				<translate x="0.5" y="0.0" z="20.5" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="cornerText" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="cornerBR">
+			<transformation>
+				<translate x="20.5" y="0.0" z="20.5" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="cornerText" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
 
 
 
