@@ -239,23 +239,6 @@
 			</patch>
 		</primitive >
 
-		<primitive id="nurbs_patch_2x3">
-			<patch npointsU="2.0" npointsV="3.0" npartsU="20.0" npartsV="20.0" >
-				<controlpoint xx="-2.0" yy="-2.0" zz="1.0" />
-				<controlpoint xx="-2.0" yy="-1.0" zz="-2.0" />
-				<controlpoint xx="-2.0" yy="1.0" zz="5.0" />
-				<controlpoint xx="-2.0" yy="2.0" zz="-1.0" />
-				<controlpoint xx="0.0" yy="-2.0" zz="0.0" />
-				<controlpoint xx="0.0" yy="-1.0" zz="-1.0" />
-				<controlpoint xx="0.0" yy="1.0" zz="1.5" />
-				<controlpoint xx="0.0" yy="2.0" zz="0.0" />
-				<controlpoint xx="2.0" yy="-2.0" zz="-1.0" />
-				<controlpoint xx="2.0" yy="-1.0" zz="2.0" />
-				<controlpoint xx="2.0" yy="1.0" zz="-5.0" />
-				<controlpoint xx="2.0" yy="2.0" zz="1.0" />				
-			</patch>
-		</primitive >
-
 		<primitive id="uni_cylinder2">
 			<cylinder2 base="1.0" top="1.0" height="1.0" slices="24.0" stacks="2.0" />
 		</primitive >
@@ -291,12 +274,303 @@
 			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
+				<componentref id="whiteP" />
+				<componentref id="gridB" />
+				
+				<!--<componentref id="patch1" />
+				<componentref id="patch2" />
+				<componentref id="patch3" />
+				<componentref id="patch4" />
+				<componentref id="patch5" />
+				<componentref id="patch6" />
+				<componentref id="patch7" />
+				<componentref id="patch8" />
+				<componentref id="patch9" />
+				<componentref id="patch10" />
+				<componentref id="patch11" />
+				<componentref id="patch12" />
 				<componentref id="ship" />
 				<componentref id="water_surface" />
 				<componentref id="terrain_surface" />
-				<componentref id="base" />
+				<componentref id="base" />-->
 			</children>
 		</component>
+
+
+		<component id="whiteP">
+			<transformation>
+				<translate x="0.0" y="0.3" z="0.0" />
+				<scale x="0.9" y="0.3" z="0.9" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="uni_sphere"/>
+			</children>
+		</component>
+
+		<component id="gridB">
+			<transformation>
+				<scale x="2.0" y="1.0" z="2.0" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+					<material id="mat_black" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="patchR">
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="patchTest"/>
+			</children>
+		</component>
+
+		<component id="patchL">
+			<transformation>
+				<rotate axis="y" angle="180" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+			</children>
+		</component>
+
+		
+		<component id="patch1">
+			<transformation>
+				<rotate axis="z" angle="0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+
+
+				<component id="patch2">
+			<transformation>
+				<rotate axis="z" angle="30" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+				<component id="patch3">
+			<transformation>
+				<rotate axis="z" angle="60" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+				<component id="patch4">
+			<transformation>
+				<rotate axis="z" angle="90" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+		<component id="patch5">
+			<transformation>
+				<rotate axis="z" angle="120" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+		<component id="patch6">
+			<transformation>
+				<rotate axis="z" angle="150" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+		<component id="patch7">
+			<transformation>
+				<rotate axis="z" angle="180" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+		<component id="patch8">
+			<transformation>
+				<rotate axis="z" angle="210" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+		<component id="patch9">
+			<transformation>
+				<rotate axis="z" angle="240" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+		<component id="patch10">
+			<transformation>
+				<rotate axis="z" angle="270" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+		
+
+		<component id="patch11">
+			<transformation>
+				<rotate axis="z" angle="300" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
+		<component id="patch12">
+			<transformation>
+				<rotate axis="z" angle="330" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="patchR"/>
+				<componentref id="patchL"/>
+			</children>
+		</component>
+
 
 		<component id="base">
 			<transformation>
