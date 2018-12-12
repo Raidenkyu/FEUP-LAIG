@@ -1,0 +1,33 @@
+Meta Programação
+
+function(Termo, Function, Aridade)                  function(ligado(a,b), ligado, 2)
+arg(Num, Termo, Valor)                              arg(2, ligado(a,b), b)
+=..     Termo = Lista -> lista com nome e args do Termo         ligado(a,b) =.. [ligado, a, b]
+
+
+
+Programação Dinamica
+
+assert   asserta/assertz                    asserta(ligado(a,b))    asserta((l(x,y) :- ligado(x,y)))
+retract                                     retract(ligado(a,b))    retract((l(x,y) :- ligado(x,y)))  //precisa de dynamic
+abolish                                     abolish(ligado/2)       abolish(l/2)
+
+
+
+Operadores
+
+op(Prioridade, Tipo, Nome)
+    Prioridade: 1-1200
+    Tipo:|prefix: fx, fy                            x -> non-association
+         |posfix: xf, yf                            y -> side-association
+         |infix: xfx, xfy, yfx  
+
+
+
+Difference Lists
+
+[1,2,3] ---> [1,2,3,8]\[8]
+[1,2,3|X]\X
+
+append_dl (existe mas não ligar muito)
+
