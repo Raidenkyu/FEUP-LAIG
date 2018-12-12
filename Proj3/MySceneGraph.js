@@ -47,6 +47,8 @@ class MySceneGraph {
          */
 
         this.reader.open('scenes/' + filename, this);
+        let server = new Connection();
+        server.testConnection();
     }
 
 
