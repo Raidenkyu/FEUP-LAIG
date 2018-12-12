@@ -10,7 +10,15 @@ class MyButton extends CGFobject{
     };
 
     display(){
+        this.scene.pushMatrix();
         this.scene.rotate(-Math.PI, 1,0,0);
+        //console.log("Hi");
         this.obj.display();
-    }
+        this.scene.popMatrix();
+    };
+
+    applyTextures(factorS, factorT){
+
+    };
+
 }

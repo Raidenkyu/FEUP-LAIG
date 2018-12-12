@@ -260,6 +260,10 @@
 			<vehicle/>
 		</primitive>
 
+		<primitive id="buttons">
+			<buttons/>
+		</primitive>
+
 
 	</primitives >
 
@@ -277,14 +281,14 @@
 			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<componentref id="whiteP" />
+				<!--<componentref id="whiteP" />
 				<componentref id="blackP" />
-				<componentref id="boardGrid" />
-				<!--<componentref id="boardTop" />-->
-				<componentref id="cornerTL" />
+				<componentref id="boardGrid" />-->
+				<componentref id="buttonsCol" />
+				<!--<componentref id="cornerTL" />
 				<componentref id="cornerTR" />
 				<componentref id="cornerBL" />
-				<componentref id="cornerBR" />
+				<componentref id="cornerBR" />-->
 				
 				<!--<componentref id="patch1" />
 				<componentref id="patch2" />
@@ -358,21 +362,19 @@
 			</children>
 		</component>
 
-		<component id="boardTop">
+		<component id="buttonsCol">
 			<transformation>
-				<translate x="10.5" y="0.0" z="0.5" />
-				<scale x="19.0" y="1.0" z="1.0" />
-				<rotate axis="x" angle="-90" />
+				<translate x="0.0" y="0.0" z="0.0" />
 			</transformation>
 
 			<materials>
 				<material id="mat_white" />
 			</materials>
 
-			<texture id="letterF" length_s="0.05263" length_t="1" /> 
+			<texture id="none" /> 
 
 			<children>
-				<primitiveref id="quad"/>
+				<primitiveref id="buttons"/>
 			</children>
 		</component>
 

@@ -45,7 +45,10 @@ class GraphLeaf {
                 break;       
             case 'h':
                 this.initializeWater();
-                break;           
+                break;  
+            case 'b':
+                this.initializeButtons();
+                break;                 
         }
 
     };
@@ -168,6 +171,13 @@ class GraphLeaf {
         }
         else console.log("Invalid number of arguments for a Water");
     };
+
+    initializeButtons(){
+        if (this.args_array.length == 1){
+            this.primitive = new ButtonCollection(this.scene);
+        }
+        else console.log("Invalid number of arguments for a Button Collection");
+    }
 
 
 }
