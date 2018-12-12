@@ -280,7 +280,7 @@
 				<componentref id="whiteP" />
 				<componentref id="blackP" />
 				<componentref id="boardGrid" />
-				<componentref id="boardTop" />
+				<!--<componentref id="boardTop" />-->
 				<componentref id="cornerTL" />
 				<componentref id="cornerTR" />
 				<componentref id="cornerBL" />
