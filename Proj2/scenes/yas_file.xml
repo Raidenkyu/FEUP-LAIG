@@ -1799,7 +1799,7 @@
 				<animationref id="ship_flying" />
 				<animationref id="ship_rotation" />
 				<animationref id="ship_linear" />
-				<animationref id="ship_circular" />
+				<!--<animationref id="ship_circular" />-->
 				<animationref id="ship_linear2" />
 				<animationref id="ship_circular2" />
 				<animationref id="ship_rotation2" />
