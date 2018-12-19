@@ -98,8 +98,47 @@
 		<texture id="metalWall" file="./scenes/images/metalWall.jpg" />
 		<texture id="baseDoor" file="./scenes/images/garageDoor.jpg" />
 		<texture id="textGrid" file="./scenes/images/boardCross.png" />
-		<texture id="letterF" file="./scenes/images/letterF.png" />
+		
 		<texture id="cornerText" file="./scenes/images/blankCorner.png" />
+		<texture id="letA" file="./scenes/images/buttons/letterA.png" />
+		<texture id="letB" file="./scenes/images/buttons/letterB.png" />
+		<texture id="letC" file="./scenes/images/buttons/letterC.png" />
+		<texture id="letD" file="./scenes/images/buttons/letterD.png" />
+		<texture id="letE" file="./scenes/images/buttons/letterE.png" />
+		<texture id="letF" file="./scenes/images/buttons/letterF.png" />
+		<texture id="letG" file="./scenes/images/buttons/letterG.png" />
+		<texture id="letH" file="./scenes/images/buttons/letterH.png" />
+		<texture id="letI" file="./scenes/images/buttons/letterI.png" />
+		<texture id="letJ" file="./scenes/images/buttons/letterJ.png" />
+		<texture id="letK" file="./scenes/images/buttons/letterK.png" />
+		<texture id="letL" file="./scenes/images/buttons/letterL.png" />
+		<texture id="letM" file="./scenes/images/buttons/letterM.png" />
+		<texture id="letN" file="./scenes/images/buttons/letterN.png" />
+		<texture id="letO" file="./scenes/images/buttons/letterO.png" />
+		<texture id="letP" file="./scenes/images/buttons/letterP.png" />
+		<texture id="letQ" file="./scenes/images/buttons/letterQ.png" />
+		<texture id="letR" file="./scenes/images/buttons/letterR.png" />
+		<texture id="letS" file="./scenes/images/buttons/letterS.png" />
+		<texture id="num1" file="./scenes/images/buttons/number1.png" />
+		<texture id="num2" file="./scenes/images/buttons/number2.png" />
+		<texture id="num3" file="./scenes/images/buttons/number3.png" />
+		<texture id="num4" file="./scenes/images/buttons/number4.png" />
+		<texture id="num5" file="./scenes/images/buttons/number5.png" />
+		<texture id="num6" file="./scenes/images/buttons/number6.png" />
+		<texture id="num7" file="./scenes/images/buttons/number7.png" />
+		<texture id="num8" file="./scenes/images/buttons/number8.png" />
+		<texture id="num9" file="./scenes/images/buttons/number9.png" />
+		<texture id="num10" file="./scenes/images/buttons/number10.png" />
+		<texture id="num11" file="./scenes/images/buttons/number11.png" />
+		<texture id="num12" file="./scenes/images/buttons/number12.png" />
+		<texture id="num13" file="./scenes/images/buttons/number13.png" />
+		<texture id="num14" file="./scenes/images/buttons/number14.png" />
+		<texture id="num15" file="./scenes/images/buttons/number15.png" />
+		<texture id="num16" file="./scenes/images/buttons/number16.png" />
+		<texture id="num17" file="./scenes/images/buttons/number17.png" />
+		<texture id="num18" file="./scenes/images/buttons/number18.png" />
+		<texture id="num19" file="./scenes/images/buttons/number19.png" />
+
 
 	</textures>
 		
@@ -281,14 +320,14 @@
 			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<!--<componentref id="whiteP" />
+				<componentref id="whiteP" />
 				<componentref id="blackP" />
-				<componentref id="boardGrid" />-->
+				<componentref id="boardGrid" />
 				<componentref id="buttonsCol" />
-				<!--<componentref id="cornerTL" />
+				<componentref id="cornerTL" />
 				<componentref id="cornerTR" />
 				<componentref id="cornerBL" />
-				<componentref id="cornerBR" />-->
+				<componentref id="cornerBR" />
 				
 				<!--<componentref id="patch1" />
 				<componentref id="patch2" />

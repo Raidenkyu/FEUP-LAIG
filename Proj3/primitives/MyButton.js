@@ -4,17 +4,18 @@
  */
 
 class MyButton extends CGFobject{
-    constructor(scene) {
+    constructor(scene, idTexture) {
         super(scene);
-        this.obj = new MyRectangle(scene, -0.5, -0.5, 0.5, 0.5);
+        this.idTexture = idTexture;
+        this.obj = new MyPlane(scene, 16 , 16);
     };
 
     display(){
-        this.scene.pushMatrix();
-        this.scene.rotate(-Math.PI, 1,0,0);
-        //console.log("Hi");
+        
+        this.scene.rotate(Math.PI/2.0, 0,1,0);
+        this.scene.graph.textures[this.idTexture].bind(0);
         this.obj.display();
-        this.scene.popMatrix();
+        
     };
 
     applyTextures(factorS, factorT){

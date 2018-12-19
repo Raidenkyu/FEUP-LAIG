@@ -146,6 +146,7 @@ class XMLscene extends CGFscene {
 
 
 
+
     /**
      * Displays the scene.
      */
@@ -202,6 +203,8 @@ class XMLscene extends CGFscene {
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
+
+        //TODO - this.clearPickRegistration(); again?
     }
     /**
      * Updates the scene to be displayed, including its primitives and animations
