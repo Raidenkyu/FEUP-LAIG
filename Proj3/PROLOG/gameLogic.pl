@@ -213,6 +213,7 @@ otherSymbol(blackStone,whiteStone).
 % Stores a cell
 storeCell(whiteStone,Nlinha,Ncol) :- assert(whiteCell(Nlinha,Ncol)).
 storeCell(blackStone,Nlinha,Ncol) :- assert(blackCell(Nlinha,Ncol)).
+storeCell(emptySpace,Nlinha,Ncol).
 
 % Removes a cell
 rmCell(whiteStone,Nlinha,Ncol) :- retract(whiteCell(Nlinha,Ncol)).
@@ -320,10 +321,10 @@ storeBoard(Board) :-
 storeMatrix([],Nlinha,Ncol).
 storeMatrix([H|Rest],Nlinha,Ncol):-
     storeLine(H,Nlinha,1),
-    NewLinha is NLinha +1,
+    NewLinha is Nlinha +1,
     storeMatrix(Rest,NewLinha,Ncol).
 
-storeLine([]).
+storeLine([],Nlinha,Ncol).
 storeLine([H|Rest],Nlinha,Ncol) :-
     storeCell(H,Nlinha,Ncol),
     NewCol is Ncol +1,

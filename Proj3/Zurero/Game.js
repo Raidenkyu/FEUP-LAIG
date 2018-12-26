@@ -8,26 +8,33 @@ class Game {
     constructor() {
         this.server = new Connection();
         this.boards = [];
+        this.validMoves = [];
         this.boardIndex = 0;
-        this.actualTurn = "player1";
+        this.playerTurn = "player1";
         this.initBoard();
-        //console.log(this.boards[0]);
+        this.updateValidMoves();
     }
-
-    getBoardString() {
-        return JSON.stringify(this.boards[this.boardIndex]);
-    }
-
 
     initBoard() {
         let reply = function(data) {
-            console.log(data);
-            this.boards.push(data.board);
-            dispatchEvent(new CustomEvent('gameLoaded', { detail: data.board }));
+            this.boards.push(data);
+            dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         this.loading = true;
         let request = this.server.createRequest('initialBoard', null, reply.bind(this));
         return this.server.prologRequest(request);
+    }
+
+    updateValidMoves() {
+        let reply = function(data) {
+            this.validMoves = data;
+        };
+        let request = this.server.createRequest('valid_moves', [this.getBoardString(),this.playerTurn], reply.bind(this));
+        this.server.prologRequest(request);
+    }
+
+    getBoardString() {
+        return JSON.stringify(this.boards[this.boardIndex]);
     }
 
     pickingTranslator(index) {
@@ -150,6 +157,7 @@ class Game {
                 break;
             case 39:
                 command = "l19";
+                console.log(this.validMoves);
                 break;
             case 40:
                 command = "l18";

@@ -103,7 +103,7 @@ print_header_line(_).
 
 % Require your Prolog Files here
 :- include('zurero.pl').
-:- include('toAtom.pl').
+:- include('json.pl').
 
 parse_input(handshake, Reply) :-
 	Reply = '{"msg": "handshake", "return": true}'.
@@ -114,25 +114,20 @@ parse_input(quit, Reply) :-
 	
 parse_input(initialBoard, Reply) :-
 	initialBoard(Board),
-	toAtom(Board, BoardAtom),
-	concat_list_atom(['{"msg": "InitialBoard", "return": true, "board": ', BoardAtom, '}'], Reply).
+	matrix_to_json(Board,Reply).
 
 parse_input(game_over(Board),Reply):-
-	call_with_result(game_over(Board,Winner),Result),
-	toAtom(Winner, WinnerAtom),
-	concat_list_atom(['{"msg": "game_over", "return": ', Result, ', "winner": ', WinnerAtom, '}'], Reply).
+	game_over(Board,Winner),
+	json(Winner,Reply).
 
 parse_input(move(Move,Board),Reply):-
-	call_with_result(move(Move,Board,NewBoard), Result),
-	toAtom(NewBoard, BoardAtom),
-	concat_list_atom(['{"msg": "move", "return": ', Result, ', "board": ', BoardAtom, '}'], Reply).
+	move(Move,Board,NewBoard),
+	matrix_to_json(NewBoard,Reply).
 
 parse_input(valid_moves(Board, Player),Reply):-
-	call_with_result(valid_moves(Board, Player, ListOfMoves), Result),
-	toAtom(ListOfMoves, MoveListAtom),
-	concat_list_atom(['{"msg": "valid_moves", "return": ', Result, ', "moves": ', MoveListAtom, '}'], Reply).
+	valid_moves(Board, Player, ListOfMoves),
+	list_to_json(ListOfMoves,Reply).
 
 parse_input(choose_move(Board, Level, PlayerTurn),Reply):-
-	call_with_result(choose_move(Board, Level, PlayerTurn,Move),Result),
-	toAtom(Move, MoveAtom),
-	concat_list_atom(['{"msg": "makeMove", "return": ', Result, ', "board": ', NewBoardAtom, ', "move": ', MoveAtom,'}'], Reply).
+	choose_move(Board, Level, PlayerTurn,Move),
+	json(Move,Reply).
