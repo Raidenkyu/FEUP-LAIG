@@ -36,6 +36,7 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
+        this.game = new Game();
         this.setUpdatePeriod(FPS);
     }
 
@@ -136,7 +137,8 @@ class XMLscene extends CGFscene {
                     if (obj)
                     {
                         var customId = this.pickResults[i][1];				
-                        console.log("Picked object: " + obj + ", with pick id " + customId);
+                        //console.log("Picked object: " + obj + ", with pick id " + customId);
+                        console.log(this.game.pickingTranslator(customId));
                     }
                 }
                 this.pickResults.splice(0,this.pickResults.length);

@@ -102,22 +102,37 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
-:- include('gameLogic.pl').
-:- include('botPlayer.pl').
 :- include('zurero.pl').
+:- include('toAtom.pl').
 
 parse_input(handshake, Reply) :-
 	Reply = '{"msg": "handshake", "return": true}'.
-parse_input(testConnection, JsonReply) :- 
+parse_input(testConnection, Reply) :- 
 	Reply = '{"msg": "Connection OK", "return": true}'.
-parse_input(quit, JsonReply) :-
+parse_input(quit, Reply) :-
 	Reply = '{"msg": "goodbye", "return": true}'.
 	
+parse_input(initialBoard, Reply) :-
+	initialBoard(Board),
+	toAtom(Board, BoardAtom),
+	concat_list_atom(['{"msg": "InitialBoard", "return": true, "board": ', BoardAtom, '}'], Reply).
 
-parse_input(game_over(Board,Winner),Reply).
+parse_input(game_over(Board),Reply):-
+	call_with_result(game_over(Board,Winner),Result),
+	toAtom(Winner, WinnerAtom),
+	concat_list_atom(['{"msg": "game_over", "return": ', Result, ', "winner": ', WinnerAtom, '}'], Reply).
 
-parse_input(move(Move,Board,NewBoard),Reply).
+parse_input(move(Move,Board),Reply):-
+	call_with_result(move(Move,Board,NewBoard), Result),
+	toAtom(NewBoard, BoardAtom),
+	concat_list_atom(['{"msg": "move", "return": ', Result, ', "board": ', BoardAtom, '}'], Reply).
 
-parse_input(valid_moves(Board, Player, ListOfMoves),Reply).
+parse_input(valid_moves(Board, Player),Reply):-
+	call_with_result(valid_moves(Board, Player, ListOfMoves), Result),
+	toAtom(ListOfMoves, MoveListAtom),
+	concat_list_atom(['{"msg": "valid_moves", "return": ', Result, ', "moves": ', MoveListAtom, '}'], Reply).
 
-parse_input(choose_move(Board, Level, PlayerTurn,Move),Reply).
+parse_input(choose_move(Board, Level, PlayerTurn),Reply):-
+	call_with_result(choose_move(Board, Level, PlayerTurn,Move),Result),
+	toAtom(Move, MoveAtom),
+	concat_list_atom(['{"msg": "makeMove", "return": ', Result, ', "board": ', NewBoardAtom, ', "move": ', MoveAtom,'}'], Reply).

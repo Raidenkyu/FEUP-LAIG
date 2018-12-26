@@ -245,7 +245,7 @@ validate_dia2_w(X,Y,L).
 
 % Checks if game is over and what player is the winner
 game_over(Board,Winner) :-
-
+storeBoard(Board),
 b_pieces(Lb),
 w_pieces(Lw),
 ifElse(checkBlack(Lb),(Winner = player2),ifElse(checkWhite(Lw),(Winner = player1),(Winner = none))).
