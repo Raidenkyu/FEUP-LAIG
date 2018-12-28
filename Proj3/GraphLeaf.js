@@ -48,7 +48,10 @@ class GraphLeaf {
                 break;  
             case 'b':
                 this.initializeButtons();
-                break;                 
+                break;        
+            case 'w':
+                this.initializePieces();
+                break;          
         }
 
     };
@@ -179,6 +182,12 @@ class GraphLeaf {
         else console.log("Invalid number of arguments for a Button Collection");
     }
 
+    initializePieces(){
+        if (this.args_array.length == 1){
+            this.primitive = new MyPieces(this.scene);
+        }
+        else console.log("Invalid number of arguments for Pieces");
+    }
 
 }
 

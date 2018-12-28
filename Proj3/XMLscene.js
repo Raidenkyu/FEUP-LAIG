@@ -108,6 +108,8 @@ class XMLscene extends CGFscene {
         // Adds lights group.
         this.interface.addViewsGroup(this.graph.views);
 
+        this.interface.addServerGroup(this.game.server);
+
         this.sceneInited = true;
     }
 
@@ -138,11 +140,17 @@ class XMLscene extends CGFscene {
                     {
                         var customId = this.pickResults[i][1];				
                         //console.log("Picked object: " + obj + ", with pick id " + customId);
-                        console.log(this.game.pickingTranslator(customId));
+                        clickAction(customId);
                     }
                 }
                 this.pickResults.splice(0,this.pickResults.length);
             }		
+        }
+    }
+
+    clickAction(id){
+        if(id < 77){
+            game.play(id);
         }
     }
 

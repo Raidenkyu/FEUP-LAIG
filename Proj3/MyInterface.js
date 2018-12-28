@@ -60,6 +60,15 @@ class MyInterface extends CGFinterface {
         group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
     }
 
+
+    addServerGroup(server){
+        var group = this.gui.addFolder("Server");
+        group.open();
+
+        group.add(server,'closeServer');
+
+    }
+
     /**
      * Initializes the keys
      */

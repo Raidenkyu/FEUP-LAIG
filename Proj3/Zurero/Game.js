@@ -33,7 +33,6 @@ class Game {
             this.boardIndex++;
             this.boards.push(data);
             this.updateValidMoves();
-            console.log(this.boards[this.boardIndex])
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
             this.loading = false;
         };
@@ -75,12 +74,16 @@ class Game {
         while(3000){}
     }
 
+    play(pickId){
+        let command = this.pickingTranslator(pickId);
+        this.move(command);
+    }
+
     pickingTranslator(index) {
         let command;
         switch (index) {
             case 1:
                 command = "uA";
-                this.server.closeServer();
                 break;
             case 2:
                 command = "uB";
@@ -222,7 +225,6 @@ class Game {
                 break;
             case 48:
                 command = "l10";
-                this.move(command);
                 break;
             case 49:
                 command = "l9";

@@ -60,6 +60,7 @@ class MyInterface extends CGFinterface {
         group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
     }
 
+
     /**
      * Initializes the keys
      */

@@ -1483,6 +1483,10 @@ class MySceneGraph {
                 primArray.push('b');
             }
 
+            if (primNode.nodeName == "pieces") {
+                primArray.push('w');
+            }
+
             var graphLeaf = new GraphLeaf(this.scene, primArray[0], primArray); //Index 0 is the char that identifies the type of primitive
             if (graphLeaf.primitive == null) {
                 this.log("Error: Primitive is null");
