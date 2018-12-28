@@ -36,7 +36,6 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.game = new Game();
         this.setUpdatePeriod(FPS);
     }
 
@@ -93,6 +92,7 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+        this.game = new Game(this);
         this.initViews();
 
         this.axis = new CGFaxis(this, this.graph.axisLength);
@@ -140,7 +140,7 @@ class XMLscene extends CGFscene {
                     {
                         var customId = this.pickResults[i][1];				
                         //console.log("Picked object: " + obj + ", with pick id " + customId);
-                        clickAction(customId);
+                        this.clickAction(customId);
                     }
                 }
                 this.pickResults.splice(0,this.pickResults.length);
@@ -150,7 +150,7 @@ class XMLscene extends CGFscene {
 
     clickAction(id){
         if(id < 77){
-            game.play(id);
+            this.game.play(id);
         }
     }
 

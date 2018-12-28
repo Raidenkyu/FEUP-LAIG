@@ -5,7 +5,9 @@ class Game {
     /**
      * @constructor
      */
-    constructor() {
+    constructor(scene) {
+        this.scene = scene;
+        this.pieces = this.scene.graph.primitives['pieces'];
         this.server = new Connection();
         this.boards = [];
         this.validMoves = [];
@@ -19,6 +21,7 @@ class Game {
             this.boards = [];
             this.boardIndex = 0;
             this.boards.push(data);
+            this.pieces.storePieces(data);
             this.loading = false;
             this.updateValidMoves();
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
@@ -32,7 +35,9 @@ class Game {
         let reply = function(data) {
             this.boardIndex++;
             this.boards.push(data);
+            this.pieces.storePieces(data);
             this.updateValidMoves();
+            this.changeTurn();
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
             this.loading = false;
         };
@@ -70,9 +75,6 @@ class Game {
         }
     }
 
-    waitLoading(){
-        while(3000){}
-    }
 
     play(pickId){
         let command = this.pickingTranslator(pickId);
