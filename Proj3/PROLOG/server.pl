@@ -125,6 +125,7 @@ parse_input(move(Move,Board),Reply):-
 	matrix_to_json(NewBoard,Reply).
 
 parse_input(valid_moves(Board, Player),Reply):-
+	write('Here'),nl,
 	valid_moves(Board, Player, ListOfMoves),
 	list_to_json(ListOfMoves,Reply).
 

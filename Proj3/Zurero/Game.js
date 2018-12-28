@@ -12,12 +12,15 @@ class Game {
         this.boardIndex = 0;
         this.playerTurn = "player1";
         this.initBoard();
-        this.updateValidMoves();
     }
 
     initBoard() {
         let reply = function(data) {
+            this.boards = [];
+            this.boardIndex = 0;
             this.boards.push(data);
+            this.loading = false;
+            this.updateValidMoves();
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         this.loading = true;
@@ -25,9 +28,27 @@ class Game {
         return this.server.prologRequest(request);
     }
 
+    move(command){
+        let reply = function(data) {
+            this.boardIndex++;
+            this.boards.push(data);
+            this.updateValidMoves();
+            console.log(this.boards[this.boardIndex])
+            dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
+            this.loading = false;
+        };
+        this.loading = true;
+        let direction = command.charAt(0);
+        let coord = command.substr(1);
+        let move = [this.playerTurn,direction,coord];
+        let request = this.server.createRequest('move', [this.getMoveString(move),this.getBoardString()], reply.bind(this));
+        return this.server.prologRequest(request);
+    }
+
     updateValidMoves() {
         let reply = function(data) {
             this.validMoves = data;
+            dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('valid_moves', [this.getBoardString(),this.playerTurn], reply.bind(this));
         this.server.prologRequest(request);
@@ -35,6 +56,23 @@ class Game {
 
     getBoardString() {
         return JSON.stringify(this.boards[this.boardIndex]);
+    }
+
+    getMoveString(move){
+        return JSON.stringify(move);
+    }
+
+    changeTurn(){
+        if(this.playerTurn == "player1"){
+            this.playerTurn = "player2";
+        }
+        else{
+            this.playerTurn = "player1";
+        }
+    }
+
+    waitLoading(){
+        while(3000){}
     }
 
     pickingTranslator(index) {
@@ -157,7 +195,6 @@ class Game {
                 break;
             case 39:
                 command = "l19";
-                console.log(this.validMoves);
                 break;
             case 40:
                 command = "l18";
@@ -185,6 +222,7 @@ class Game {
                 break;
             case 48:
                 command = "l10";
+                this.move(command);
                 break;
             case 49:
                 command = "l9";
@@ -272,6 +310,11 @@ class Game {
                 break;
         }
         return command;
+    }
+
+    sleep(ms){
+        let start = new Date().getTime();
+        while((new Date().getTime() - start) <= ms){}
     }
 
 
