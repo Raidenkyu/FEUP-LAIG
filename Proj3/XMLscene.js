@@ -163,8 +163,6 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
-
-        console.log(this.game.botLevel);
         
         //Picking
         this.logPicking();

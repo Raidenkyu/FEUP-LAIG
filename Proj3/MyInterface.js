@@ -70,7 +70,7 @@ class MyInterface extends CGFinterface {
     }
 
     /**
-     * Adds a folder containing the diferent possible modes
+     * Adds a folder containing the diferent possible modes and difficulty
      * @param {array} views
      */
     addModesGroup(){
