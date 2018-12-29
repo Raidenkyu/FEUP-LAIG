@@ -14,7 +14,7 @@ class ButtonCollection extends CGFobject{
     };
 
     display(){
-        this.scene.setActiveShader(this.testShader);
+        //this.scene.setActiveShader(this.testShader);
         let i = 0;
         let n;
         
@@ -25,7 +25,7 @@ class ButtonCollection extends CGFobject{
             this.scene.translate(n, 0, 0);
             this.scene.registerForPick(i+1, this.buttons[i]);
 
-            this.buttons[i].display();
+            this.buttons[i].display(i+1);
             this.scene.popMatrix();
             i++;
         }
@@ -36,7 +36,7 @@ class ButtonCollection extends CGFobject{
             this.scene.translate(n, 0, 0);
             this.scene.registerForPick(i+1, this.buttons[i]);
             
-            this.buttons[i].display();
+            this.buttons[i].display(i+1);
             this.scene.popMatrix();
             i++;
         }
@@ -47,7 +47,7 @@ class ButtonCollection extends CGFobject{
             this.scene.translate(0, 0, n);
             this.scene.registerForPick(i+1, this.buttons[i]);
             
-            this.buttons[i].display();
+            this.buttons[i].display(i+1);
             this.scene.popMatrix();
             i++;
         }
@@ -59,12 +59,12 @@ class ButtonCollection extends CGFobject{
             this.scene.translate(0, 0, n);
             this.scene.registerForPick(i+1, this.buttons[i]);
             
-            this.buttons[i].display();
+            this.buttons[i].display(i+1);
             this.scene.popMatrix();
             i++;
         }
         
-        this.scene.setActiveShader(this.scene.defaultShader);
+        //this.scene.setActiveShader(this.scene.defaultShader);
 
     };    
 
