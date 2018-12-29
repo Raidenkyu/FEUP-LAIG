@@ -10,7 +10,7 @@ class MyPieces extends CGFobject{
         this.blackPieces = [];
         this.whitePieces = [];
         this.piece = new MySphere(scene,1,15,15);
-        this.transScale = 2.35;
+        this.transScale = 2.22222;
         this.initPieces();
         this.initMaterials();
     };
@@ -21,14 +21,14 @@ class MyPieces extends CGFobject{
         this.blackMaterial.apply();
         for(var i = 0; i < this.blackPieces.length;i++){
             this.scene.pushMatrix();
-            this.scene.translate(this.blackPieces[i][1]*this.transScale,0.3,this.blackPieces[i][0]*this.transScale);
+            this.scene.translate(this.blackPieces[i][1]*this.transScale+1,0.3,this.blackPieces[i][0]*this.transScale+1);
             this.piece.display();
             this.scene.popMatrix();
         }
         this.whiteMaterial.apply();
         for(var i = 0; i < this.whitePieces.length;i++){
             this.scene.pushMatrix();
-            this.scene.translate(this.whitePieces[i][1]*this.transScale,0.3,this.whitePieces[i][0]*this.transScale);
+            this.scene.translate(this.whitePieces[i][1]*this.transScale+1,0.3,this.whitePieces[i][0]*this.transScale+1);
             this.piece.display();
             this.scene.popMatrix();
         }
