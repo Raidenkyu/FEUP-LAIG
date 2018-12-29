@@ -14,6 +14,7 @@ class Game {
         this.server = new Connection();
         this.boards = [];
         this.validMoves = [];
+        this.validIDs = [];
         this.boardIndex = 0;
         this.playerTurn = "player1";
         this.botLevel = 1;
@@ -64,6 +65,10 @@ class Game {
     updateValidMoves() {
         let reply = function(data) {
             this.validMoves = data;
+            this.validIDs = [];
+            this.validMoves.forEach(element => {
+                this.validIDs.push(this.getValidId(element));
+            });
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('valid_moves', [this.getBoardString(),this.playerTurn], reply.bind(this));
@@ -360,6 +365,27 @@ class Game {
         let start = new Date().getTime();
         while((new Date().getTime() - start) <= ms){}
     }
+
+
+    getValidId(move) {
+        let id;
+        switch (move[0]) {
+            case "u":
+                id = 0*19 + move[1];
+                break;
+            case "d":
+                id = 1*19 + move[1];
+                break;
+            case "l":
+                id = 2*19 + move[1];
+                break;
+            case "r":
+                id = 3*19 + move[1];
+                break;                                            
+        }
+        return id;
+    }
+
 
 
 }

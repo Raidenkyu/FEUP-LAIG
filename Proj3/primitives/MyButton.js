@@ -11,12 +11,13 @@ class MyButton extends CGFobject{
         this.obj = new MyPlane(scene, 16 , 16);
     };
 
-    display(buttonId){
-        //this.testShader.setUniformsValues({isValid: 1});        
+    display(buttonId){     
         this.scene.rotate(Math.PI/2.0, 0,1,0);
+
+        let n = this.scene.game.validIDs.includes(buttonId);
+
         let buttonMat;
-        //console.log(this.scene.game.validMoves);
-        if(buttonId == 10){
+        if(n){
             buttonMat = this.scene.graph.materials["mat_green"];
         }
         else{
@@ -26,7 +27,6 @@ class MyButton extends CGFobject{
         buttonMat.apply();
         //this.scene.graph.textures[this.idTexture].bind(0);
         this.obj.display();
-        //this.testShader.setUniformsValues({isValid: 0}); 
     };
 
     applyTextures(factorS, factorT){
