@@ -70,6 +70,33 @@ class MyInterface extends CGFinterface {
     }
 
     /**
+     * Adds a folder containing the diferent possible modes
+     * @param {array} views
+     */
+    addModesGroup(){
+        var group = this.gui.addFolder("Play Mode");
+        group.open();
+
+        let modes = new Array();
+        modes["Player Vs Player"] = 1;
+        modes["Player Vs Bot"] = 2;
+        modes["Bot Vs Bot"] = 3;
+        const modeIdArray = Object.keys(modes);
+        this.currentModeId = "Player Vs Player";
+
+        group.add(this, 'currentModeId', modeIdArray).name('Mode').onChange(val => this.scene.game.mode = modes[val]);
+        
+        let difficulty = new Array();
+        difficulty["Easy"] = 1;
+        difficulty["Hard"] = 2;
+        const difIdArray = Object.keys(difficulty);
+        this.currentDifId = "Easy";
+
+        group.add(this, 'currentDifId', difIdArray).name('Difficulty').onChange(val => this.scene.game.botLevel = difficulty[val]);
+
+    }
+
+    /**
      * Initializes the keys
      */
     initKeys() {

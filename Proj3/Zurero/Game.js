@@ -9,7 +9,7 @@ class Game {
      */
     constructor(scene) {
         this.scene = scene;
-        this.mode = GameMode.PVB;
+        this.mode = GameMode.PVP;
         this.pieces = this.scene.graph.primitives['pieces'];
         this.server = new Connection();
         this.boards = [];
@@ -17,7 +17,7 @@ class Game {
         this.validIDs = [];
         this.boardIndex = 0;
         this.playerTurn = "player1";
-        this.botLevel = 1;
+        this.botLevel = 1; // TODO - Assumi que 1 fosse easy e 2 fosse hard para a interface
         this.botAction = false;
         this.terminated = false;
         this.initBoard();

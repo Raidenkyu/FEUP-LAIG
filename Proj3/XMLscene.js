@@ -108,6 +108,8 @@ class XMLscene extends CGFscene {
         // Adds lights group.
         this.interface.addViewsGroup(this.graph.views);
 
+        this.interface.addModesGroup();
+
         this.interface.addServerGroup(this.game.server);
 
         this.sceneInited = true;
@@ -161,6 +163,8 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
+
+        console.log(this.game.botLevel);
         
         //Picking
         this.logPicking();
