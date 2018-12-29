@@ -125,10 +125,9 @@ parse_input(move(Move,Board),Reply):-
 	matrix_to_json(NewBoard,Reply).
 
 parse_input(valid_moves(Board, Player),Reply):-
-	write('Here'),nl,
 	valid_moves(Board, Player, ListOfMoves),
 	list_to_json(ListOfMoves,Reply).
 
-parse_input(choose_move(Board, Level, PlayerTurn),Reply):-
-	choose_move(Board, Level, PlayerTurn,Move),
-	json(Move,Reply).
+parse_input(playBot(PlayerTurn,Level,Board),Reply):-
+	playBot(PlayerTurn,Level,Direction,Board,NewBoard),
+	matrix_to_json(NewBoard,Reply).
