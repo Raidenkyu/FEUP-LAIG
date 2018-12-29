@@ -222,6 +222,7 @@ class XMLscene extends CGFscene {
     update(currTime){
         var deltaTime = currTime - this.lastTime;
         this.updateAnimations(deltaTime/1000);
+        this.updateGame();
         if(this.sceneInited){
             for(var key in this.graph.primitives){
                 let elem = this.graph.primitives[key];
@@ -230,6 +231,13 @@ class XMLscene extends CGFscene {
             }
         }
         this.lastTime = currTime;
+    }
+
+    updateGame(){
+        if(this.game){
+            this.game.botTurn();
+        }
+
     }
 
     /**

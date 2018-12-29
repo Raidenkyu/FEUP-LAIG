@@ -1,3 +1,5 @@
+var GameMode = {PVP:1,PVB:2,BVB:3};
+
 /**
  * Game class, representing the game logic.
  */
@@ -7,12 +9,16 @@ class Game {
      */
     constructor(scene) {
         this.scene = scene;
+        this.mode = GameMode.PVB;
         this.pieces = this.scene.graph.primitives['pieces'];
         this.server = new Connection();
         this.boards = [];
         this.validMoves = [];
         this.boardIndex = 0;
         this.playerTurn = "player1";
+        this.botLevel = 1;
+        this.botAction = false;
+        this.terminated = false;
         this.initBoard();
     }
 
@@ -33,11 +39,7 @@ class Game {
 
     move(command){
         let reply = function(data) {
-            this.boardIndex++;
-            this.boards.push(data);
-            this.pieces.storePieces(data);
-            this.updateValidMoves();
-            this.changeTurn();
+            this.addBoard(data);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
             this.loading = false;
         };
@@ -46,6 +48,16 @@ class Game {
         let coord = command.substr(1);
         let move = [this.playerTurn,direction,coord];
         let request = this.server.createRequest('move', [this.getMoveString(move),this.getBoardString()], reply.bind(this));
+        return this.server.prologRequest(request);
+    }
+
+    playBot(){
+        let reply = function(data) {
+            this.addBoard(data);
+            dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
+            this.loading = false;
+        };
+        let request = this.server.createRequest('playBot', [this.playerTurn,this.botLevel,this.getBoardString()], reply.bind(this));
         return this.server.prologRequest(request);
     }
 
@@ -66,6 +78,20 @@ class Game {
         return JSON.stringify(move);
     }
 
+    botTurn(){
+        if(this.botAction && !this.terminated){
+            this.botAction = false;
+            this.playBot();
+        }
+    }
+
+    nextTurn(){
+        this.changeTurn();
+        if(this.mode == GameMode.BVB || (this.mode == GameMode.PVB && this.playerTurn == "player2")){
+            this.botAction = true;
+        }
+    }
+
     changeTurn(){
         if(this.playerTurn == "player1"){
             this.playerTurn = "player2";
@@ -73,130 +99,144 @@ class Game {
         else{
             this.playerTurn = "player1";
         }
+
+
     }
 
 
     play(pickId){
-        let command = this.pickingTranslator(pickId);
-        this.move(command);
+        if(this.mode == GameMode.PVPVB || (this.mode == GameMode.PVB && this.playerTurn == "player1")){
+            let command = this.pickingTranslator(pickId);
+            this.move(command);
+        }
+    }
+
+    addBoard(board){
+        if(board != null && board != []){
+            this.boardIndex++;
+            this.boards.push(board);
+            this.pieces.storePieces(board);
+            this.updateValidMoves();
+            this.nextTurn();
+        }
     }
 
     pickingTranslator(index) {
         let command;
         switch (index) {
             case 1:
-                command = "uA";
+                command = "u1";
                 break;
             case 2:
-                command = "uB";
+                command = "u2";
                 break;
             case 3:
-                command = "uC";
+                command = "u3";
                 break;
             case 4:
-                command = "uD";
+                command = "u4";
                 break;
             case 5:
-                command = "uE";
+                command = "u5";
                 break;
             case 6:
-                command = "uF";
+                command = "u6";
                 break;
             case 7:
-                command = "uG";
+                command = "u7";
                 break;
             case 8:
-                command = "uH";
+                command = "u8";
                 break;
             case 9:
-                command = "uI";
+                command = "u9";
                 break;
             case 10:
-                command = "uJ";
+                command = "u10";
                 break;
             case 11:
-                command = "uK";
+                command = "u11";
                 break;
             case 12:
-                command = "uL";
+                command = "u12";
                 break;
             case 13:
-                command = "uM";
+                command = "u13";
                 break;
             case 14:
-                command = "uN";
+                command = "u14";
                 break;
             case 15:
-                command = "uO";
+                command = "u15";
                 break;
             case 16:
-                command = "uP";
+                command = "u16";
                 break;
             case 17:
-                command = "uQ";
+                command = "u17";
                 break;
             case 18:
-                command = "uR";
+                command = "u18";
                 break;
             case 19:
-                command = "uS";
+                command = "u19";
                 break;
             case 20:
-                command = "dA";
+                command = "d1";
                 break;
             case 21:
-                command = "dB";
+                command = "d2";
                 break;
             case 22:
-                command = "dC";
+                command = "d3";
                 break;
             case 23:
-                command = "dD";
+                command = "d4";
                 break;
             case 24:
-                command = "dE";
+                command = "d5";
                 break;
             case 25:
-                command = "dF";
+                command = "d6";
                 break;
             case 26:
-                command = "dG";
+                command = "d7";
                 break;
             case 27:
-                command = "dH";
+                command = "d8";
                 break;
             case 28:
-                command = "dI";
+                command = "d9";
                 break;
             case 29:
-                command = "dJ";
+                command = "d10";
                 break;
             case 30:
-                command = "dK";
+                command = "d11";
                 break;
             case 31:
-                command = "dL";
+                command = "d12";
                 break;
             case 32:
-                command = "dM";
+                command = "d13";
                 break;
             case 33:
-                command = "dN";
+                command = "d14";
                 break;
             case 34:
-                command = "dO";
+                command = "d15";
                 break;
             case 35:
-                command = "dP";
+                command = "d16";
                 break;
             case 36:
-                command = "dQ";
+                command = "d17";
                 break;
             case 37:
-                command = "dR";
+                command = "d18";
                 break;
             case 38:
-                command = "dS";
+                command = "d19";
                 break;
             case 39:
                 command = "l19";
