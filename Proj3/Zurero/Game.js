@@ -58,6 +58,7 @@ class Game {
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
             this.loading = false;
         };
+        console.log(this.pieces);
         let request = this.server.createRequest('playBot', [this.playerTurn,this.botLevel,this.getBoardString()], reply.bind(this));
         return this.server.prologRequest(request);
     }
@@ -110,7 +111,7 @@ class Game {
 
 
     play(pickId){
-        if(this.mode == GameMode.PVPVB || (this.mode == GameMode.PVB && this.playerTurn == "player1")){
+        if(this.mode == GameMode.PVP || (this.mode == GameMode.PVB && this.playerTurn == "player1")){
             let command = this.pickingTranslator(pickId);
             this.move(command);
         }
@@ -377,7 +378,7 @@ class Game {
                 id = 1*19 + move[1];
                 break;
             case "l":
-                id = 2*19 + move[1];
+                id =  2*19 + 20 - move[1];
                 break;
             case "r":
                 id = 3*19 + move[1];
