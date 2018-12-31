@@ -151,7 +151,7 @@ class XMLscene extends CGFscene {
     }
 
     clickAction(id){
-        if(id < 77){
+        if(id < 77 && !this.game.terminated){
             this.game.play(id);
         }
     }

@@ -12,28 +12,28 @@ class Game {
         this.mode = GameMode.PVP;
         this.pieces = this.scene.graph.primitives['pieces'];
         this.server = new Connection();
+        this.botLevel = 1; // Assumiste bem.
+        this.initBoard();
+    }
+
+    initBoard() {
+        this.botAction = false;
+        this.terminated = false;
+        this.winner = 'none';
         this.boards = [];
         this.validMoves = [];
         this.validIDs = [];
         this.boardIndex = 0;
         this.playerTurn = "player1";
-        this.botLevel = 1; // TODO - Assumi que 1 fosse easy e 2 fosse hard para a interface
-        this.botAction = false;
-        this.terminated = false;
-        this.initBoard();
-    }
-
-    initBoard() {
         let reply = function(data) {
-            this.boards = [];
-            this.boardIndex = 0;
             this.boards.push(data);
             this.pieces.storePieces(data);
-            this.loading = false;
             this.updateValidMoves();
+            if(this.mode == GameMode.BVB){
+                this.botAction = true;
+            }
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
-        this.loading = true;
         let request = this.server.createRequest('initialBoard', null, reply.bind(this));
         return this.server.prologRequest(request);
     }
@@ -42,13 +42,43 @@ class Game {
         let reply = function(data) {
             this.addBoard(data);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
-            this.loading = false;
         };
-        this.loading = true;
         let direction = command.charAt(0);
         let coord = command.substr(1);
-        let move = [this.playerTurn,direction,coord];
-        let request = this.server.createRequest('move', [this.getMoveString(move),this.getBoardString()], reply.bind(this));
+        if(this.checkMove(direction,coord)){
+            let move = [this.playerTurn,direction,coord];
+            let request = this.server.createRequest('move', [this.getMoveString(move),this.getBoardString()], reply.bind(this));
+            return this.server.prologRequest(request);
+        }
+        console.log("Invalid Move");
+        return false;
+        
+    }
+
+    checkMove(direction,coord){
+        let num = parseInt(coord);
+        for(var i = 0; i < this.validMoves.length;i++){
+            if(this.validMoves[i][0] == direction && this.validMoves[i][1] == num){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    gameover(){
+        let reply = function(data) {
+            this.winner = data;
+            if(this.winner != 'none'){
+                this.terminated = true;
+                this.validIDs = [];
+                console.log("Congratulions " + this.winner + "! You Win!");
+            }
+            else{
+                this.updateValidMoves();
+            }
+            dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
+        };
+        let request = this.server.createRequest('game_over', [this.getBoardString()], reply.bind(this));
         return this.server.prologRequest(request);
     }
 
@@ -56,9 +86,7 @@ class Game {
         let reply = function(data) {
             this.addBoard(data);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
-            this.loading = false;
         };
-        console.log(this.pieces);
         let request = this.server.createRequest('playBot', [this.playerTurn,this.botLevel,this.getBoardString()], reply.bind(this));
         return this.server.prologRequest(request);
     }
@@ -122,7 +150,7 @@ class Game {
             this.boardIndex++;
             this.boards.push(board);
             this.pieces.storePieces(board);
-            this.updateValidMoves();
+            this.gameover();
             this.nextTurn();
         }
     }
@@ -361,12 +389,6 @@ class Game {
         }
         return command;
     }
-
-    sleep(ms){
-        let start = new Date().getTime();
-        while((new Date().getTime() - start) <= ms){}
-    }
-
 
     getValidId(move) {
         let id;

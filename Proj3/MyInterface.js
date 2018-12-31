@@ -93,6 +93,7 @@ class MyInterface extends CGFinterface {
         this.currentDifId = "Easy";
 
         group.add(this, 'currentDifId', difIdArray).name('Difficulty').onChange(val => this.scene.game.botLevel = difficulty[val]);
+        group.add(this.scene.game,'initBoard').name("Reset Game");
 
     }
 
