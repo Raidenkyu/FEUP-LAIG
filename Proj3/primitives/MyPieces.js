@@ -45,12 +45,14 @@ class MyPieces extends CGFobject{
     }
 
     initPieces(){
-        
+        this.whitePieces = [];
+        this.blackPieces = [];
+        this.addWhitePiece(0,0);
+        this.addBlackPiece(0,20);
     }
 
     storePieces(board){
-        this.whitePieces = [];
-        this.blackPieces = [];
+        this.initPieces();
         for(var i = 0; i < board.length;i++){
             for(var j = 0; j < board[0].length;j++){
                 if(board[j][i] == "blackStone"){
