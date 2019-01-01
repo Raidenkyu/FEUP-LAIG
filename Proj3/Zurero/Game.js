@@ -55,6 +55,19 @@ class Game {
         
     }
 
+    undo(){
+        if(this.boardIndex > 0){
+            this.boards.pop();
+            this.boards.pop();
+            this.boardIndex--;
+            this.boardIndex--;
+            this.pieces.storePieces(this.boards[this.boardIndex]);
+        }
+        else{
+            console.log("This was the initial board!! There's no previous board!");
+        }
+    }
+
     checkMove(direction,coord){
         let num = parseInt(coord);
         for(var i = 0; i < this.validMoves.length;i++){

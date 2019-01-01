@@ -58,6 +58,7 @@ class MyInterface extends CGFinterface {
         this.currentCameraId = this.scene.graph.defaultView;
 
         group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
+        group.add(this.scene,'rotateCamera').name('Rotate');
     }
 
 
@@ -74,9 +75,9 @@ class MyInterface extends CGFinterface {
      * @param {array} views
      */
     addModesGroup(){
-        var group = this.gui.addFolder("Play Mode");
+        var group = this.gui.addFolder("Zurero");
         group.open();
-
+        group.add(this.scene.game,'undo').name('Undo Play');
         let modes = new Array();
         modes["Player Vs Player"] = 1;
         modes["Player Vs Bot"] = 2;

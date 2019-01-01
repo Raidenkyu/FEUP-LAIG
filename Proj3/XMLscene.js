@@ -223,7 +223,9 @@ class XMLscene extends CGFscene {
      */
     update(currTime){
         var deltaTime = currTime - this.lastTime;
-        this.updateAnimations(deltaTime/1000);
+        let elapsedTime = deltaTime/1000;
+        this.updateCamera(elapsedTime);
+        this.updateAnimations(elapsedTime);
         this.updateGame();
         if(this.sceneInited){
             for(var key in this.graph.primitives){
@@ -240,6 +242,32 @@ class XMLscene extends CGFscene {
             this.game.botTurn();
         }
 
+    }
+
+    updateCamera(deltaTime){
+        if(this.cameraRotating){
+            let cam = this.camera;
+            let angularSpeed = Math.PI/5;
+            let elapsedAngle = angularSpeed*deltaTime;
+            let nextAngle = this.cameraAngle + elapsedAngle;
+            if(nextAngle >= Math.PI/2){
+                elapsedAngle = Math.PI/2 - this.cameraAngle;
+                this.cameraRotating = null;
+                this.cameraAngle = 0;
+            }
+            this.cameraAngle += elapsedAngle;
+            cam.orbit([0,1,0],elapsedAngle);
+        }
+    }
+
+    rotateCamera(){
+        if(this.cameraRotating == null){
+        this.cameraRotating = this.camera;
+        this.cameraAngle = 0;
+        }
+        else{
+            console.log("Wait!! Another camera still is rotating");
+        }
     }
 
     /**
