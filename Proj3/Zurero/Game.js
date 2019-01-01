@@ -77,12 +77,12 @@ class Game {
         switch (dir) {
             case "l":
                 count = 0;
-                cell = oldBoard[index][count];
+                cell = oldBoard[18-index][count];
                 while(cell == "emptySpace"){
                     count++;
-                    cell = oldBoard[index][count];
+                    cell = oldBoard[18-index][count];
                 }
-                if(oldBoard[index][count+1] == "emptySpace"){
+                if(oldBoard[18-index][count+1] == "emptySpace"){
                     console.log("2 Pieces Moved at Indexes: " + count + " and " + (count+1));
                 }
                 else{
@@ -92,12 +92,12 @@ class Game {
 
             case "r":
                 count = 18;
-                cell = oldBoard[index][count];
+                cell = oldBoard[18-index][count];
                 while(cell == "emptySpace"){
                     count--;
-                    cell = oldBoard[index][count];
+                    cell = oldBoard[18-index][count];
                 }
-                if(oldBoard[index][count-1] == "emptySpace"){
+                if(oldBoard[18-index][count-1] == "emptySpace"){
                     console.log("2 Pieces Moved at Indexes: " + count + " and " + (count-1));
                 }
                 else{
