@@ -11,6 +11,7 @@ class MyPieces extends CGFobject{
         this.whitePieces = [];
         this.piece = new MySphere(scene,1,15,15);
         this.transScale = 2.22222;
+        this.animationTime = 0;
         this.initPieces();
         this.initMaterials();
     };
@@ -34,6 +35,19 @@ class MyPieces extends CGFobject{
         }
         this.scene.popMatrix();
     }
+
+
+    update(deltaTime) {
+        if(this.scene.game.animationRunning){
+            this.animationTime += deltaTime;
+            //console.log("Animation time = " + this.animationTime);
+            if(this.animationTime > 5000){
+                this.animationTime = 0;
+                this.scene.game.animationRunning = false;
+                console.log("Terminou a Animação!");
+            }
+        }
+	}
 
 
     addBlackPiece(x,y){

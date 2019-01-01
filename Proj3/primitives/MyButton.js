@@ -14,10 +14,10 @@ class MyButton extends CGFobject{
     display(buttonId){     
         this.scene.rotate(Math.PI/2.0, 0,1,0);
 
-        let n = this.scene.game.validIDs.includes(buttonId);
+        let isValid = this.scene.game.validIDs.includes(buttonId);
 
         let buttonMat;
-        if(n){
+        if(isValid){
             buttonMat = this.scene.graph.materials["mat_green"];
         }
         else{

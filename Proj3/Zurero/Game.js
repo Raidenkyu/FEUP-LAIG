@@ -21,10 +21,12 @@ class Game {
         this.terminated = false;
         this.winner = 'none';
         this.boards = [];
+        this.movesArray = [];
         this.validMoves = [];
         this.validIDs = [];
         this.boardIndex = 0;
         this.playerTurn = "player1";
+        this.animationRunning = false;
         let reply = function(data) {
             this.boards.push(data);
             this.pieces.storePieces(data);
@@ -48,6 +50,9 @@ class Game {
         if(this.checkMove(direction,coord)){
             let move = [this.playerTurn,direction,coord];
             let request = this.server.createRequest('move', [this.getMoveString(move),this.getBoardString()], reply.bind(this));
+            this.animationRunning = true;
+            console.log("Animation Running = " + this.animationRunning);
+            console.log("Moves Array: " + this.movesArray);
             return this.server.prologRequest(request);
         }
         console.log("Invalid Move");
@@ -55,13 +60,16 @@ class Game {
         
     }
 
-    undo(){
+    undo(){ // TODO - O if nao deveria ser > 1? Porque se não o board index pode ir a valores abaixo de 0
         if(this.boardIndex > 0){
             this.boards.pop();
             this.boards.pop();
+            this.movesArray.pop();
+            this.movesArray.pop();
             this.boardIndex--;
             this.boardIndex--;
             this.pieces.storePieces(this.boards[this.boardIndex]);
+            this.updateValidMoves();
         }
         else{
             console.log("This was the initial board!! There's no previous board!");
@@ -152,9 +160,12 @@ class Game {
 
 
     play(pickId){
-        if(this.mode == GameMode.PVP || (this.mode == GameMode.PVB && this.playerTurn == "player1")){
-            let command = this.pickingTranslator(pickId);
-            this.move(command);
+        if(!this.animationRunning){
+            if(this.mode == GameMode.PVP || (this.mode == GameMode.PVB && this.playerTurn == "player1")){
+                let command = this.pickingTranslator(pickId);
+                this.movesArray.push(command);
+                this.move(command);
+            }
         }
     }
 

@@ -232,6 +232,8 @@ class XMLscene extends CGFscene {
                 let elem = this.graph.primitives[key];
                 if(elem instanceof MyWater)
                     elem.update(currTime);
+                if(elem instanceof MyPieces)
+                    elem.update(deltaTime);
             }
         }
         this.lastTime = currTime;
