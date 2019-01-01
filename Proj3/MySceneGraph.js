@@ -685,7 +685,7 @@ class MySceneGraph {
             this.textures[texId] = tex;
         }
 
-        console.log("Parsed textures");
+        this.log("Parsed textures");
 
         return null;
     }
@@ -1412,7 +1412,7 @@ class MySceneGraph {
 
                 // idtexture
                 var idText = this.reader.getString(primNode, 'idtexture');
-                console.log(idText);
+                //console.log(idText);
                 if (idText == null)
                     return "unable to parse idtexture from the primitive ID " + primId;
                 else

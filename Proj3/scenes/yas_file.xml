@@ -1,8 +1,12 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_far" >
+	<views default="view_board" >
 
+		<perspective id="view_board" near="0.1" far="500" angle="22.92">
+			<from x="10.0" y="45.0" z="40.0" />
+			<to x="10.0" y="0.0" z="10.0" />
+		</perspective>
 		
 		<perspective id="view_far" near="0.1" far="500" angle="22.92">
 			<from x="40.0" y="35.0" z="40.0" />

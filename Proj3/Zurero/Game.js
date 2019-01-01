@@ -50,14 +50,92 @@ class Game {
         if(this.checkMove(direction,coord)){
             let move = [this.playerTurn,direction,coord];
             let request = this.server.createRequest('move', [this.getMoveString(move),this.getBoardString()], reply.bind(this));
+            
+            this.setupAnimationVars(direction, coord);
             this.animationRunning = true;
             console.log("Animation Running = " + this.animationRunning);
-            console.log("Moves Array: " + this.movesArray);
+            console.log("Board Array Length: " + this.boards.length);
+
             return this.server.prologRequest(request);
         }
         console.log("Invalid Move");
         return false;
         
+    }
+
+    setupAnimationVars(direction, coord){
+        let currTurn = this.movesArray.length-1;
+        this.ani_Dir = direction
+        this.ani_Index = parseInt(coord);
+
+        this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
+    }
+
+    calcBoardDif(dir, index, oldBoard){
+        let count;
+        let cell;
+        switch (dir) {
+            case "l":
+                count = 0;
+                cell = oldBoard[index][count];
+                while(cell == "emptySpace"){
+                    count++;
+                    cell = oldBoard[index][count];
+                }
+                if(oldBoard[index][count+1] == "emptySpace"){
+                    console.log("2 Pieces Moved at Indexes: " + count + " and " + (count+1));
+                }
+                else{
+                    console.log("1 Piece Moved at Index: " + (count-1));
+                }
+                break;
+
+            case "r":
+                count = 18;
+                cell = oldBoard[index][count];
+                while(cell == "emptySpace"){
+                    count--;
+                    cell = oldBoard[index][count];
+                }
+                if(oldBoard[index][count-1] == "emptySpace"){
+                    console.log("2 Pieces Moved at Indexes: " + count + " and " + (count-1));
+                }
+                else{
+                    console.log("1 Piece Moved at Index: " + (count+1));
+                }
+                break;
+
+            case "u":
+                count = 0;
+                cell = oldBoard[count][index];
+                while(cell == "emptySpace"){
+                    count++;
+                    cell = oldBoard[count][index];
+                }
+                if(oldBoard[count+1][index] == "emptySpace"){
+                    console.log("2 Pieces Moved at Indexes: " + count + " and " + (count+1));
+                }
+                else{
+                    console.log("1 Piece Moved at Index: " + (count-1));
+                }
+                break;
+
+            case "d":
+                count = 18;
+                cell = oldBoard[count][index];
+                while(cell == "emptySpace"){
+                    count--;
+                    cell = oldBoard[count][index];
+                }
+                if(oldBoard[count-1][index] == "emptySpace"){
+                    console.log("2 Pieces Moved at Indexes: " + count + " and " + (count-1));
+                }
+                else{
+                    console.log("1 Piece Moved at Index: " + (count+1));
+                }
+                break;     
+        }
+
     }
 
     undo(){ // TODO - O if nao deveria ser > 1? Porque se não o board index pode ir a valores abaixo de 0
@@ -424,10 +502,10 @@ class Game {
                 id = 1*19 + move[1];
                 break;
             case "l":
-                id =  2*19 + 20 - move[1];
+                id = 2*19 + 20 - move[1];
                 break;
             case "r":
-                id = 3*19 + move[1];
+                id = 3*19 + 20 - move[1];
                 break;                                            
         }
         return id;
