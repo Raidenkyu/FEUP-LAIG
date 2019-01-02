@@ -44,6 +44,8 @@ class MyPieces extends CGFobject{
                 this.whitePiecesAnimation = [];
                 this.removePiecesAnimation();
                 this.scene.game.ani_firstIte = false;
+
+                this.calcAnimationVals();
             }
 
 
@@ -61,10 +63,44 @@ class MyPieces extends CGFobject{
                 this.blackPiecesAnimation = [];
                 this.whitePiecesAnimation = [];
                 this.scene.game.animationRunning = false;
+
+                //Jogo terminou
+                if(this.scene.game.ani_term){
+                    this.scene.game.terminated = true;
+                    this.scene.game.validIDs = [];
+                    this.scene.game.showWinner();
+                }
+
                 console.log("Terminou a Animação!");
             }
         }
 	}
+
+    calcAnimationVals(){
+
+        this.startArcPoint = this.scene.game.ani_PiecesCoords[this.scene.game.ani_PiecesCoords.length-1];
+
+        this.endTranslatePoint = this.scene.game.ani_PiecesCoords[0];
+
+        let dir = this.scene.game.ani_Dir;
+        let index = this.scene.game.ani_Index;
+        switch (dir){
+            case "l":
+                this.endArcPoint = [18-index+1, 0];
+            case "r":
+                this.endArcPoint = [18-index+1, 20];
+            case "u":
+                this.endArcPoint = [0, index];
+            case "d":
+                this.endArcPoint = [20, index];
+        }
+
+        //console.log("Start: " + this.startArcPoint);
+        //console.log("Mid: ");
+        //console.log(this.endArcPoint);
+        //console.log("")
+
+    }
 
     removePiecesAnimation(){
         for(let i = 0; i < this.blackPieces.length; i++){

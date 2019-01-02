@@ -66,6 +66,8 @@ class Game {
         this.ani_Dir = direction
         this.ani_Index = parseInt(coord);
         this.ani_firstIte = true;
+        this.ani_term = false;
+        this.ani_winner = "none";
         this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
 
         this.animationRunning = true;
@@ -177,9 +179,14 @@ class Game {
         let reply = function(data) {
             this.winner = data;
             if(this.winner != 'none'){
-                this.terminated = true;
-                this.validIDs = [];
-                console.log("Congratulions " + this.winner + "! You Win!");
+                if(!this.animationRunning){
+                    this.terminated = true;
+                    this.validIDs = [];
+                    this.showWinner;
+                }
+                else{
+                    this.ani_term = true;
+                }
             }
             else{
                 this.updateValidMoves();
@@ -188,6 +195,10 @@ class Game {
         };
         let request = this.server.createRequest('game_over', [this.getBoardString()], reply.bind(this));
         return this.server.prologRequest(request);
+    }
+
+    showWinner(){
+        console.log("Congratulions " + this.winner + "! You Win!");
     }
 
     playBot(){
