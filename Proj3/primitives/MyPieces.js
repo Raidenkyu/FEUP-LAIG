@@ -44,6 +44,10 @@ class MyPieces extends CGFobject{
             if(this.animationTime > 5000){
                 this.animationTime = 0;
                 this.scene.game.animationRunning = false;
+                //console.log(this.blackPieces);
+                //console.log(this.whitePieces);
+                //console.log("Break");
+                //console.log(this.scene.game.ani_PiecesCoords);
                 console.log("Terminou a Animação!");
             }
         }

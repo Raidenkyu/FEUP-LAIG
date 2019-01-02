@@ -74,6 +74,7 @@ class Game {
     calcBoardDif(dir, index, oldBoard){
         let count;
         let cell;
+        this.ani_PiecesCoords = [];
         switch (dir) {
             case "l":
                 count = 0;
@@ -83,10 +84,10 @@ class Game {
                     cell = oldBoard[18-index][count];
                 }
                 if(oldBoard[18-index][count+1] == "emptySpace"){
-                    console.log("2 Pieces Moved at Indexes: " + count + " and " + (count+1));
+                    this.ani_PiecesCoords.push([index+1,count+1], [index+1, count+2]);
                 }
                 else{
-                    console.log("1 Piece Moved at Index: " + (count-1));
+                    this.ani_PiecesCoords.push([index+1,count]);
                 }
                 break;
 
@@ -98,10 +99,10 @@ class Game {
                     cell = oldBoard[18-index][count];
                 }
                 if(oldBoard[18-index][count-1] == "emptySpace"){
-                    console.log("2 Pieces Moved at Indexes: " + count + " and " + (count-1));
+                    this.ani_PiecesCoords.push([index+1,count+1], [index+1, count]);
                 }
                 else{
-                    console.log("1 Piece Moved at Index: " + (count+1));
+                    this.ani_PiecesCoords.push([index+1, count+2]);
                 }
                 break;
 
@@ -113,10 +114,10 @@ class Game {
                     cell = oldBoard[count][index];
                 }
                 if(oldBoard[count+1][index] == "emptySpace"){
-                    console.log("2 Pieces Moved at Indexes: " + count + " and " + (count+1));
+                    this.ani_PiecesCoords.push([count+1,index+1], [count+2, index+1]);
                 }
                 else{
-                    console.log("1 Piece Moved at Index: " + (count-1));
+                    this.ani_PiecesCoords.push([count,index+1]);
                 }
                 break;
 
@@ -128,14 +129,21 @@ class Game {
                     cell = oldBoard[count][index];
                 }
                 if(oldBoard[count-1][index] == "emptySpace"){
-                    console.log("2 Pieces Moved at Indexes: " + count + " and " + (count-1));
+                    this.ani_PiecesCoords.push([count+1,index+1], [count, index+1]);
                 }
                 else{
-                    console.log("1 Piece Moved at Index: " + (count+1));
+                    this.ani_PiecesCoords.push([count+2, index+1]);
                 }
                 break;     
         }
 
+        if(this.playerTurn == "player1"){
+            this.ani_PiecesCoords.push([0,0]);
+        }
+        else{
+            this.ani_PiecesCoords.push([0,20]);
+        }
+        
     }
 
     undo(){ // TODO - O if nao deveria ser > 1? Porque se não o board index pode ir a valores abaixo de 0
