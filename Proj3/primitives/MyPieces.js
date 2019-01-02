@@ -46,11 +46,15 @@ class MyPieces extends CGFobject{
                 this.scene.game.ani_firstIte = false;
 
                 this.calcAnimationVals();
+
+                //this.circAnimation = new CircularAnimation("circular", 3);
+                //this.linAnimation = new LinearAnimation("linear", 3);
             }
 
+            //this.updateAnimations(deltaTime);
 
             this.animationTime += deltaTime;
-            if(this.animationTime > 7000){ //Terminou a animação, 7s neste momento
+            if(this.animationTime > 7.0){ //Terminou a animação, 7s neste momento
                 //Atualizar visualmente as valid moves
                 this.scene.game.validMoves = this.scene.game.ani_ValidMoves;
                 this.scene.game.validIDs = [];
@@ -76,6 +80,10 @@ class MyPieces extends CGFobject{
         }
 	}
 
+    updateAnimations(deltaTime){
+
+    }
+
     calcAnimationVals(){
 
         this.startArcPoint = this.scene.game.ani_PiecesCoords[this.scene.game.ani_PiecesCoords.length-1];
@@ -86,19 +94,22 @@ class MyPieces extends CGFobject{
         let index = this.scene.game.ani_Index;
         switch (dir){
             case "l":
-                this.endArcPoint = [18-index+1, 0];
+                this.endArcPoint = [20-index, 0];
+                break;
             case "r":
-                this.endArcPoint = [18-index+1, 20];
+                this.endArcPoint = [20-index, 20];
+                break;
             case "u":
                 this.endArcPoint = [0, index];
+                break;
             case "d":
                 this.endArcPoint = [20, index];
+                break;
         }
 
-        //console.log("Start: " + this.startArcPoint);
-        //console.log("Mid: ");
-        //console.log(this.endArcPoint);
-        //console.log("")
+        this.centerArcPoint = [((this.endArcPoint[0]+this.startArcPoint[0])/2.0),((this.endArcPoint[1]+this.startArcPoint[1])/2.0)];
+        this.radius = Math.sqrt(Math.pow((this.centerArcPoint[0]-this.startArcPoint[0]),2) + Math.pow((this.centerArcPoint[1]-this.startArcPoint[1]),2));
+
 
     }
 

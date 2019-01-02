@@ -233,7 +233,7 @@ class XMLscene extends CGFscene {
                 if(elem instanceof MyWater)
                     elem.update(currTime);
                 if(elem instanceof MyPieces)
-                    elem.update(deltaTime);
+                    elem.update(elapsedTime);
             }
         }
         this.lastTime = currTime;
