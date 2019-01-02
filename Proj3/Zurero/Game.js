@@ -52,9 +52,7 @@ class Game {
             let request = this.server.createRequest('move', [this.getMoveString(move),this.getBoardString()], reply.bind(this));
             
             this.setupAnimationVars(direction, coord);
-            this.animationRunning = true;
             console.log("Animation Running = " + this.animationRunning);
-            console.log("Board Array Length: " + this.boards.length);
 
             return this.server.prologRequest(request);
         }
@@ -67,8 +65,10 @@ class Game {
         let currTurn = this.movesArray.length-1;
         this.ani_Dir = direction
         this.ani_Index = parseInt(coord);
-
+        this.ani_firstIte = true;
         this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
+
+        this.animationRunning = true;
     }
 
     calcBoardDif(dir, index, oldBoard){
@@ -84,10 +84,10 @@ class Game {
                     cell = oldBoard[18-index][count];
                 }
                 if(oldBoard[18-index][count+1] == "emptySpace"){
-                    this.ani_PiecesCoords.push([index+1,count+1], [index+1, count+2]);
+                    this.ani_PiecesCoords.push([18-index+1,count+1], [18-index+1, count+2]);
                 }
                 else{
-                    this.ani_PiecesCoords.push([index+1,count]);
+                    this.ani_PiecesCoords.push([18-index+1,count]);
                 }
                 break;
 
@@ -99,10 +99,10 @@ class Game {
                     cell = oldBoard[18-index][count];
                 }
                 if(oldBoard[18-index][count-1] == "emptySpace"){
-                    this.ani_PiecesCoords.push([index+1,count+1], [index+1, count]);
+                    this.ani_PiecesCoords.push([18-index+1,count+1], [18-index+1, count]);
                 }
                 else{
-                    this.ani_PiecesCoords.push([index+1, count+2]);
+                    this.ani_PiecesCoords.push([18-index+1, count+2]);
                 }
                 break;
 
@@ -143,6 +143,7 @@ class Game {
         else{
             this.ani_PiecesCoords.push([0,20]);
         }
+        this.ani_pTurn = this.playerTurn;
         
     }
 
@@ -200,11 +201,17 @@ class Game {
 
     updateValidMoves() {
         let reply = function(data) {
-            this.validMoves = data;
-            this.validIDs = [];
-            this.validMoves.forEach(element => {
-                this.validIDs.push(this.getValidId(element));
-            });
+            if(!this.animationRunning){
+                this.validMoves = data;
+                this.validIDs = [];
+                this.validMoves.forEach(element => {
+                    this.validIDs.push(this.getValidId(element));
+                });
+            }
+            else{
+                this.ani_ValidMoves = data;
+            }
+
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('valid_moves', [this.getBoardString(),this.playerTurn], reply.bind(this));
