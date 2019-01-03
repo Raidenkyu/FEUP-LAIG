@@ -3,12 +3,16 @@
  * @constructor
  */
 
+var AniState = {Circ:1,Lin1:2,Lin2:3,Done:4};
+
 class MyPieces extends CGFobject{
     constructor(scene) {
         super(scene);
         this.scene = scene;
         this.blackPieces = [];
         this.whitePieces = [];
+        this.animatedPieces = [];
+        this.aniState = AniState.Circ;
         this.piece = new MySphere(scene,1,15,15);
         this.transScale = 2.22222;
         this.animationTime = 0;
@@ -33,12 +37,21 @@ class MyPieces extends CGFobject{
             this.piece.display();
             this.scene.popMatrix();
         }
+
+        for(var i = 0; i < this.animatedPieces.length;i++){
+            this.scene.pushMatrix();
+            this.scene.translate(this.animatedPieces[i][2]*this.transScale+1,0.3,this.animatedPieces[i][0]*this.transScale+1);
+            this.piece.display();
+            this.scene.popMatrix();
+        }
+
         this.scene.popMatrix();
     }
 
 
     update(deltaTime) {
         if(this.scene.game.animationRunning){
+            //Init the animation
             if(this.scene.game.ani_firstIte){
                 this.blackPiecesAnimation = [];
                 this.whitePiecesAnimation = [];
@@ -46,12 +59,24 @@ class MyPieces extends CGFobject{
                 this.scene.game.ani_firstIte = false;
 
                 this.calcAnimationVals();
+                this.circAnimation = new CircularAnimation("circular", 3, this.centerArcPoint, this.radius, 0, Math.PI);
+                
+                if(this.scene.game.ani_PiecesCoords.length == 1){
+                    this.linAnimation1 = new LinearAnimation("linear1piece", 3, [[0,0,0],[10,0,10]]);
+                    this.aniPieces = 1;
+                }
+                else{
+                    this.linAnimation1 = new LinearAnimation("linear1piece", 3, [[0,0,0],[10,0,10]]);
+                    this.linAnimation2 = new LinearAnimation("linear1piece", 3, [[0,0,0],[10,0,10]]);
+                    this.linAnimation3 = new LinearAnimation("linear1piece", 3, [[0,0,0],[10,0,10]]);
+                    this.aniPieces = 2;
+                }
 
-                //this.circAnimation = new CircularAnimation("circular", 3);
-                //this.linAnimation = new LinearAnimation("linear", 3);
             }
 
-            //this.updateAnimations(deltaTime);
+            
+            this.updateAnimations(deltaTime);
+
 
             this.animationTime += deltaTime;
             if(this.animationTime > 7.0){ //Terminou a animação, 7s neste momento
@@ -81,6 +106,55 @@ class MyPieces extends CGFobject{
 	}
 
     updateAnimations(deltaTime){
+        this.animatedPieces = [];
+
+        switch(this.aniState){
+            case AniState.Circ:
+                if(this.circAnimation.terminated)
+                    this.aniState = AniState.Lin1;
+                
+                break;
+            case AniState.Lin1:
+                if(this.linAnimation1.terminated){
+                    if(this.aniPieces == 1)
+                        this.aniState = AniState.Done;
+                    else
+                        this.aniState = AniState.Lin2;
+                }
+                break;
+            case AniState.Lin2:
+                if(this.linAnimation2.terminated && this.linAnimation3.terminated){
+                    this.aniState = AniState.Done;
+                }
+                break;
+            case AniState.Done:
+                break;
+        }
+        
+
+        switch(this.aniState){
+            case AniState.Circ:
+                console.log("Circ");
+                break;
+            case AniState.Lin1:
+                console.log("Lin1");
+                break;
+            case AniState.Lin2:
+                console.log("Lin2");
+                break;
+        }
+
+
+        this.linAnimation1.update(deltaTime);
+
+
+
+        if(!this.linAnimation1.terminated){
+                
+            let newPos = this.linAnimation1.applyPieces();
+            this.animatedPieces.push(newPos);
+            //console.log(newPos);
+        }
 
     }
 
@@ -141,10 +215,12 @@ class MyPieces extends CGFobject{
         for(let i = 0; i < this.whitePiecesAnimation.length; i++){
             this.whitePieces.push(this.whitePiecesAnimation[i]);
         }
+        /*
         if(this.scene.game.ani_pTurn == "player1")
             this.whitePieces.push([0,0]);
         else
             this.blackPieces.push([0,20]);
+            */
 
     }
 
@@ -161,16 +237,17 @@ class MyPieces extends CGFobject{
         this.blackPieces = [];
         if(this.scene != undefined)
             if(this.scene.game != undefined){
-                if(!this.scene.game.animationRunning){
+                //if(!this.scene.game.animationRunning){
                     this.addWhitePiece(0,0);
                     this.addBlackPiece(0,20);
-                }
+                /*}
                 else{
                     if(this.scene.game.ani_pTurn == "player1")
                         this.addBlackPiece(0,20);
                     else
                         this.addWhitePiece(0,0);
                 }
+                */
             }
             
         
