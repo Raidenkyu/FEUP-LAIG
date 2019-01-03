@@ -88,6 +88,7 @@ class Game {
                 }
                 if(oldBoard[18-index][count+1] == "emptySpace"){
                     this.ani_PiecesCoords.push([18-index+1,count+1], [18-index+1, count+2]);
+                    this.ani_PieceColor = oldBoard[18-index][count];
                 }
                 else{
                     this.ani_PiecesCoords.push([18-index+1,count]);
@@ -103,6 +104,7 @@ class Game {
                 }
                 if(oldBoard[18-index][count-1] == "emptySpace"){
                     this.ani_PiecesCoords.push([18-index+1,count+1], [18-index+1, count]);
+                    this.ani_PieceColor = oldBoard[18-index][count];
                 }
                 else{
                     this.ani_PiecesCoords.push([18-index+1, count+2]);
@@ -118,6 +120,7 @@ class Game {
                 }
                 if(oldBoard[count+1][index] == "emptySpace"){
                     this.ani_PiecesCoords.push([count+1,index+1], [count+2, index+1]);
+                    this.ani_PieceColor = oldBoard[count,index];
                 }
                 else{
                     this.ani_PiecesCoords.push([count,index+1]);
@@ -133,6 +136,7 @@ class Game {
                 }
                 if(oldBoard[count-1][index] == "emptySpace"){
                     this.ani_PiecesCoords.push([count+1,index+1], [count, index+1]);
+                    this.ani_PieceColor = oldBoard[count,index];
                 }
                 else{
                     this.ani_PiecesCoords.push([count+2, index+1]);
