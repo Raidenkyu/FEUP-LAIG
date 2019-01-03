@@ -11,7 +11,34 @@ function getUrlVars() {
     return vars;
 }	 
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js','GraphNode.js','GraphLeaf.js','primitives/MyCylinder.js','primitives/MyCircle.js','primitives/MyRectangle.js','primitives/MyTriangle.js','primitives/MySphere.js','primitives/MyPlane.js','primitives/MyTorus.js','primitives/MyCylinder2.js','primitives/MyTerrain.js','primitives/MyWater.js','primitives/MyPatch.js','primitives/MyButton.js','primitives/ButtonCollection.js', 'primitives/MyVehicle.js', 'primitives/MyPieces.js','animations/Animation.js','animations/LinearAnimation.js','animations/CircularAnimation.js','Zurero/connection.js','Zurero/Game.js',
+serialInclude(['../lib/CGF.js', 
+            'XMLscene.js', 
+            'MySceneGraph.js', 
+            'MyInterface.js',
+            'GraphNode.js',
+            'GraphLeaf.js',
+            'primitives/MyCylinder.js',
+            'primitives/MyCircle.js',
+            'primitives/MyRectangle.js',
+            'primitives/MyTriangle.js',
+            'primitives/MySphere.js',
+            'primitives/MyPlane.js',
+            'primitives/MyTorus.js',
+            'primitives/MyCylinder2.js',
+            'primitives/MyTerrain.js',
+            'primitives/MyWater.js',
+            'primitives/MyPatch.js',
+            'primitives/MyButton.js',
+            'primitives/ButtonCollection.js', 
+            'primitives/MyVehicle.js', 
+            'primitives/MyPieces.js',
+            'animations/Animation.js',
+            'animations/LinearAnimation.js',
+            'animations/CircularAnimation.js',
+            'Zurero/connection.js',
+            'Zurero/Game.js',
+            'interface/GameInterface.js',
+            'interface/InterfaceComponent.js',
 
 /**
  * Main function
