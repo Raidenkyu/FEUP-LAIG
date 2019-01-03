@@ -139,12 +139,14 @@ class Game {
                 break;     
         }
 
+        /*
         if(this.playerTurn == "player1"){
             this.ani_PiecesCoords.push([0,0]);
         }
         else{
             this.ani_PiecesCoords.push([0,20]);
         }
+        */
         this.ani_pTurn = this.playerTurn;
         
     }

@@ -84,4 +84,19 @@ class LinearAnimation extends Animation {
         return transform;
 
     }
+
+    applyPieces(){
+        var transform = mat4.create();
+        mat4.identity(transform);
+        var relativeDistance = this.currentDistance/this.arrayDist[this.index];
+        var x = this.controlPoints[this.index][0] + this.vectors[this.index][0]*relativeDistance;
+        var y = this.controlPoints[this.index][1] + this.vectors[this.index][1]*relativeDistance;
+        var z = this.controlPoints[this.index][2] + this.vectors[this.index][2]*relativeDistance;
+        mat4.translate(transform,transform,[x,y,z]);
+        mat4.rotate(transform,transform,this.rotationAngle,[0,1,0]);
+        
+        let outVec = [transform[12], transform[13], transform[14]];
+        //mat4.getTranslation(outVec, transform);
+        return outVec;
+    }
 }
