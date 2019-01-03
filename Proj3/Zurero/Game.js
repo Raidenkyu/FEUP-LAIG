@@ -155,8 +155,8 @@ class Game {
         
     }
 
-    undo(){ // TODO - O if nao deveria ser > 1? Porque se não o board index pode ir a valores abaixo de 0
-        if(this.boardIndex > 0){
+    undo(){ 
+        if(this.boardIndex > 1){
             this.boards.pop();
             this.boards.pop();
             this.movesArray.pop();
@@ -277,6 +277,10 @@ class Game {
                 this.move(command);
             }
         }
+    }
+
+    playGameMovie(){
+        
     }
 
     addBoard(board){

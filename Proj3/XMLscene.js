@@ -93,6 +93,7 @@ class XMLscene extends CGFscene {
      */
     onGraphLoaded() {
         this.game = new Game(this);
+        this.gameInterface = new GameInterface(this,this.game);
         this.initViews();
 
         this.axis = new CGFaxis(this, this.graph.axisLength);
@@ -216,6 +217,7 @@ class XMLscene extends CGFscene {
         // ---- END Background, camera and axis setup
 
         //TODO - this.clearPickRegistration(); again?
+        this.gameInterface.display();
     }
     /**
      * Updates the scene to be displayed, including its primitives and animations
@@ -227,6 +229,7 @@ class XMLscene extends CGFscene {
         this.updateCamera(elapsedTime);
         this.updateAnimations(elapsedTime);
         this.updateGame();
+        this.updateInterface(deltaTime);
         if(this.sceneInited){
             for(var key in this.graph.primitives){
                 let elem = this.graph.primitives[key];
@@ -244,6 +247,12 @@ class XMLscene extends CGFscene {
             this.game.botTurn();
         }
 
+    }
+
+    updateInterface(deltaTime){
+        if(this.gameInterface){
+            this.gameInterface.update(deltaTime);
+        }
     }
 
     updateCamera(deltaTime){

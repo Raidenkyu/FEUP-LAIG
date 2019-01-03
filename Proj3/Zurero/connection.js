@@ -32,12 +32,11 @@ class Connection {
     
 
     getPrologRequest(requestString, onSuccess, onError, port, tries) {
-        var requestPort = port || 8081
         var request = new XMLHttpRequest();
         if (!tries) {
             tries = 0;
         }
-        request.open('GET', 'http://localhost:' + requestPort + '/' + requestString, true);
+        request.open('GET', 'http://localhost:' + this.port + '/' + requestString, true);
     
         request.onload = function(data) {
             tries = 0;
