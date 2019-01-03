@@ -216,9 +216,15 @@ class XMLscene extends CGFscene {
         this.popMatrix();
         // ---- END Background, camera and axis setup
 
-        //TODO - this.clearPickRegistration(); again?
-        this.gameInterface.display();
+        this.displayGameInterface();
     }
+
+    displayGameInterface(){
+        if(this.gameInterface){
+            this.gameInterface.display();
+        }
+    }
+
     /**
      * Updates the scene to be displayed, including its primitives and animations
      * @param {Time} currTime 

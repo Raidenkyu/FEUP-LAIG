@@ -131,7 +131,7 @@ class GameInterface {
         this.ui_elements["white_score"].render();
         this.ui_elements["minus"].render();
         this.ui_elements["black_score"].render();
-        if (!this.game.terminate) {
+        if (!this.game.terminated) {
             this.ui_elements["player"].render();
             this.ui_elements[this.game.playerTurn].render();
         } else {
@@ -145,25 +145,27 @@ class GameInterface {
     };
 
     update(deltaTime) {
-        if (!this.game.terminate  && !this.game.animationRunning) {
+        if (!this.game.terminated  && !this.game.animationRunning) {
             this.turnTime -= deltaTime;
             if (this.turnTime > 0) {
-                let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((this.turnTime % (1000 * 60)) / 1000);
+                let minutes = Math.floor((this.turnTime % (1000 * 60 * 60)) / (1000 * 60));
 
                 this.ui_elements["minutes0"].texture = this.timer_textures[Math.floor(minutes / 10)];
                 this.ui_elements["minutes1"].texture = this.timer_textures[minutes % 10];
                 this.ui_elements["seconds0"].texture = this.timer_textures[Math.floor(seconds / 10)];
                 this.ui_elements["seconds1"].texture = this.timer_textures[seconds % 10];
             } else {
-                this.game.nextTurn();
-                this.resetTimer();
+                this.game.timeout();
             }
+        }
+        else{
+            this.resetTimer();
         }
 
         if (this.scene.graph) {
-            this.ui_elements["white_score"].texture = this.timer_textures[this.scene.graph.white_score];
-            this.ui_elements["black_score"].texture = this.timer_textures[this.scene.graph.black_score];
+            this.ui_elements["white_score"].texture = this.timer_textures[this.game.victories[0]];
+            this.ui_elements["black_score"].texture = this.timer_textures[this.game.victories[1]];
         }
     }
 
@@ -212,6 +214,6 @@ class GameInterface {
     }
 
     resetTimer() {
-        this.totalTime = 30* 1000;
+        this.turnTime = 31 * 1000;
     }
 }

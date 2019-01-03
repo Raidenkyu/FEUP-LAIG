@@ -35,7 +35,9 @@ class InterfaceComponent {
     render() {
       let shader = this.scene.activeShader;
       let gl = this.scene.gl;
-  
+
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      gl.enable(gl.BLEND);
       gl.enableVertexAttribArray(shader.attributes.aVertexPosition);
       gl.bindBuffer(gl.ARRAY_BUFFER, this.vertsBuffer);
       gl.vertexAttribPointer(shader.attributes.aVertexPosition, 2, gl.FLOAT, false, 0, 0);

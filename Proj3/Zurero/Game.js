@@ -13,6 +13,7 @@ class Game {
         this.pieces = this.scene.graph.primitives['pieces'];
         this.server = new Connection();
         this.botLevel = 1; // Assumiste bem.
+        this.victories = [0,0];
         this.initBoard();
     }
 
@@ -184,7 +185,7 @@ class Game {
                 if(!this.animationRunning){
                     this.terminated = true;
                     this.validIDs = [];
-                    this.showWinner;
+                    this.showWinner();
                 }
                 else{
                     this.ani_term = true;
@@ -199,8 +200,26 @@ class Game {
         return this.server.prologRequest(request);
     }
 
+    timeout(){
+        if(this.playerTurn == "player1"){
+            this.winner = "player2";
+        }
+        else{
+            this.winner = "player1";
+        }
+        this.terminated = true;
+        this.validIDs = [];
+        this.showWinner();
+    }
+
     showWinner(){
         console.log("Congratulions " + this.winner + "! You Win!");
+        if(this.winner == "player1"){
+            this.victories[0]++;
+        }
+        else {
+            this.victories[1]++;
+        }
     }
 
     playBot(){
