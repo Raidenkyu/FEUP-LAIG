@@ -53,7 +53,7 @@ class GameInterface {
             text_coords,
             indices,
             "undo.png",
-            this.game.undo());
+            this.game.undo.bind(this.game));
         this.ui_elements.push(undo);
 
         let reset = new InterfaceComponent(this.scene, [
@@ -65,7 +65,7 @@ class GameInterface {
             text_coords,
             indices,
             "reset.png",
-            this.game.initBoard());
+            this.game.initBoard.bind(this.game));
         this.ui_elements.push(reset);
 
         let movie_position = [
@@ -74,7 +74,7 @@ class GameInterface {
             0.7, -0.7,
             0.95, -0.7
         ];
-        let movie = new InterfaceComponent(this.scene, movie_position, text_coords, indices, "movie.png", this.game.playGameMovie());
+        let movie = new InterfaceComponent(this.scene, movie_position, text_coords, indices, "movie.png", this.game.playGameMovie.bind(this.game));
         this.ui_elements["movie"] = movie;
 
         let game_over_position = [-0.5, 0.95,
@@ -88,7 +88,6 @@ class GameInterface {
         this.initCounter(text_coords, indices);
 
         //Init shader
-        let currentPath = document.location.pathname;
         this.ui_shader = new CGFshader(this.gl, 'shaders/interface.vert','shaders/interface.frag');
         let previous_shader = this.scene.activeShader;
         this.scene.setActiveShader(this.ui_shader);

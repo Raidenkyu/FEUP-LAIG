@@ -58,8 +58,11 @@ class InterfaceComponent {
     }
   
     onClick() {
-        if (this.on_click)
-            this.on_click();
+        if (this.on_click){
+          console.log("clicked");
+          this.on_click();
+        }
+
     }
   
     isInside(x, y, canvas_width, canvas_height) {
