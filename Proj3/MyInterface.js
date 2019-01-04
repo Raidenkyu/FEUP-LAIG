@@ -77,6 +77,7 @@ class MyInterface extends CGFinterface {
     addModesGroup(){
         var group = this.gui.addFolder("Zurero");
         group.open();
+        group.add(this.scene.gameInterface,'maxTurnTime',10,60).name("Turn Time");
         group.add(this.scene.game,'undo').name('Undo Play');
         let modes = new Array();
         modes["Player Vs Player"] = 1;

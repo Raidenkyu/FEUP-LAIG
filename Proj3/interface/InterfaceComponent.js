@@ -1,15 +1,35 @@
 class InterfaceComponent {
 
-    constructor(scene, vertices, text_coords, indices, texture_path, on_click) {
+    constructor(scene, coords,width,length, texture_path, on_click) {
       this.scene = scene;
-      this.vertices = vertices;
-      this.text_coords = text_coords;
-      this.indices = indices;
+      this.initCoords(coords[0],coords[1],width,length);
       if (texture_path != null)
           this.texture = new CGFtexture(this.scene, "./scenes/images/interface/" + texture_path);
       else this.texture = null;
       this.on_click = on_click;
       this.init();
+    }
+
+    initCoords(x,y,width,height){
+      this.vertices = [
+        x, y,
+        x+width, y,
+        x, y-height,
+        x+width, y-height
+      ];
+
+      this.text_coords = [
+        0.0, 0.0,
+        1.0, 0.0,
+        0.0, 1.0,
+        1.0, 1.0
+      ];
+
+      this.indices = [
+        0, 2, 3,
+        0, 3, 1
+      ];
+
     }
   
     init() {
@@ -32,12 +52,10 @@ class InterfaceComponent {
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
     }
   
-    render() {
+    display() {
       let shader = this.scene.activeShader;
       let gl = this.scene.gl;
-
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.enable(gl.BLEND);
+      
       gl.enableVertexAttribArray(shader.attributes.aVertexPosition);
       gl.bindBuffer(gl.ARRAY_BUFFER, this.vertsBuffer);
       gl.vertexAttribPointer(shader.attributes.aVertexPosition, 2, gl.FLOAT, false, 0, 0);
@@ -58,8 +76,11 @@ class InterfaceComponent {
     }
   
     onClick() {
-        if (this.on_click)
-            this.on_click();
+        if (this.on_click){
+          console.log("clicked");
+          this.on_click();
+        }
+
     }
   
     isInside(x, y, canvas_width, canvas_height) {

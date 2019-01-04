@@ -35,6 +35,9 @@ class Game {
             if(this.mode == GameMode.BVB){
                 this.botAction = true;
             }
+            if(this.scene.gameInterface){
+            this.scene.gameInterface.resetTimer();
+            }
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('initialBoard', null, reply.bind(this));

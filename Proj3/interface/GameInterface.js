@@ -10,85 +10,55 @@ class GameInterface {
 
     init() {
         //Init elements
-        this.ui_elements = [];
-        let text_coords = [
-            0.0, 0.0,
-            1.0, 0.0,
-            0.0, 1.0,
-            1.0, 1.0
-        ];
-        let indices = [
-            0, 2, 3,
-            0, 3, 1
-        ];
 
-        let player_position = [-0.3, 0.95,
-            0.1, 0.95, -0.3, 0.75,
-            0.1, 0.75
-        ];
-        let bot_position = [-0.2, 0.95,
-            0.0, 0.95, -0.2, 0.75,
-            0.0, 0.75
-        ];
-        let player = new InterfaceComponent(this.scene, player_position, text_coords, indices, "player.png");
+        this.maxTurnTime = 30;
+
+        this.ui_elements = [];
+
+        let player = new InterfaceComponent(this.scene, [-0.3,0.95],0.4,0.20, "player.png");
         this.ui_elements["player"] = player;
 
-        let player_number_position = [
-            0.15, 0.95,
-            0.2, 0.95,
-            0.15, 0.75,
-            0.2, 0.75
-        ];
-        let player1 = new InterfaceComponent(this.scene, player_number_position, text_coords, indices, "1.png");
-        let player2 = new InterfaceComponent(this.scene, player_number_position, text_coords, indices, "2.png");
+        let player_coords = [0.14,0.96];
+        let player_width = 0.04;
+        let player_height = 0.18;
+        let player1 = new InterfaceComponent(this.scene, player_coords,player_width,player_height, "1.png");
+        let player2 = new InterfaceComponent(this.scene, player_coords,player_width,player_height, "2.png");
         this.ui_elements["player1"] = player1;
         this.ui_elements["player2"] = player2;
 
-        let undo = new InterfaceComponent(this.scene, [
-                0.7, 0.15,
-                0.95, 0.15,
-                0.7, -0.1,
-                0.95, -0.1
-            ],
-            text_coords,
-            indices,
-            "undo.png",
-            this.game.undo());
+        let undo = new InterfaceComponent(this.scene,[0.7,0.15],0.25,0.25, "undo.png",
+        this.game.undo.bind(this.game));
+        
         this.ui_elements.push(undo);
 
-        let reset = new InterfaceComponent(this.scene, [
-                0.7, -0.15,
-                0.95, -0.15,
-                0.7, -0.4,
-                0.95, -0.4
-            ],
-            text_coords,
-            indices,
-            "reset.png",
-            this.game.initBoard());
+        let reset = new InterfaceComponent(this.scene, [0.7,-0.15],0.25,0.25,"reset.png",
+        this.game.initBoard.bind(this.game));
+        
         this.ui_elements.push(reset);
 
-        let movie_position = [
-            0.7, -0.45,
-            0.95, -0.45,
-            0.7, -0.7,
-            0.95, -0.7
-        ];
-        let movie = new InterfaceComponent(this.scene, movie_position, text_coords, indices, "movie.png", this.game.playGameMovie());
+        let movie = new InterfaceComponent(this.scene,[0.7,-0.45],0.25,0.25, "movie.png", this.game.playGameMovie.bind(this.game));
         this.ui_elements["movie"] = movie;
 
-        let game_over_position = [-0.5, 0.95,
-            0.5, 0.95, -0.5, 0.75,
-            0.5, 0.75
-        ];
-        let game_over = new InterfaceComponent(this.scene, game_over_position, text_coords, indices, "game_over.png");
-        this.ui_elements["game_over"] = game_over;
+        let winner = new InterfaceComponent(this.scene, [-0.5,0.95],1,0.2, "winner.png");
+        this.ui_elements["winner"] = winner;
 
-        this.initTimer(text_coords, indices);
-        this.initCounter(text_coords, indices);
+        let winner_coords = [0.05,0.94];
+
+        let player1winner = new InterfaceComponent(this.scene, winner_coords,player_width,player_height, "1winner.png");
+        let player2winner = new InterfaceComponent(this.scene, winner_coords,player_width,player_height, "2winner.png");
+        this.ui_elements["player1winner"] = player1winner;
+        this.ui_elements["player2winner"] = player2winner;
+
+        let timer_label = new InterfaceComponent(this.scene,[-0.96,0.97],0.2,0.1,"timer.png");
+        this.ui_elements["timer_label"] = timer_label;
+
+        let score_label = new InterfaceComponent(this.scene,[-0.96,0.77],0.2,0.1,"score.png");
+        this.ui_elements["score_label"] = score_label;
+
+        this.initTimer();
+        this.initCounter();
 
         //Init shader
-        let currentPath = document.location.pathname;
         this.ui_shader = new CGFshader(this.gl, 'shaders/interface.vert','shaders/interface.frag');
         let previous_shader = this.scene.activeShader;
         this.scene.setActiveShader(this.ui_shader);
@@ -121,22 +91,25 @@ class GameInterface {
         this.gl.disable(this.gl.DEPTH_TEST);
 
         this.ui_elements.forEach(function(element) {
-            element.render();
+            element.display();
         });
-        this.ui_elements["minutes0"].render();
-        this.ui_elements["minutes1"].render();
-        this.ui_elements["separator"].render();
-        this.ui_elements["seconds0"].render();
-        this.ui_elements["seconds1"].render();
-        this.ui_elements["white_score"].render();
-        this.ui_elements["minus"].render();
-        this.ui_elements["black_score"].render();
+        this.ui_elements["timer_label"].display();
+        this.ui_elements["score_label"].display();
+        this.ui_elements["minutes0"].display();
+        this.ui_elements["minutes1"].display();
+        this.ui_elements["separator"].display();
+        this.ui_elements["seconds0"].display();
+        this.ui_elements["seconds1"].display();
+        this.ui_elements["white_score"].display();
+        this.ui_elements["minus"].display();
+        this.ui_elements["black_score"].display();
         if (!this.game.terminated) {
-            this.ui_elements["player"].render();
-            this.ui_elements[this.game.playerTurn].render();
+            this.ui_elements["player"].display();
+            this.ui_elements[this.game.playerTurn].display();
         } else {
-            this.ui_elements["movie"].render();
-            this.ui_elements["game_over"].render();
+            this.ui_elements["movie"].display();
+            this.ui_elements["winner"].display();
+            this.ui_elements[this.game.winner+"winner"].display();
         }
 
 
@@ -169,7 +142,7 @@ class GameInterface {
         }
     }
 
-    initTimer(text_coords, indices) {
+    initTimer() {
         this.timer_textures = [];
         for (let i = 0; i < 10; i++) {
             this.timer_textures[i] = new CGFtexture(this.scene, "./scenes/images/nums/" + i + ".png");
@@ -181,13 +154,10 @@ class GameInterface {
         let space_between = 0.005;
         let initial_x = -0.95 - space_between;
         for (let i = 0; i < ids.length; i++) {
-            let vertices = [
-                i * width + (i + 1) * space_between + initial_x, 0.95,
-                (i + 1) * width + (i + 1) * space_between + initial_x, 0.95,
-                i * width + (i + 1) * space_between + initial_x, 0.9,
-                (i + 1) * width + (i + 1) * space_between + initial_x, 0.9
-            ];
-            this.ui_elements[ids[i]] = new InterfaceComponent(this.scene, vertices, text_coords, indices);
+
+            let x = i * width + (i + 1) * space_between + initial_x;
+            let y = 0.85;
+            this.ui_elements[ids[i]] = new InterfaceComponent(this.scene, [x,y],width,0.05);
         }
 
         this.ui_elements["separator"].texture = this.timer_textures[10];
@@ -195,25 +165,22 @@ class GameInterface {
         this.resetTimer();
     }
 
-    initCounter(text_coords, indices) {
+    initCounter() {
         let ids = ["white_score", "minus", "black_score"];
         let width = 0.03;
         let space_between = 0.005;
         let initial_x = -0.95 - space_between;
         for (let i = 0; i < ids.length; i++) {
-            let vertices = [
-                i * width + (i + 1) * space_between + initial_x, 0.85,
-                (i + 1) * width + (i + 1) * space_between + initial_x, 0.85,
-                i * width + (i + 1) * space_between + initial_x, 0.8,
-                (i + 1) * width + (i + 1) * space_between + initial_x, 0.8
-            ];
-            this.ui_elements[ids[i]] = new InterfaceComponent(this.scene, vertices, text_coords, indices);
+
+            let x = i * width + (i + 1) * space_between + initial_x;
+            let y = 0.65;
+            this.ui_elements[ids[i]] = new InterfaceComponent(this.scene, [x,y],width,0.05);
         }
         this.timer_textures[11] = new CGFtexture(this.scene, "./scenes/" + "images/nums/minus.png");
         this.ui_elements["minus"].texture = this.timer_textures[11];
     }
 
     resetTimer() {
-        this.turnTime = 31 * 1000;
+        this.turnTime = (this.maxTurnTime + 1) * 1000;
     }
 }
