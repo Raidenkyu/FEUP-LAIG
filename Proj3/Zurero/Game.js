@@ -77,6 +77,17 @@ class Game {
         this.animationRunning = true;
     }
 
+    setupAnimationVarsMovie(direction, coord, currTurn){
+        this.ani_Dir = direction
+        this.ani_Index = parseInt(coord);
+        this.ani_firstIte = true;
+        this.ani_term = false;
+        this.ani_winner = "none";
+        this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
+
+        this.animationRunning = true;
+    }
+
     calcBoardDif(dir, index, oldBoard){
         let count;
         let cell;
@@ -125,7 +136,7 @@ class Game {
                 }
                 if(oldBoard[count+1][index] == "emptySpace"){
                     this.ani_PiecesCoords.push([count+1,index+1], [count+2, index+1]);
-                    this.ani_PieceColor = oldBoard[count,index];
+                    this.ani_PieceColor = oldBoard[count][index];
                 }
                 else{
                     this.ani_PiecesCoords.push([count,index+1]);
@@ -142,7 +153,7 @@ class Game {
                 }
                 if(oldBoard[count-1][index] == "emptySpace"){
                     this.ani_PiecesCoords.push([count+1,index+1], [count, index+1]);
-                    this.ani_PieceColor = oldBoard[count,index];
+                    this.ani_PieceColor = oldBoard[count][index];
                 }
                 else{
                     this.ani_PiecesCoords.push([count+2, index+1]);
@@ -151,14 +162,6 @@ class Game {
                 break;     
         }
 
-        /*
-        if(this.playerTurn == "player1"){
-            this.ani_PiecesCoords.push([0,0]);
-        }
-        else{
-            this.ani_PiecesCoords.push([0,20]);
-        }
-        */
         this.ani_pTurn = this.playerTurn;
         
     }
@@ -306,7 +309,26 @@ class Game {
     }
 
     playGameMovie(){
-        
+        this.terminated = true;
+        //this.winner = 'none';
+        this.validMoves = [];
+        this.validIDs = [];
+        this.playerTurn = "player1";
+        this.animationRunning = false;
+        this.pieces.storePieces(this.boards[0]);
+
+        for(let i = 1; i < this.boards.length; i++){
+            console.log("Turn " + i);
+            let command = this.movesArray[i-1];
+            let direction = command.charAt(0);
+            let coord = command.substr(1);
+            //this.setupAnimationVarsMovie(direction, coord, i);
+
+
+            //this.pieces.storePieces(this.boards[i]);
+        }
+
+        console.log("Did you enjoy the movie?");
     }
 
     addBoard(board){

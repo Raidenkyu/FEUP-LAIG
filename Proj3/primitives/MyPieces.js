@@ -86,6 +86,7 @@ class MyPieces extends CGFobject{
                     this.linAnimation2 = new LinearAnimation("linear2piece", timePerCell*(this.nSpaces+1), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.linAnimation3 = new LinearAnimation("linear3piece", timePerCell, [[this.midTranslate1Point[0],0,this.midTranslate1Point[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
                     this.linAnimation4 = new LinearAnimation("linear4piece", timePerCell, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate2Point[0],0,this.endTranslate2Point[1]]]);
+                    this.linAnimation5 = new LinearAnimation("linear5piece", timePerCell*(this.nSpaces+1), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.aniPieces = 2;
                 }
 
@@ -97,7 +98,7 @@ class MyPieces extends CGFobject{
 
 
             this.animationTime += deltaTime;
-            if(this.aniState == AniState.Done /*|| this.animationTime > 10.0*/){ //Terminou a animação, 7s neste momento
+            if(this.aniState == AniState.Done /*|| this.animationTime > 10.0*/){
                 //Atualizar visualmente as valid moves
                 this.scene.game.validMoves = this.scene.game.ani_ValidMoves;
                 this.scene.game.validIDs = [];
@@ -159,6 +160,12 @@ class MyPieces extends CGFobject{
                 this.circAnimation.update(deltaTime);
                 let newCircPos = this.circAnimation.applyPieces(this.dirVec);
                 this.animatedPieces.push(newCircPos);
+                if(this.aniPieces == 2){
+                    this.linAnimation5.update(deltaTime);
+                    let newCircPos2 = this.linAnimation5.applyPieces();
+                    this.animatedPieces.push(newCircPos2);
+                }
+                //console.log(newCircPos);
                 break;
             case AniState.Lin1Piece:
                 console.log("Lin1Piece");
@@ -199,6 +206,7 @@ class MyPieces extends CGFobject{
             this.startArcPoint = [0,0];
         else
             this.startArcPoint = [0,20];
+
         this.endTranslate1Point = this.scene.game.ani_PiecesCoords[0];
 
         if(this.scene.game.ani_PiecesCoords.length == 2){
