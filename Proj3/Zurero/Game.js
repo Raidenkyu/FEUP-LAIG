@@ -93,6 +93,7 @@ class Game {
                 else{
                     this.ani_PiecesCoords.push([18-index+1,count]);
                 }
+                this.ani_nSpaces = count;
                 break;
 
             case "r":
@@ -109,6 +110,7 @@ class Game {
                 else{
                     this.ani_PiecesCoords.push([18-index+1, count+2]);
                 }
+                this.ani_nSpaces = 18-count;
                 break;
 
             case "u":
@@ -125,6 +127,7 @@ class Game {
                 else{
                     this.ani_PiecesCoords.push([count,index+1]);
                 }
+                this.ani_nSpaces = count;
                 break;
 
             case "d":
@@ -141,6 +144,7 @@ class Game {
                 else{
                     this.ani_PiecesCoords.push([count+2, index+1]);
                 }
+                this.ani_nSpaces = 18-count;
                 break;     
         }
 

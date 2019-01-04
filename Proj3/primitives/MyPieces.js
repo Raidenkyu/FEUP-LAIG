@@ -46,14 +46,14 @@ class MyPieces extends CGFobject{
                     this.blackMaterial.apply();
             }
             else if(i == 1){
-                if(this.scene.game.ani_pTurn == "player1")
+                if(this.scene.game.ani_PieceColor == "whiteStone")
                     this.whiteMaterial.apply();
                 else
                     this.blackMaterial.apply();
             }
 
             this.scene.pushMatrix();
-            this.scene.translate(this.animatedPieces[i][2]*this.transScale+1,0.3,this.animatedPieces[i][0]*this.transScale+1);
+            this.scene.translate(this.animatedPieces[i][2]*this.transScale+1,this.animatedPieces[i][1]+0.3,this.animatedPieces[i][0]*this.transScale+1);
             this.piece.display();
             this.scene.popMatrix();
         }
@@ -69,24 +69,27 @@ class MyPieces extends CGFobject{
                 this.blackPiecesAnimation = [];
                 this.whitePiecesAnimation = [];
                 this.removePiecesAnimation();
-                this.scene.game.ani_firstIte = false;
                 this.aniState = AniState.Circ;
 
                 this.calcAnimationVals();
+
+                let timePerCell = 0.5;
+
                 this.circAnimation = new CircularAnimation("circular", 0, this.centerArcPoint, this.radius, 0, Math.PI);
                 
                 if(this.scene.game.ani_PiecesCoords.length == 1){
-                    this.linAnimation1 = new LinearAnimation("linear1piece", 3, [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
+                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
                     this.aniPieces = 1;
                 }
                 else{
-                    this.linAnimation1 = new LinearAnimation("linear1piece", 3, [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
-                    this.linAnimation2 = new LinearAnimation("linear2piece", 3, [[0,0,0],[10,0,10]]);
-                    this.linAnimation3 = new LinearAnimation("linear3piece", 3, [[0,0,0],[10,0,10]]);
-                    this.linAnimation4 = new LinearAnimation("linear4piece", 3, [[0,0,0],[10,0,10]]);
+                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.midTranslate1Point[0],0,this.midTranslate1Point[1]]]);
+                    this.linAnimation2 = new LinearAnimation("linear2piece", timePerCell*(this.nSpaces+1), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
+                    this.linAnimation3 = new LinearAnimation("linear3piece", timePerCell, [[this.midTranslate1Point[0],0,this.midTranslate1Point[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
+                    this.linAnimation4 = new LinearAnimation("linear4piece", timePerCell, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate2Point[0],0,this.endTranslate2Point[1]]]);
                     this.aniPieces = 2;
                 }
 
+                this.scene.game.ani_firstIte = false;
             }
 
             
@@ -162,31 +165,29 @@ class MyPieces extends CGFobject{
                 break;
             case AniState.Lin2Pieces1:
                 console.log("Lin2Pieces1");
-                /*this.linAnimation1.update(deltaTime);
+                this.linAnimation1.update(deltaTime);
                 this.linAnimation2.update(deltaTime);
                 let newPos1 = this.linAnimation1.applyPieces();
                 this.animatedPieces.push(newPos1);
                 let newPos2 = this.linAnimation2.applyPieces();
-                this.animatedPieces.push(newPos2);*/
+                this.animatedPieces.push(newPos2);
                 break;
             case AniState.Lin2Pieces2:
                 console.log("Lin2Pieces2");
-                /*this.linAnimation3.update(deltaTime);
+                this.linAnimation3.update(deltaTime);
                 this.linAnimation4.update(deltaTime);
-                let newPos1 = this.linAnimation3.applyPieces();
-                this.animatedPieces.push(newPos1);
-                let newPos2 = this.linAnimation4.applyPieces();
-                this.animatedPieces.push(newPos2);*/
+                let newPos3 = this.linAnimation3.applyPieces();
+                this.animatedPieces.push(newPos3);
+                let newPos4 = this.linAnimation4.applyPieces();
+                this.animatedPieces.push(newPos4);
                 break; 
             case AniState.Done:
                 console.log("Done");
                 break;
         }
 
-
-        
-
     }
+
 
     calcAnimationVals(){
 
@@ -194,28 +195,33 @@ class MyPieces extends CGFobject{
 
         this.startArcPoint = this.scene.game.ani_PiecesCoords[this.scene.game.ani_PiecesCoords.length-1];
 
-        if(this.scene.game.ani_PiecesCoords.length == 1){
-            this.endTranslate1Point = this.scene.game.ani_PiecesCoords[0];
-            /*switch (dir){
+        this.endTranslate1Point = this.scene.game.ani_PiecesCoords[0];
+
+        if(this.scene.game.ani_PiecesCoords.length == 2){
+            
+            switch (dir){
                 case "l":
-                    this.endTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0], this.scene.game.ani_PiecesCoords[0][1]-1];
+                    this.midTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0], this.scene.game.ani_PiecesCoords[0][1]-1];
+                    this.endTranslate2Point = [this.scene.game.ani_PiecesCoords[0][0], this.scene.game.ani_PiecesCoords[0][1]+1];
                     break;
                 case "r":
-                    this.endTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0], this.scene.game.ani_PiecesCoords[0][1]+1];
+                    this.midTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0], this.scene.game.ani_PiecesCoords[0][1]+1];
+                    this.endTranslate2Point = [this.scene.game.ani_PiecesCoords[0][0], this.scene.game.ani_PiecesCoords[0][1]-1];
                     break;
                 case "u":
-                    this.endTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0]-1, this.scene.game.ani_PiecesCoords[0][1]];
+                    this.midTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0]-1, this.scene.game.ani_PiecesCoords[0][1]];
+                    this.endTranslate2Point = [this.scene.game.ani_PiecesCoords[0][0]+1, this.scene.game.ani_PiecesCoords[0][1]];
                     break;
                 case "d":
-                    this.endTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0]+1, this.scene.game.ani_PiecesCoords[0][1]];
+                    this.midTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0]+1, this.scene.game.ani_PiecesCoords[0][1]];
+                    this.endTranslate2Point = [this.scene.game.ani_PiecesCoords[0][0]-1, this.scene.game.ani_PiecesCoords[0][1]];
                     break;
-            }*/
+            }
 
         }
-        else{
-
-            this.endTranslate1Point = this.scene.game.ani_PiecesCoords[0];
-        }
+        
+        this.nSpaces = this.scene.game.ani_nSpaces;
+        //console.log(this.scene.game.ani_nSpaces);
         
         let index = this.scene.game.ani_Index;
         switch (dir){
