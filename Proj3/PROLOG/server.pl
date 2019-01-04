@@ -130,4 +130,7 @@ parse_input(valid_moves(Board, Player),Reply):-
 
 parse_input(playBot(PlayerTurn,Level,Board),Reply):-
 	playBot(PlayerTurn,Level,Direction,Board,NewBoard),
-	matrix_to_json(NewBoard,Reply).
+	format("Direction: ~w",[Direction]),
+	list_to_json(Direction,DirectionString),
+	matrix_to_json(NewBoard,BoardString),
+	Reply = [DirectionString,BoardString].

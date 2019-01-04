@@ -80,6 +80,7 @@ playBot(PlayerTurn,1,Direction,Tab,NewTab):-
     Move = [_|Rest],
     Rest = [MoveDir|Rest2],
     Rest2 = [MoveIndex|_],
+    Direction = [MoveDir, MoveIndex],
     format("Computer Move: ~w~w", [MoveDir, MoveIndex]), nl,
     move(Move,Tab,NewTab).
 
@@ -89,6 +90,7 @@ playBot(PlayerTurn,2,Direction,Tab,NewTab):-
     Move = [_|Rest],
     Rest = [MoveDir|Rest2],
     Rest2 = [MoveIndex|_],
+    Direction = [MoveDir, MoveIndex],
     format("Computer Move: ~w~w", [MoveDir, MoveIndex]), nl,
     move(Move,Tab,NewTab).
 
