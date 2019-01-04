@@ -74,15 +74,15 @@ class CircularAnimation extends Animation {
         mat4.identity(transform);
 
         mat4.translate(transform, transform, [this.x_center,this.y_center,this.z_center]);
-        mat4.rotate(transform, transform, this.elapsedAngle, [0, 1, 0]);
+        mat4.rotate(transform, transform, this.elapsedAngle, arcVec);
 
         mat4.translate(transform,transform,[this.radius,0,0]);
 
         if(this.direction == 1){
-            mat4.rotate(transform,transform,Math.PI,[0,1,0]);
+            mat4.rotate(transform,transform,Math.PI,arcVec);
         }
 
-        getTranslation(outVec, transform);
+        let outVec = [transform[12], transform[13], transform[14]];
         return outVec;
     }
 

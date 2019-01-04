@@ -75,7 +75,7 @@ class MyPieces extends CGFobject{
 
                 let timePerCell = 0.5;
 
-                this.circAnimation = new CircularAnimation("circular", 0, this.centerArcPoint, this.radius, 0, Math.PI);
+                this.circAnimation = new CircularAnimation("circular", 3, [this.centerArcPoint[0],0,this.centerArcPoint[1]], this.radius, 180, 180);
                 
                 if(this.scene.game.ani_PiecesCoords.length == 1){
                     this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
@@ -97,7 +97,7 @@ class MyPieces extends CGFobject{
 
 
             this.animationTime += deltaTime;
-            if(this.aniState == AniState.Done || this.animationTime > 7.0){ //Terminou a animação, 7s neste momento
+            if(this.aniState == AniState.Done /*|| this.animationTime > 10.0*/){ //Terminou a animação, 7s neste momento
                 //Atualizar visualmente as valid moves
                 this.scene.game.validMoves = this.scene.game.ani_ValidMoves;
                 this.scene.game.validIDs = [];
@@ -123,6 +123,8 @@ class MyPieces extends CGFobject{
         }
 	}
 
+
+
     updateAnimations(deltaTime){
         this.animatedPieces = [];
 
@@ -133,7 +135,6 @@ class MyPieces extends CGFobject{
                         this.aniState = AniState.Lin1Piece;
                     else
                         this.aniState = AniState.Lin2Pieces1;
-
                 break;
             case AniState.Lin1Piece:
                 if(this.linAnimation1.terminated)
@@ -156,6 +157,8 @@ class MyPieces extends CGFobject{
             case AniState.Circ:
                 console.log("Circ");
                 this.circAnimation.update(deltaTime);
+                let newCircPos = this.circAnimation.applyPieces(this.dirVec);
+                this.animatedPieces.push(newCircPos);
                 break;
             case AniState.Lin1Piece:
                 console.log("Lin1Piece");
@@ -192,13 +195,13 @@ class MyPieces extends CGFobject{
     calcAnimationVals(){
 
         let dir = this.scene.game.ani_Dir;
-
-        this.startArcPoint = this.scene.game.ani_PiecesCoords[this.scene.game.ani_PiecesCoords.length-1];
-
+        if(this.scene.game.ani_pTurn == "player1")
+            this.startArcPoint = [0,0];
+        else
+            this.startArcPoint = [0,20];
         this.endTranslate1Point = this.scene.game.ani_PiecesCoords[0];
 
         if(this.scene.game.ani_PiecesCoords.length == 2){
-            
             switch (dir){
                 case "l":
                     this.midTranslate1Point = [this.scene.game.ani_PiecesCoords[0][0], this.scene.game.ani_PiecesCoords[0][1]-1];
@@ -217,12 +220,9 @@ class MyPieces extends CGFobject{
                     this.endTranslate2Point = [this.scene.game.ani_PiecesCoords[0][0]-1, this.scene.game.ani_PiecesCoords[0][1]];
                     break;
             }
-
         }
         
         this.nSpaces = this.scene.game.ani_nSpaces;
-        //console.log(this.scene.game.ani_nSpaces);
-        
         let index = this.scene.game.ani_Index;
         switch (dir){
             case "l":
@@ -239,10 +239,20 @@ class MyPieces extends CGFobject{
                 break;
         }
 
+        console.log(this.startArcPoint);
+        console.log(this.endArcPoint);
+
+        let startEndVec = [this.endArcPoint[0]-this.startArcPoint[0], 0, this.endArcPoint[1]-this.startArcPoint[1]];
+        let tempVec = [0,0,0];
+        this.rotVecY(tempVec, startEndVec, [0,0,0], Math.PI/2);
+        let vecLength = Math.sqrt(Math.pow(tempVec[0],2)+Math.pow(tempVec[1],2)+Math.pow(tempVec[2],2));
+        this.dirVec = [tempVec[0]/vecLength,tempVec[1]/vecLength,tempVec[2]/vecLength];
+
+        console.log(startEndVec);
+        console.log(this.dirVec);
+
         this.centerArcPoint = [((this.endArcPoint[0]+this.startArcPoint[0])/2.0),((this.endArcPoint[1]+this.startArcPoint[1])/2.0)];
         this.radius = Math.sqrt(Math.pow((this.centerArcPoint[0]-this.startArcPoint[0]),2) + Math.pow((this.centerArcPoint[1]-this.startArcPoint[1]),2));
-
-
     }
 
     removePiecesAnimation(){
@@ -273,13 +283,6 @@ class MyPieces extends CGFobject{
         for(let i = 0; i < this.whitePiecesAnimation.length; i++){
             this.whitePieces.push(this.whitePiecesAnimation[i]);
         }
-        /*
-        if(this.scene.game.ani_pTurn == "player1")
-            this.whitePieces.push([0,0]);
-        else
-            this.blackPieces.push([0,20]);
-            */
-
     }
 
     addBlackPiece(x,y){
@@ -295,21 +298,9 @@ class MyPieces extends CGFobject{
         this.blackPieces = [];
         if(this.scene != undefined)
             if(this.scene.game != undefined){
-                //if(!this.scene.game.animationRunning){
-                    this.addWhitePiece(0,0);
-                    this.addBlackPiece(0,20);
-                /*}
-                else{
-                    if(this.scene.game.ani_pTurn == "player1")
-                        this.addBlackPiece(0,20);
-                    else
-                        this.addWhitePiece(0,0);
-                }
-                */
+                this.addWhitePiece(0,0);
+                this.addBlackPiece(0,20);
             }
-            
-        
-
     }
 
     storePieces(board){
@@ -371,7 +362,31 @@ class MyPieces extends CGFobject{
         this.whiteMaterial.setAmbient(0.1, 0.1, 0.1, 1);
         this.whiteMaterial.setDiffuse(1, 1, 1, 1);
         this.whiteMaterial.setSpecular(1, 1, 1, 1);
-
         
     }
+
+
+    rotVecY(out, a, b, c){
+
+        let p = [], r=[];
+      
+        //Translate point to the origin
+        p[0] = a[0] - b[0];
+        p[1] = a[1] - b[1];
+        p[2] = a[2] - b[2];
+      
+        //perform rotation
+        r[0] = p[2]*Math.sin(c) + p[0]*Math.cos(c);
+        r[1] = p[1];
+        r[2] = p[2]*Math.cos(c) - p[0]*Math.sin(c);
+      
+        //translate to correct position
+        out[0] = r[0] + b[0];
+        out[1] = r[1] + b[1];
+        out[2] = r[2] + b[2];
+      
+        return out;
+    }
+
+
 }
