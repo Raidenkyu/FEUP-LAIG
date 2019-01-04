@@ -9,6 +9,7 @@ class Game {
      */
     constructor(scene) {
         this.scene = scene;
+        this.inited = false;
         this.mode = GameMode.PVP;
         this.pieces = this.scene.graph.primitives['pieces'];
         this.server = new Connection();
@@ -17,7 +18,12 @@ class Game {
         this.initBoard();
     }
 
+    start(){
+        this.inited = true;
+    }
+
     initBoard() {
+
         this.botAction = false;
         this.terminated = false;
         this.winner = 'none';
@@ -45,6 +51,13 @@ class Game {
     }
 
     move(command){
+
+        if(!this.inited){
+            return;
+        }
+
+
+
         let reply = function(data) {
             this.addBoard(data);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
@@ -238,7 +251,9 @@ class Game {
 
     playBot(){
         let reply = function(data) {
-            this.addBoard(data);
+            let command = data[0][0] + data[0][1];
+            this.movesArray.push(command);
+            this.addBoard(data[1]);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('playBot', [this.playerTurn,this.botLevel,this.getBoardString()], reply.bind(this));
@@ -273,7 +288,7 @@ class Game {
     }
 
     botTurn(){
-        if(this.botAction && !this.terminated){
+        if(this.botAction && !this.terminated && !this.animationRunning){
             this.botAction = false;
             this.playBot();
         }
@@ -299,7 +314,7 @@ class Game {
 
 
     play(pickId){
-        if(!this.animationRunning){
+        if(!this.animationRunning && this.inited){
             if(this.mode == GameMode.PVP || (this.mode == GameMode.PVB && this.playerTurn == "player1")){
                 let command = this.pickingTranslator(pickId);
                 this.movesArray.push(command);

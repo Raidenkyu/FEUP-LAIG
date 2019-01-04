@@ -24,3 +24,4 @@ list_to_json([], []).
 list_to_json([Element | Rest], [JSONElem | JsonRest]):-
   json(Element, JSONElem),
   list_to_json(Rest, JsonRest).
+
