@@ -308,7 +308,7 @@ class Game {
         }
     }
 
-    playGameMovie(){
+    async playGameMovie(){
         this.terminated = true;
         //this.winner = 'none';
         this.validMoves = [];
@@ -322,10 +322,10 @@ class Game {
             let command = this.movesArray[i-1];
             let direction = command.charAt(0);
             let coord = command.substr(1);
-            //this.setupAnimationVarsMovie(direction, coord, i);
-
-
-            //this.pieces.storePieces(this.boards[i]);
+            this.setupAnimationVarsMovie(direction, coord, i-1);
+            await this.sleep(12000); // TODO - Ajustar timings
+            console.log("Acordei");
+            this.pieces.storePieces(this.boards[i]);
         }
 
         console.log("Did you enjoy the movie?");
@@ -595,6 +595,8 @@ class Game {
         return id;
     }
 
-
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
 }
