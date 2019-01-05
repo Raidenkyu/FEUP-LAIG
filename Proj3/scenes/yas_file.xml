@@ -1,37 +1,17 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_board" >
+	<views default="view_far" >
 
 		<perspective id="view_board" near="0.1" far="500" angle="22.92">
-			<from x="10.0" y="45.0" z="40.0" />
-			<to x="10.0" y="0.0" z="10.0" />
+			<from x="25.0" y="35.0" z="35.0" />
+			<to x="25.0" y="10.0" z="25.0" />
 		</perspective>
 		
 		<perspective id="view_far" near="0.1" far="500" angle="22.92">
-			<from x="40.0" y="35.0" z="40.0" />
-			<to x="0.0" y="0.0" z="0.0" />
+			<from x="25.0" y="100.0" z="150.0" />
+			<to x="25.0" y="0.0" z="0.0" />
 		</perspective>
-
-		<perspective id="view_base" near="0.1" far="500" angle="22.92">
-			<from x="5.0" y="8.0" z="5.0" />
-			<to x="-7.0" y="0.0" z="-7.0" />
-		</perspective>
-		
-		<perspective id="view_office" near="0.1" far="500" angle="22.92">
-			<from x="5.0" y="3.0" z="-3.5" />
-			<to x="-5.0" y="2.7" z="-3.5" />
-		</perspective>
-
-		<perspective id="view_desktop" near="0.1" far="500" angle="22.92">
-			<from x="-4.4" y="2.8" z="-2.7" />
-			<to x="-2.3" y="1.5" z="-2.7" />
-		</perspective>
-
-		<ortho id="ortho_view_waves" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
-            <from x="0" y="7" z="20" />
-            <to x="0" y="3" z="0" />
-        </ortho>
 
 		<ortho id="ortho_view_top" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
             <from x="0" y="20.0" z="0" />
@@ -56,6 +36,34 @@
 
 		<omni id="omni_office" enabled="0" >
 			<location x="-4.3" y="2.8" z="-3.5" w="1.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
+			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+		</omni>
+
+		<omni id="omni_SE" enabled="1" >
+			<location x="50.0" y="50.0" z="50.0" w="1.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
+			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+		</omni>
+
+		<omni id="omni_SW" enabled="1" >
+			<location x="-50.0" y="50.0" z="50.0" w="1.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
+			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+		</omni>
+
+		<omni id="omni_NE" enabled="1" >
+			<location x="50.0" y="50.0" z="-50.0" w="1.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
+			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+		</omni>
+
+		<omni id="omni_NW" enabled="1" >
+			<location x="-50.0" y="50.0" z="-50.0" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
 			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
@@ -143,6 +151,8 @@
 		<texture id="num18" file="./scenes/images/buttons/number18.png" />
 		<texture id="num19" file="./scenes/images/buttons/number19.png" />
 
+		<texture id="woodBoardSide" file="./scenes/images/woodBoardSide.jpg" />
+		<texture id="floorTexture" file="./scenes/images/floorTexture.jpg" />
 
 	</textures>
 		
@@ -311,6 +321,15 @@
 			<pieces/>
 		</primitive>
 
+		<primitive id="tetra">
+			<patch npointsU="1.0" npointsV="1.0" npartsU="5.0" npartsV="5.0" >
+				<controlpoint xx="-1.0" yy="-0.5" zz="0.0" />
+				<controlpoint xx="-0.5" yy="0.5" zz="0.0" />
+				<controlpoint xx="1.0" yy="-0.5" zz="0.0" />
+				<controlpoint xx="0.5" yy="0.5" zz="0.0" />
+			</patch>
+		</primitive >
+
 	</primitives >
 
 	<components>
@@ -327,14 +346,11 @@
 			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
-				<primitiveref id="pieces" />
-				<componentref id="boardGrid" />
-				<componentref id="buttonsCol" />
-				<componentref id="cornerTL" />
-				<componentref id="cornerTR" />
-				<componentref id="cornerBL" />
-				<componentref id="cornerBR" />
-				
+				<componentref id="tableWithComps" />
+				<componentref id="floorScene" />
+				<componentref id="leftWall" />
+				<primitiveref id="tetra" />
+
 				<!--<componentref id="patch1" />
 				<componentref id="patch2" />
 				<componentref id="patch3" />
@@ -353,6 +369,78 @@
 				<componentref id="base" />-->
 			</children>
 		</component>
+
+		<component id="tableWithComps">
+			<transformation>
+				<translate x="25.0" y="14.0" z="25.0" />
+				<translate x="-2.5" y="0.0" z="-2.5" />
+				<scale x="0.5" y="0.5" z="0.5" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="0.05263" length_t="0.05263" /> 
+
+			<children>
+				<componentref id="boardComponents" />
+				<componentref id="table" />
+			</children>
+		</component>
+
+		<component id="boardComponents">
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.0" />
+				<scale x="0.5" y="0.5" z="0.5" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="none" length_s="0.05263" length_t="0.05263" /> 
+
+			<children>
+				<primitiveref id="pieces" />
+				<componentref id="boardGrid" />
+				<componentref id="buttonsCol" />
+				<componentref id="cornerTL" />
+				<componentref id="cornerTR" />
+				<componentref id="cornerBL" />
+				<componentref id="cornerBR" />
+				<componentref id="boardSide1" />	
+				<componentref id="boardSide2" />	
+				<componentref id="boardSide3" />
+				<componentref id="boardSide4" />
+
+			</children>
+		</component>
+
+		<component id="table">
+
+			<transformation>
+				<translate x="5.0" y="-28.0" z="7.0"/>
+				<scale x="15.0" y="10" z="18.0"/>
+			</transformation>
+
+			<materials>
+				<material id="inherit" />
+			</materials>
+
+			<texture id="table" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<componentref id="leg_table1" />
+				<componentref id="leg_table2" />
+				<componentref id="leg_table3" />
+				<componentref id="leg_table4" />
+				<componentref id="tableTop" />
+			</children>
+		</component> 
+
+
+
 
 		<component id="boardGrid">
 			<transformation>
@@ -456,247 +544,123 @@
 			</children>
 		</component>
 
-
-
-		<component id="patchR">
+		<component id="boardSide1">
 			<transformation>
-				<translate x="0.0" y="0.0" z="0.0" />
+				<translate x="10.5" y="-2.0" z="21.0" />
+				<scale x="21.0" y="4.0" z="1.0" />
+				<rotate axis="x" angle="90" />
+				<rotate axis="y" angle="90" />
 			</transformation>
 
 			<materials>
-					<material id="mat_white" />
+				<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="woodBoardSide" length_s="1" length_t="1" /> 
 
 			<children>
-				<primitiveref id="patchTest"/>
+				<primitiveref id="nurbs_5x5"/>
+			</children>
+		</component>
+		
+		<component id="boardSide2">
+			<transformation>
+				<translate x="21.0" y="-2.0" z="10.5" />
+				<rotate axis="y" angle="90" />
+				<scale x="21.0" y="4.0" z="1.0" />
+				<rotate axis="x" angle="90" />
+				<rotate axis="y" angle="90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="woodBoardSide" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="nurbs_5x5"/>
 			</children>
 		</component>
 
-		<component id="patchL">
+		<component id="boardSide3">
 			<transformation>
+				<translate x="10.5" y="-2.0" z="0.0" />
 				<rotate axis="y" angle="180" />
+				<scale x="21.0" y="4.0" z="1.0" />
+				<rotate axis="x" angle="90" />
+				<rotate axis="y" angle="90" />
 			</transformation>
 
 			<materials>
-					<material id="mat_white" />
+				<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="woodBoardSide" length_s="1" length_t="1" /> 
 
 			<children>
-				<componentref id="patchR"/>
+				<primitiveref id="nurbs_5x5"/>
 			</children>
 		</component>
 
-		
-		<component id="patch1">
+		<component id="boardSide4">
 			<transformation>
-				<rotate axis="z" angle="0" />
+				<translate x="0.0" y="-2.0" z="10.5" />
+				<rotate axis="y" angle="270" />
+				<scale x="21.0" y="4.0" z="1.0" />
+				<rotate axis="x" angle="90" />
+				<rotate axis="y" angle="90" />
 			</transformation>
 
 			<materials>
-					<material id="mat_white" />
+				<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="woodBoardSide" length_s="1" length_t="1" /> 
 
 			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
+				<primitiveref id="nurbs_5x5"/>
 			</children>
 		</component>
 
 
-
-				<component id="patch2">
+		<component id="floorScene">
 			<transformation>
-				<rotate axis="z" angle="30" />
+				<translate x="25.0" y="0.0" z="25.0" />
+				<rotate axis="x" angle="-90" />
+				<scale x="50.0" y="50.0" z="1.0" />
 			</transformation>
 
 			<materials>
 					<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="floorTexture" length_s="0.25" length_t="0.25"/> 
 
 			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
+				<primitiveref id="tetra" />
 			</children>
-		</component>
+		</component> 
 
-				<component id="patch3">
+		<component id="leftWall">
 			<transformation>
-				<rotate axis="z" angle="60" />
+				
+				<rotate axis="y" angle="63.435" />
+				<translate x="-25.0" y="12.5" z="0.0" />
+				<scale x="50.0" y="25.0" z="1.0" />
 			</transformation>
 
 			<materials>
 					<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="greyBrick" length_s="0.25" length_t="0.25"/> 
 
 			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
+				<primitiveref id="quad" />
 			</children>
-		</component>
+		</component> 
 
-				<component id="patch4">
-			<transformation>
-				<rotate axis="z" angle="90" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
-
-		<component id="patch5">
-			<transformation>
-				<rotate axis="z" angle="120" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
-
-		<component id="patch6">
-			<transformation>
-				<rotate axis="z" angle="150" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
-
-		<component id="patch7">
-			<transformation>
-				<rotate axis="z" angle="180" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
-
-		<component id="patch8">
-			<transformation>
-				<rotate axis="z" angle="210" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
-
-		<component id="patch9">
-			<transformation>
-				<rotate axis="z" angle="240" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
-
-		<component id="patch10">
-			<transformation>
-				<rotate axis="z" angle="270" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
-		
-
-		<component id="patch11">
-			<transformation>
-				<rotate axis="z" angle="300" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
-
-		<component id="patch12">
-			<transformation>
-				<rotate axis="z" angle="330" />
-			</transformation>
-
-			<materials>
-					<material id="mat_white" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="patchR"/>
-				<componentref id="patchL"/>
-			</children>
-		</component>
 
 
 		<component id="base">
@@ -1129,27 +1093,7 @@
 			</children>
 		</component> 
 
-		<component id="table">
 
-			<transformation>
-				<translate x="5.0" y="0.0" z="7.0"/>
-				<scale x="1.5" y="1" z="1.8"/>
-			</transformation>
-
-			<materials>
-				<material id="inherit" />
-			</materials>
-
-			<texture id="table" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="leg_table1" />
-				<componentref id="leg_table2" />
-				<componentref id="leg_table3" />
-				<componentref id="leg_table4" />
-				<componentref id="tableTop" />
-			</children>
-		</component> 
 
 
 		<component id="cube_inherit">
