@@ -69,14 +69,15 @@ class CircularAnimation extends Animation {
         return transform;
     }
 
-    applyPieces(arcVec){
+    applyPieces(arcVec, angVec){
         var transform = mat4.create();
         mat4.identity(transform);
 
         mat4.translate(transform, transform, [this.x_center,this.y_center,this.z_center]);
+
         mat4.rotate(transform, transform, this.elapsedAngle, arcVec);
 
-        mat4.translate(transform,transform,[this.radius,0,0]);
+        mat4.translate(transform,transform,[this.radius*Math.cos(angVec),0,-this.radius*Math.sin(angVec)]);
 
         
         if(this.direction == 1){

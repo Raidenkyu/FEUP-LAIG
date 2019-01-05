@@ -76,6 +76,8 @@ class MyPieces extends CGFobject{
 
                 let timePerCell = 0.3;
 
+                // 
+
                 this.circAnimation = new CircularAnimation("circular", 3, [this.centerArcPoint[0],0,this.centerArcPoint[1]], this.radius, 180, 180);
                 
                 if(this.scene.game.ani_PiecesCoords.length == 1){
@@ -136,7 +138,7 @@ class MyPieces extends CGFobject{
             case AniState.Circ:
                 //console.log("Circ");
                 this.circAnimation.update(deltaTime);
-                let newCircPos = this.circAnimation.applyPieces(this.dirVec);
+                let newCircPos = this.circAnimation.applyPieces(this.dirVec, this.angleVec);
                 this.animatedPieces.push(newCircPos);
                 if(this.aniPieces == 2){
                     this.linAnimation5.update(deltaTime);
@@ -234,6 +236,8 @@ class MyPieces extends CGFobject{
         this.rotVecY(tempVec, startEndVec, [0,0,0], Math.PI/2);
         let vecLength = Math.sqrt(Math.pow(tempVec[0],2)+Math.pow(tempVec[1],2)+Math.pow(tempVec[2],2));
         this.dirVec = [tempVec[0]/vecLength,tempVec[1]/vecLength,tempVec[2]/vecLength];
+
+        this.angleVec = Math.atan(tempVec[0]/tempVec[2]);
 
         //console.log(this.startArcPoint);
         //console.log(this.centerArcPoint);
