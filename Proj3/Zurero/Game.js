@@ -96,6 +96,7 @@ class Game {
         this.ani_firstIte = true;
         this.ani_term = false;
         this.ani_winner = "none";
+        this.ani_ValidMoves = [];
         this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
 
         this.animationRunning = true;
@@ -253,7 +254,11 @@ class Game {
         let reply = function(data) {
             let command = data[0][0] + data[0][1];
             this.movesArray.push(command);
+            let direction = command.charAt(0);
+            let coord = command.substr(1);
             this.addBoard(data[1]);
+            //this.setupAnimationVars(direction, coord);
+            //console.log("Animation Running = " + this.animationRunning);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('playBot', [this.playerTurn,this.botLevel,this.getBoardString()], reply.bind(this));
@@ -323,7 +328,8 @@ class Game {
         }
     }
 
-    playGameMovie(){
+    async playGameMovie(){
+        this.inMovie = true;
         this.terminated = true;
         //this.winner = 'none';
         this.validMoves = [];
@@ -334,16 +340,20 @@ class Game {
 
         for(let i = 1; i < this.boards.length; i++){
             console.log("Turn " + i);
+            this.movieIndex = i;
             let command = this.movesArray[i-1];
             let direction = command.charAt(0);
             let coord = command.substr(1);
-            //this.setupAnimationVarsMovie(direction, coord, i);
+            this.setupAnimationVarsMovie(direction, coord, i-1);
+            await this.sleep(this.ani_totalTime*1100); // TODO - Ajustar timings
+            console.log("Acordei");
+            this.pieces.storePiecesMovie(this.boards[i]);
+            this.changeTurn();
 
-
-            //this.pieces.storePieces(this.boards[i]);
         }
 
         console.log("Did you enjoy the movie?");
+        this.inMovie = false;
     }
 
     addBoard(board){
@@ -610,6 +620,8 @@ class Game {
         return id;
     }
 
-
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
 }

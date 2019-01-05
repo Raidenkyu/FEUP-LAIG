@@ -64,6 +64,7 @@ class MyPieces extends CGFobject{
 
     update(deltaTime) {
         if(this.scene.game.animationRunning){
+            
             //Init the animation
             if(this.scene.game.ani_firstIte){
                 this.blackPiecesAnimation = [];
@@ -73,22 +74,27 @@ class MyPieces extends CGFobject{
 
                 this.calcAnimationVals();
 
-                let timePerCell = 0.5;
+                let timePerCell = 0.3;
+                let timeCircular = 3.0;
 
-                this.circAnimation = new CircularAnimation("circular", 3, [this.centerArcPoint[0],0,this.centerArcPoint[1]], this.radius, 180, 180);
+                this.circAnimation = new CircularAnimation("circular", timeCircular, [this.centerArcPoint[0],0,this.centerArcPoint[1]], this.radius, 180, 180);
                 
                 if(this.scene.game.ani_PiecesCoords.length == 1){
-                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
+                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
                     this.aniPieces = 1;
+                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces);
                 }
                 else{
-                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.midTranslate1Point[0],0,this.midTranslate1Point[1]]]);
-                    this.linAnimation2 = new LinearAnimation("linear2piece", timePerCell*(this.nSpaces+1), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
+                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.midTranslate1Point[0],0,this.midTranslate1Point[1]]]);
+                    this.linAnimation2 = new LinearAnimation("linear2piece", timePerCell*(this.nSpaces), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.linAnimation3 = new LinearAnimation("linear3piece", timePerCell, [[this.midTranslate1Point[0],0,this.midTranslate1Point[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
                     this.linAnimation4 = new LinearAnimation("linear4piece", timePerCell, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate2Point[0],0,this.endTranslate2Point[1]]]);
-                    this.linAnimation5 = new LinearAnimation("linear5piece", timePerCell*(this.nSpaces+1), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
+                    this.linAnimation5 = new LinearAnimation("linear5piece", timeCircular, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.aniPieces = 2;
+                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces) + timePerCell;
                 }
+
+                //console.log(this.scene.game.ani_totalTime);
 
                 this.scene.game.ani_firstIte = false;
             }
@@ -112,6 +118,10 @@ class MyPieces extends CGFobject{
                 this.whitePiecesAnimation = [];
                 this.scene.game.animationRunning = false;
 
+                if(this.scene.game.inMovie){
+                    this.storePiecesMovie(this.scene.game.boards[this.scene.game.movieIndex]);
+                }
+
                 //Jogo terminou
                 if(this.scene.game.ani_term){
                     this.scene.game.terminated = true;
@@ -129,52 +139,25 @@ class MyPieces extends CGFobject{
     updateAnimations(deltaTime){
         this.animatedPieces = [];
 
-        switch(this.aniState){
-            case AniState.Circ:
-                if(this.circAnimation.terminated)
-                    if(this.scene.game.ani_PiecesCoords.length == 1)
-                        this.aniState = AniState.Lin1Piece;
-                    else
-                        this.aniState = AniState.Lin2Pieces1;
-                break;
-            case AniState.Lin1Piece:
-                if(this.linAnimation1.terminated)
-                    this.aniState = AniState.Done;
-                break;
-            case AniState.Lin2Pieces1:
-                if(this.linAnimation1.terminated && this.linAnimation2.terminated)
-                    this.aniState = AniState.Lin2Pieces2;
-                break;
-            case AniState.Lin2Pieces2:
-                if(this.linAnimation3.terminated && this.linAnimation4.terminated)
-                    this.aniState = AniState.Done;
-                break;
-            case AniState.Done:
-                break;
-        }
-        
+        this.updateAniState();
 
         switch(this.aniState){
             case AniState.Circ:
-                console.log("Circ");
                 this.circAnimation.update(deltaTime);
-                let newCircPos = this.circAnimation.applyPieces(this.dirVec);
+                let newCircPos = this.circAnimation.applyPieces(this.dirVec, this.angleVec);
                 this.animatedPieces.push(newCircPos);
                 if(this.aniPieces == 2){
                     this.linAnimation5.update(deltaTime);
                     let newCircPos2 = this.linAnimation5.applyPieces();
                     this.animatedPieces.push(newCircPos2);
                 }
-                //console.log(newCircPos);
                 break;
             case AniState.Lin1Piece:
-                console.log("Lin1Piece");
                 this.linAnimation1.update(deltaTime);
                 let newPos = this.linAnimation1.applyPieces();
                 this.animatedPieces.push(newPos);
                 break;
             case AniState.Lin2Pieces1:
-                console.log("Lin2Pieces1");
                 this.linAnimation1.update(deltaTime);
                 this.linAnimation2.update(deltaTime);
                 let newPos1 = this.linAnimation1.applyPieces();
@@ -183,7 +166,6 @@ class MyPieces extends CGFobject{
                 this.animatedPieces.push(newPos2);
                 break;
             case AniState.Lin2Pieces2:
-                console.log("Lin2Pieces2");
                 this.linAnimation3.update(deltaTime);
                 this.linAnimation4.update(deltaTime);
                 let newPos3 = this.linAnimation3.applyPieces();
@@ -247,20 +229,26 @@ class MyPieces extends CGFobject{
                 break;
         }
 
-        console.log(this.startArcPoint);
-        console.log(this.endArcPoint);
+
+        this.centerArcPoint = [((this.endArcPoint[0]+this.startArcPoint[0])/2.0),((this.endArcPoint[1]+this.startArcPoint[1])/2.0)];
+        this.radius = Math.sqrt(Math.pow((this.centerArcPoint[0]-this.startArcPoint[0]),2) + Math.pow((this.centerArcPoint[1]-this.startArcPoint[1]),2));
 
         let startEndVec = [this.endArcPoint[0]-this.startArcPoint[0], 0, this.endArcPoint[1]-this.startArcPoint[1]];
         let tempVec = [0,0,0];
         this.rotVecY(tempVec, startEndVec, [0,0,0], Math.PI/2);
         let vecLength = Math.sqrt(Math.pow(tempVec[0],2)+Math.pow(tempVec[1],2)+Math.pow(tempVec[2],2));
-        this.dirVec = [tempVec[0]/vecLength,tempVec[1]/vecLength,tempVec[2]/vecLength];
+        this.dirVec = tempVec;
+        //this.dirVec = [tempVec[0]/vecLength,tempVec[1]/vecLength,tempVec[2]/vecLength];
 
-        console.log(startEndVec);
-        console.log(this.dirVec);
+        this.angleVec = Math.atan(tempVec[0]/tempVec[2]);
 
-        this.centerArcPoint = [((this.endArcPoint[0]+this.startArcPoint[0])/2.0),((this.endArcPoint[1]+this.startArcPoint[1])/2.0)];
-        this.radius = Math.sqrt(Math.pow((this.centerArcPoint[0]-this.startArcPoint[0]),2) + Math.pow((this.centerArcPoint[1]-this.startArcPoint[1]),2));
+        //console.log(this.startArcPoint);
+        //console.log(this.endArcPoint);
+        //console.log(startEndVec);
+        //console.log(tempVec);
+        //console.log(tempVec[0]/tempVec[2]);
+        //console.log(this.angleVec*180/Math.PI);
+
     }
 
     removePiecesAnimation(){
@@ -351,6 +339,21 @@ class MyPieces extends CGFobject{
         }
     }
 
+    storePiecesMovie(board){
+        this.initPieces();
+        for(var i = 0; i < board.length;i++){
+            for(var j = 0; j < board[0].length;j++){
+                if(board[j][i] == "blackStone"){
+                    this.addBlackPiece(j+1,i+1);     
+                }
+                else if(board[j][i] == "whiteStone"){
+                    this.addWhitePiece(j+1,i+1);
+                }
+            }
+        }
+    }
+
+
     applyTextures(factorS, factorT){
         //this.piece.applyTextures(factorS,factorT);
     };
@@ -371,6 +374,32 @@ class MyPieces extends CGFobject{
         this.whiteMaterial.setDiffuse(1, 1, 1, 1);
         this.whiteMaterial.setSpecular(1, 1, 1, 1);
         
+    }
+
+    updateAniState(){
+        switch(this.aniState){
+            case AniState.Circ:
+                if(this.circAnimation.terminated)
+                    if(this.scene.game.ani_PiecesCoords.length == 1)
+                        this.aniState = AniState.Lin1Piece;
+                    else
+                        this.aniState = AniState.Lin2Pieces1;
+                break;
+            case AniState.Lin1Piece:
+                if(this.linAnimation1.terminated)
+                    this.aniState = AniState.Done;
+                break;
+            case AniState.Lin2Pieces1:
+                if(this.linAnimation1.terminated && this.linAnimation2.terminated)
+                    this.aniState = AniState.Lin2Pieces2;
+                break;
+            case AniState.Lin2Pieces2:
+                if(this.linAnimation3.terminated && this.linAnimation4.terminated)
+                    this.aniState = AniState.Done;
+                break;
+            case AniState.Done:
+                break;
+        }
     }
 
 
