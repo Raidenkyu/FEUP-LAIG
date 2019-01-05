@@ -1,8 +1,6 @@
 
-class LightingScene extends CGFscene
-{
-	init(application)
-	{
+class LightingScene extends CGFscene {
+	init(application) {
 		super.init(application);
 
 		this.initCameras();
@@ -18,11 +16,12 @@ class LightingScene extends CGFscene
 		this.axis = new CGFaxis(this);
 
 		// Scene elements
-		
+
 		this.suzanne = new CGFOBJModel(this, 'models/suzanne.obj');
 		this.male = new CGFOBJModel(this, 'models/male.obj');
 		this.navigator = new CGFOBJModel(this, 'models/navigator.obj', true);
-		
+		this.ship = new CGFOBJModel(this, 'models/ship.obj');
+
 		// Materials
 		this.materialDefault = new CGFappearance(this);
 
@@ -35,7 +34,7 @@ class LightingScene extends CGFscene
 	};
 
 	initLights() {
-		this.setGlobalAmbientLight(0, 0 ,0, 1);
+		this.setGlobalAmbientLight(0, 0, 0, 1);
 
 		var height = 50;
 		var spread = 10;
@@ -99,37 +98,16 @@ class LightingScene extends CGFscene
 
 		// ---- BEGIN Primitive drawing section
 
-		// suzanne
+
+		// ship
 		this.pushMatrix();
+		//this.rotate(-Math.PI/2,1,0,0);
+		this.scale(10, 10, 10);
 
-		this.translate(5, 5, 0);
-
-		this.suzanne.display();
+		this.ship.display();
 
 		this.popMatrix();
 
-
-		// male
-		this.pushMatrix();
-
-		this.scale(0.5, 0.5, 0.5);
-
-		this.male.display();
-
-		this.popMatrix();
-
-
-		// navigator
-		this.pushMatrix();
-
-		this.translate(-10, 0, 0);
-		this.scale(2, 2, 2);
-		this.translate(0, 3, 0);
-		this.rotate(-Math.PI/2, 1, 0, 0);
-
-		this.navigator.display();
-
-		this.popMatrix();
 
 		// ---- END Primitive drawing section
 
