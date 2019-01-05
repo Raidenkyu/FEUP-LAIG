@@ -1264,6 +1264,21 @@
 			</children>
 		</component> 
 
+		<component id="plane_prim">
+			<transformation>
+				<rotate axis="x" angle="90.0" />
+			</transformation>
+
+			<materials>
+					<material id="inherit" />
+			</materials>
+
+			<texture id="inherit" /> 
+
+			<children>
+				<primitiveref id="nurbs_5x5" />
+			</children>
+		</component>
 
 	</components>
 	

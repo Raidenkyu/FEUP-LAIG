@@ -15,6 +15,7 @@ class XMLscene extends CGFscene {
 
         this.interface = myinterface;
         this.lightValues = {};
+        this.firstScene = true;
         this.initSceneOptions();
     }
 
@@ -96,8 +97,10 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+        if(this.firstScene){
         this.game = new Game(this);
         this.gameInterface = new GameInterface(this,this.game);
+        }
         this.initViews();
 
         this.axis = new CGFaxis(this, this.graph.axisLength);
@@ -330,6 +333,7 @@ class XMLscene extends CGFscene {
     }
 
     changeScene(sceneId){
+        this.firstScene = false;
         this.graph.changeScene(this.sceneOptions[sceneId]);
     }
 }
