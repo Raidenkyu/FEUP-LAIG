@@ -75,24 +75,26 @@ class MyPieces extends CGFobject{
                 this.calcAnimationVals();
 
                 let timePerCell = 0.3;
-                let timeCircular = 3;
+                let timeCircular = 3.0;
 
                 this.circAnimation = new CircularAnimation("circular", timeCircular, [this.centerArcPoint[0],0,this.centerArcPoint[1]], this.radius, 180, 180);
                 
                 if(this.scene.game.ani_PiecesCoords.length == 1){
-                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
+                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
                     this.aniPieces = 1;
-                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces+1);
+                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces);
                 }
                 else{
-                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.midTranslate1Point[0],0,this.midTranslate1Point[1]]]);
-                    this.linAnimation2 = new LinearAnimation("linear2piece", timePerCell*(this.nSpaces+1), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
+                    this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.midTranslate1Point[0],0,this.midTranslate1Point[1]]]);
+                    this.linAnimation2 = new LinearAnimation("linear2piece", timePerCell*(this.nSpaces), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.linAnimation3 = new LinearAnimation("linear3piece", timePerCell, [[this.midTranslate1Point[0],0,this.midTranslate1Point[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
                     this.linAnimation4 = new LinearAnimation("linear4piece", timePerCell, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate2Point[0],0,this.endTranslate2Point[1]]]);
                     this.linAnimation5 = new LinearAnimation("linear5piece", timeCircular, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.aniPieces = 2;
-                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces+2);
+                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces) + timePerCell;
                 }
+
+                //console.log(this.scene.game.ani_totalTime);
 
                 this.scene.game.ani_firstIte = false;
             }
@@ -115,6 +117,10 @@ class MyPieces extends CGFobject{
                 this.blackPiecesAnimation = [];
                 this.whitePiecesAnimation = [];
                 this.scene.game.animationRunning = false;
+
+                if(this.scene.game.inMovie){
+                    this.storePiecesMovie(this.scene.game.boards[this.scene.game.movieIndex]);
+                }
 
                 //Jogo terminou
                 if(this.scene.game.ani_term){
@@ -231,9 +237,18 @@ class MyPieces extends CGFobject{
         let tempVec = [0,0,0];
         this.rotVecY(tempVec, startEndVec, [0,0,0], Math.PI/2);
         let vecLength = Math.sqrt(Math.pow(tempVec[0],2)+Math.pow(tempVec[1],2)+Math.pow(tempVec[2],2));
-        this.dirVec = [tempVec[0]/vecLength,tempVec[1]/vecLength,tempVec[2]/vecLength];
+        this.dirVec = tempVec;
+        //this.dirVec = [tempVec[0]/vecLength,tempVec[1]/vecLength,tempVec[2]/vecLength];
 
         this.angleVec = Math.atan(tempVec[0]/tempVec[2]);
+
+        //console.log(this.startArcPoint);
+        //console.log(this.endArcPoint);
+        //console.log(startEndVec);
+        //console.log(tempVec);
+        //console.log(tempVec[0]/tempVec[2]);
+        //console.log(this.angleVec*180/Math.PI);
+
     }
 
     removePiecesAnimation(){
@@ -323,6 +338,21 @@ class MyPieces extends CGFobject{
             }
         }
     }
+
+    storePiecesMovie(board){
+        this.initPieces();
+        for(var i = 0; i < board.length;i++){
+            for(var j = 0; j < board[0].length;j++){
+                if(board[j][i] == "blackStone"){
+                    this.addBlackPiece(j+1,i+1);     
+                }
+                else if(board[j][i] == "whiteStone"){
+                    this.addWhitePiece(j+1,i+1);
+                }
+            }
+        }
+    }
+
 
     applyTextures(factorS, factorT){
         //this.piece.applyTextures(factorS,factorT);

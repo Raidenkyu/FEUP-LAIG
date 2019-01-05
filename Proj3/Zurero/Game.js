@@ -254,7 +254,11 @@ class Game {
         let reply = function(data) {
             let command = data[0][0] + data[0][1];
             this.movesArray.push(command);
+            let direction = command.charAt(0);
+            let coord = command.substr(1);
             this.addBoard(data[1]);
+            //this.setupAnimationVars(direction, coord);
+            //console.log("Animation Running = " + this.animationRunning);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('playBot', [this.playerTurn,this.botLevel,this.getBoardString()], reply.bind(this));
@@ -325,6 +329,7 @@ class Game {
     }
 
     async playGameMovie(){
+        this.inMovie = true;
         this.terminated = true;
         //this.winner = 'none';
         this.validMoves = [];
@@ -335,18 +340,20 @@ class Game {
 
         for(let i = 1; i < this.boards.length; i++){
             console.log("Turn " + i);
+            this.movieIndex = i;
             let command = this.movesArray[i-1];
             let direction = command.charAt(0);
             let coord = command.substr(1);
             this.setupAnimationVarsMovie(direction, coord, i-1);
-            await this.sleep(this.ani_totalTime*1001); // TODO - Ajustar timings
+            await this.sleep(this.ani_totalTime*1100); // TODO - Ajustar timings
             console.log("Acordei");
-            this.pieces.storePieces(this.boards[i]);
+            this.pieces.storePiecesMovie(this.boards[i]);
             this.changeTurn();
 
         }
 
         console.log("Did you enjoy the movie?");
+        this.inMovie = false;
     }
 
     addBoard(board){
