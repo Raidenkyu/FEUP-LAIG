@@ -75,22 +75,23 @@ class MyPieces extends CGFobject{
                 this.calcAnimationVals();
 
                 let timePerCell = 0.3;
+                let timeCircular = 3;
 
-                // 
-
-                this.circAnimation = new CircularAnimation("circular", 3, [this.centerArcPoint[0],0,this.centerArcPoint[1]], this.radius, 180, 180);
+                this.circAnimation = new CircularAnimation("circular", timeCircular, [this.centerArcPoint[0],0,this.centerArcPoint[1]], this.radius, 180, 180);
                 
                 if(this.scene.game.ani_PiecesCoords.length == 1){
                     this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
                     this.aniPieces = 1;
+                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces+1);
                 }
                 else{
                     this.linAnimation1 = new LinearAnimation("linear1piece", timePerCell*(this.nSpaces+1), [[this.endArcPoint[0],0,this.endArcPoint[1]],[this.midTranslate1Point[0],0,this.midTranslate1Point[1]]]);
                     this.linAnimation2 = new LinearAnimation("linear2piece", timePerCell*(this.nSpaces+1), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.linAnimation3 = new LinearAnimation("linear3piece", timePerCell, [[this.midTranslate1Point[0],0,this.midTranslate1Point[1]],[this.endTranslate1Point[0],0,this.endTranslate1Point[1]]]);
                     this.linAnimation4 = new LinearAnimation("linear4piece", timePerCell, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate2Point[0],0,this.endTranslate2Point[1]]]);
-                    this.linAnimation5 = new LinearAnimation("linear5piece", timePerCell*(this.nSpaces+1), [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
+                    this.linAnimation5 = new LinearAnimation("linear5piece", timeCircular, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.aniPieces = 2;
+                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces+2);
                 }
 
                 this.scene.game.ani_firstIte = false;
@@ -136,7 +137,6 @@ class MyPieces extends CGFobject{
 
         switch(this.aniState){
             case AniState.Circ:
-                //console.log("Circ");
                 this.circAnimation.update(deltaTime);
                 let newCircPos = this.circAnimation.applyPieces(this.dirVec, this.angleVec);
                 this.animatedPieces.push(newCircPos);
@@ -145,16 +145,13 @@ class MyPieces extends CGFobject{
                     let newCircPos2 = this.linAnimation5.applyPieces();
                     this.animatedPieces.push(newCircPos2);
                 }
-                //console.log(newCircPos);
                 break;
             case AniState.Lin1Piece:
-                //console.log("Lin1Piece");
                 this.linAnimation1.update(deltaTime);
                 let newPos = this.linAnimation1.applyPieces();
                 this.animatedPieces.push(newPos);
                 break;
             case AniState.Lin2Pieces1:
-                //console.log("Lin2Pieces1");
                 this.linAnimation1.update(deltaTime);
                 this.linAnimation2.update(deltaTime);
                 let newPos1 = this.linAnimation1.applyPieces();
@@ -163,7 +160,6 @@ class MyPieces extends CGFobject{
                 this.animatedPieces.push(newPos2);
                 break;
             case AniState.Lin2Pieces2:
-                //console.log("Lin2Pieces2");
                 this.linAnimation3.update(deltaTime);
                 this.linAnimation4.update(deltaTime);
                 let newPos3 = this.linAnimation3.applyPieces();
@@ -238,15 +234,6 @@ class MyPieces extends CGFobject{
         this.dirVec = [tempVec[0]/vecLength,tempVec[1]/vecLength,tempVec[2]/vecLength];
 
         this.angleVec = Math.atan(tempVec[0]/tempVec[2]);
-
-        //console.log(this.startArcPoint);
-        //console.log(this.centerArcPoint);
-        //console.log(this.endArcPoint);
-        //console.log(this.radius);
-        
-        //console.log(startEndVec);
-        //console.log(this.dirVec);
-
     }
 
     removePiecesAnimation(){

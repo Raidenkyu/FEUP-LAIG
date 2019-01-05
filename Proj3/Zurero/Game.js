@@ -96,6 +96,7 @@ class Game {
         this.ani_firstIte = true;
         this.ani_term = false;
         this.ani_winner = "none";
+        this.ani_ValidMoves = [];
         this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
 
         this.animationRunning = true;
@@ -338,9 +339,11 @@ class Game {
             let direction = command.charAt(0);
             let coord = command.substr(1);
             this.setupAnimationVarsMovie(direction, coord, i-1);
-            await this.sleep(12000); // TODO - Ajustar timings
+            await this.sleep(this.ani_totalTime*1001); // TODO - Ajustar timings
             console.log("Acordei");
             this.pieces.storePieces(this.boards[i]);
+            this.changeTurn();
+
         }
 
         console.log("Did you enjoy the movie?");
