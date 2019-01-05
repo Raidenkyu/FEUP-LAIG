@@ -77,14 +77,6 @@
 			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
 		</spot>
 
-		<spot id="spot_pyramid" enabled="0" angle="5.0" exponent="1.0">
-			<location x="-3.8" y="2.7" z="-2.5" w="1.0" />
-			<target x="-3.8" y="0.8" z="-2.5" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
-			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
-		</spot>
-
 	</lights>
 
 	<textures> 
