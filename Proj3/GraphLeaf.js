@@ -192,7 +192,7 @@ class GraphLeaf {
         else console.log("Invalid number of arguments for Pieces");
     }
 
-    initializePieces(){
+    initializeObj(){
         if (this.args_array.length == 3){
             this.primitive = new CGFOBJModel(this.scene,this.args_array[1],this.args_array[2]);
         }
