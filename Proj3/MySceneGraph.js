@@ -1485,6 +1485,10 @@ class MySceneGraph {
 
             if (primNode.nodeName == "pieces") {
                 primArray.push('w');
+          }
+
+            if (primNode.nodeName == "obj") {
+                primArray.push('j');
 
                 //Model Path
                 var modelPath = this.reader.getString(primNode, "path");
@@ -1495,12 +1499,9 @@ class MySceneGraph {
                     primArray.push(modelPath);
 
                 //Wireframe
-                var Wireframe = this.reader.getFloat(children[i], 'enabled');
-                if (aux != 0 && aux != 1) {
-                    return "enabled must be 0 or 1, but was " + aux + ")";
-                }
+                var wireframe = this.reader.getFloat(children[i], 'wireframe');
 
-                if(Wireframe == 1){
+                if(wireframe == 1){
                     primArray.push(true);
                 }
                 else{
