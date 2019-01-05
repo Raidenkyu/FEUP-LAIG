@@ -15,6 +15,7 @@ class XMLscene extends CGFscene {
 
         this.interface = myinterface;
         this.lightValues = {};
+        this.initSceneOptions();
     }
 
     /**
@@ -39,6 +40,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(FPS);
+        this.currentScene = "Cena do Fernando";
     }
 
     /**
@@ -104,6 +106,9 @@ class XMLscene extends CGFscene {
 
         this.initLights();
         this.interface.initKeys();
+
+        // Adds Scene group.
+        this.interface.addSceneGroup(this.graph.lights);
 
         // Adds lights group.
         this.interface.addLightsGroup(this.graph.lights);
@@ -315,5 +320,16 @@ class XMLscene extends CGFscene {
      */
     updateMaterial(){
         this.graph.nextMaterial();
+    }
+
+    initSceneOptions(){
+        this.sceneOptions = new Array();
+        this.sceneOptions["Island"] = "tp2_yas.xml"
+        this.sceneOptions["Cena do Fernando"] = "yas_file.xml"
+        this.sceneOptions["Ocean"] = "ocean.xml"
+    }
+
+    changeScene(sceneId){
+        this.graph.changeScene(this.sceneOptions[sceneId]);
     }
 }

@@ -27,6 +27,18 @@ class MyInterface extends CGFinterface {
     }
 
     /**
+     * Adds a folder containing the scene.
+     * @param {array} views
+     */
+    addSceneGroup(){
+        var group = this.gui.addFolder("Scene");
+        group.open();
+        const sceneIdArray = Object.keys(this.scene.sceneOptions);
+        let sceneChanger = group.add(this.scene, 'currentScene',sceneIdArray).name('Current Scene');
+        sceneChanger.onChange(val => this.scene.changeScene(val));
+    }
+
+    /**
      * Adds a folder containing the IDs of the lights passed as parameter.
      * @param {array} lights
      */

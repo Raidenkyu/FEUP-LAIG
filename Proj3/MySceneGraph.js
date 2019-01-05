@@ -1800,4 +1800,24 @@ class MySceneGraph {
             }
         }
     }
+
+    changeScene(filename){
+        this.loadedOk = null;
+        this.ready = false;
+
+        this.nodes = [];
+
+        this.idRoot = null;                    // The id of the root element.
+
+        // File reading 
+        this.reader = new CGFXMLreader();
+
+        /*
+         * Read the contents of the xml file, and refer to this class for loading and error handlers.
+         * After the file is read, the reader calls onXMLReady on this object.
+         * If any error occurs, the reader calls onXMLError on this object, with an error message
+         */
+
+        this.reader.open('scenes/' + filename, this);
+    }
 }
