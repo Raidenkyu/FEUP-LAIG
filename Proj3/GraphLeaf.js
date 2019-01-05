@@ -51,7 +51,10 @@ class GraphLeaf {
                 break;        
             case 'w':
                 this.initializePieces();
-                break;          
+                break;      
+            case 'j':
+                this.initializeObj();
+                break;    
         }
 
     };
@@ -187,6 +190,13 @@ class GraphLeaf {
             this.primitive = new MyPieces(this.scene);
         }
         else console.log("Invalid number of arguments for Pieces");
+    }
+
+    initializePieces(){
+        if (this.args_array.length == 3){
+            this.primitive = new CGFOBJModel(this.scene,this.args_array[1],this.args_array[2]);
+        }
+        else console.log("Invalid number of arguments for Obj Model");
     }
 
 }

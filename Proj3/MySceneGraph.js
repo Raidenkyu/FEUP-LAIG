@@ -996,66 +996,66 @@ class MySceneGraph {
      * Parses the <animations> block.
      * @param {animations block element} animationsNode
      */
-    parseAnimations(animationsNode){
+    parseAnimations(animationsNode) {
         this.animations = new Array();
         var children = animationsNode.children;
-        for(var i = 0; i < children.length;i++){
-            var animId = this.reader.getString(children[i],'id');
-            var time = this.reader.getFloat(children[i],'span');
+        for (var i = 0; i < children.length; i++) {
+            var animId = this.reader.getString(children[i], 'id');
+            var time = this.reader.getFloat(children[i], 'span');
             var animation;
 
-            if(animId == null){
+            if (animId == null) {
                 this.onXMLMinorError("Null ID");
                 continue
             }
-            
-            if(this.animations[animId] != null){
+
+            if (this.animations[animId] != null) {
                 this.onXMLMinorError("Id already in use:" + animId);
                 continue
             }
 
-            if(time == null || time < 0){
+            if (time == null || time < 0) {
                 this.onXMLMinorError("Invalid value for span time: " + time);
                 continue
             }
 
-            if(children[i].nodeName == "linear"){
+            if (children[i].nodeName == "linear") {
                 var grandchildren = children[i].children;
                 var controlpoints = [];
 
-                for(var j = 0; j < grandchildren.length;j++){
-                    if(grandchildren[j].nodeName == "controlpoint"){
-                        var x = this.reader.getFloat(grandchildren[j],'xx');
-                        var y = this.reader.getFloat(grandchildren[j],'yy');
-                        var z = this.reader.getFloat(grandchildren[j],'zz');
+                for (var j = 0; j < grandchildren.length; j++) {
+                    if (grandchildren[j].nodeName == "controlpoint") {
+                        var x = this.reader.getFloat(grandchildren[j], 'xx');
+                        var y = this.reader.getFloat(grandchildren[j], 'yy');
+                        var z = this.reader.getFloat(grandchildren[j], 'zz');
 
-                        if(x == null || y == null || z == null){
+                        if (x == null || y == null || z == null) {
                             this.onXMLMinorError("failed to parse coordinates of controlpoint");
                             continue;
                         }
-                        controlpoints.push([x,y,z]);
+                        controlpoints.push([x, y, z]);
                     }
-                    else{
+                    else {
                         this.onXMLMinorError("Invalid controlpoint tag: <" + grandchildren[j].nodeName + ">");
                     }
-                    
+
                 }
-                if(controlpoints.length < 2){
+                if (controlpoints.length < 2) {
                     this.onXMLMinorError("Number of controlpoints must be higher than 1");
                     continue;
                 }
-                animation = ['l',animId,time,controlpoints];
+                animation = ['l', animId, time, controlpoints];
 
             }
-            else if(children[i].nodeName == "circular"){
-                var centerString = this.reader.getString(children[i],'center');
+            else if (children[i].nodeName == "circular") {
+                var centerString = this.reader.getString(children[i], 'center');
                 var centerCoords = centerString.split(' ').map(Number);
-                var radius = this.reader.getFloat(children[i],"radius");
-                var startang = this.reader.getFloat(children[i],"startang");
-                var rotang = this.reader.getFloat(children[i],"rotang");
-                animation = ['c',animId,time,centerCoords,radius,startang,rotang];
+                var radius = this.reader.getFloat(children[i], "radius");
+                var startang = this.reader.getFloat(children[i], "startang");
+                var rotang = this.reader.getFloat(children[i], "rotang");
+                animation = ['c', animId, time, centerCoords, radius, startang, rotang];
             }
-            else{
+            else {
                 this.onXMLMinorError("Invalid Animation tag: <" + children[i].nodeName + ">");
             }
             this.animations[animId] = animation;
@@ -1340,22 +1340,22 @@ class MySceneGraph {
                     return "unable to parse npartsV from the primitive ID " + primId;
                 else
                     primArray.push(v_value);
-                
+
                 var grandchildren = primNode.children;
                 //console.log(grandchildren);
-                if(grandchildren.length != (u_points+1)*(v_points+1)){
+                if (grandchildren.length != (u_points + 1) * (v_points + 1)) {
                     return "Invalid amount of controlpoints in the primitive ID " + primId;
                 }
-                else{
-                    var controlVertexes = new Array(u_points+1);
+                else {
+                    var controlVertexes = new Array(u_points + 1);
 
-                    for(var u = 0; u < (u_points+1);u++){
-                        controlVertexes[u] = new Array(v_points+1);
-                        for(var v = 0; v < (v_points+1);v++){
-                            var x = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'xx');
-                            var y = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'yy');
-                            var z = this.reader.getFloat(grandchildren[u*(v_points+1)+v], 'zz');
-                            controlVertexes[u][v] = [x,y,z,1];
+                    for (var u = 0; u < (u_points + 1); u++) {
+                        controlVertexes[u] = new Array(v_points + 1);
+                        for (var v = 0; v < (v_points + 1); v++) {
+                            var x = this.reader.getFloat(grandchildren[u * (v_points + 1) + v], 'xx');
+                            var y = this.reader.getFloat(grandchildren[u * (v_points + 1) + v], 'yy');
+                            var z = this.reader.getFloat(grandchildren[u * (v_points + 1) + v], 'zz');
+                            controlVertexes[u][v] = [x, y, z, 1];
                         }
                     }
                     //console.log(controlVertexes);
@@ -1485,6 +1485,27 @@ class MySceneGraph {
 
             if (primNode.nodeName == "pieces") {
                 primArray.push('w');
+
+                //Model Path
+                var modelPath = this.reader.getString(primNode, "path");
+
+                if (!(modelPath != null && !isNaN(modelPath)))
+                    return "unable to parse the path of the model from the primitive ID " + primId;
+                else
+                    primArray.push(modelPath);
+
+                //Wireframe
+                var Wireframe = this.reader.getFloat(children[i], 'enabled');
+                if (aux != 0 && aux != 1) {
+                    return "enabled must be 0 or 1, but was " + aux + ")";
+                }
+
+                if(Wireframe == 1){
+                    primArray.push(true);
+                }
+                else{
+                    primArray.push(false);
+                }
             }
 
             var graphLeaf = new GraphLeaf(this.scene, primArray[0], primArray); //Index 0 is the char that identifies the type of primitive
@@ -1580,21 +1601,21 @@ class MySceneGraph {
 
         }
 
-        if(animationsIndex != -1){
+        if (animationsIndex != -1) {
             var animationsChildren = children[animationsIndex].children;
-            for(var j = 0; j < animationsChildren.length;j++){
-                if(animationsChildren[j].nodeName != "animationref"){
+            for (var j = 0; j < animationsChildren.length; j++) {
+                if (animationsChildren[j].nodeName != "animationref") {
                     this.onXMLMinorError("Invalid tag for animation: <" + animationsChildren[j].nodeName + ">");
                 }
-                var animId = this.reader.getString(animationsChildren[j],'id');
-                if(this.animations[animId] != null){
+                var animId = this.reader.getString(animationsChildren[j], 'id');
+                if (this.animations[animId] != null) {
                     var animationArray = this.animations[animId];
-                    if(animationArray[0] == 'l'){
-                        var animation = new LinearAnimation(animationArray[1],animationArray[2],animationArray[3]);
+                    if (animationArray[0] == 'l') {
+                        var animation = new LinearAnimation(animationArray[1], animationArray[2], animationArray[3]);
                         graphNode.animations.push(animation);
                     }
-                    else if(animationArray[0] == 'c'){
-                        var animation = new CircularAnimation(animationArray[1],animationArray[2],animationArray[3],animationArray[4],animationArray[5],animationArray[6]);
+                    else if (animationArray[0] == 'c') {
+                        var animation = new CircularAnimation(animationArray[1], animationArray[2], animationArray[3], animationArray[4], animationArray[5], animationArray[6]);
                         graphNode.animations.push(animation);
                     }
                 }
@@ -1732,7 +1753,7 @@ class MySceneGraph {
         else if (node.textureID == "inherit") {
             mat.setTexture(text);
         }
-        else{
+        else {
             text = null;
             mat.setTexture(null);
         }
