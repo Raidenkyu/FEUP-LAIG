@@ -1,7 +1,7 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_far" >
+	<views default="view_board" >
 
 		<perspective id="view_board" near="0.1" far="500" angle="22.92">
 			<from x="25.0" y="33.0" z="37.0" />
@@ -914,12 +914,8 @@
 			</children>
 		</component> 
 
-
 		<component id="thinker_left">
 			<transformation>
-				<!--<translate x="25.0" y="12.5" z="0.0" />
-				
-				<translate x="41.0" y="0.0" z="0.0" />-->
 				<translate x="0.0" y="0.0" z="25" />
 				<rotate axis="y" angle="90" />
 				<rotate axis="x" angle="-90" />
@@ -939,9 +935,6 @@
 
 		<component id="thinker_right">
 			<transformation>
-				<!--<translate x="25.0" y="12.5" z="0.0" />
-				
-				<translate x="41.0" y="0.0" z="0.0" />-->
 				<translate x="50.0" y="0.0" z="25" />
 				<rotate axis="y" angle="-90" />
 				<rotate axis="x" angle="-90" />
