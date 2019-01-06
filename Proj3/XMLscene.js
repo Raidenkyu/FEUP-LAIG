@@ -41,7 +41,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(FPS);
-        this.currentScene = "Cena do Fernando";
+        this.currentScene = "Room";
     }
 
     /**
@@ -342,7 +342,7 @@ class XMLscene extends CGFscene {
     initSceneOptions(){
         this.sceneOptions = new Array();
         this.sceneOptions["Island"] = "tp2_yas.xml"
-        this.sceneOptions["Cena do Fernando"] = "yas_file.xml"
+        this.sceneOptions["Room"] = "yas_file.xml"
         this.sceneOptions["Ocean"] = "ocean.xml"
     }
 
