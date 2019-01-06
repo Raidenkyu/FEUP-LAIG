@@ -97,11 +97,14 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+
+        this.initViews();
+        
         if(this.firstScene){
         this.game = new Game(this);
         this.gameInterface = new GameInterface(this,this.game);
 
-        this.initViews();
+        
         this.initLights();
         this.interface.initKeys();
 
