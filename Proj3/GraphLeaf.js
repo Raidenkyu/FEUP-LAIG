@@ -187,7 +187,12 @@ class GraphLeaf {
 
     initializePieces(){
         if (this.args_array.length == 1){
-            this.primitive = new MyPieces(this.scene);
+            if(this.scene.firstScene){
+                this.primitive = new MyPieces(this.scene);
+            }
+            else{
+                this.primitive = this.scene.game.pieces;
+            }
         }
         else console.log("Invalid number of arguments for Pieces");
     }
