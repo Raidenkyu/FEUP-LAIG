@@ -94,17 +94,15 @@ class MyPieces extends CGFobject{
                     this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces) + timePerCell;
                 }
 
-                //console.log(this.scene.game.ani_totalTime);
-
                 this.scene.game.ani_firstIte = false;
             }
 
             
             this.updateAnimations(deltaTime);
-
-
             this.animationTime += deltaTime;
-            if(this.aniState == AniState.Done /*|| this.animationTime > 10.0*/){
+
+            //Term the animation
+            if(this.aniState == AniState.Done){
                 //Atualizar visualmente as valid moves
                 this.scene.game.validMoves = this.scene.game.ani_ValidMoves;
                 this.scene.game.validIDs = [];
@@ -127,6 +125,13 @@ class MyPieces extends CGFobject{
                     this.scene.game.terminated = true;
                     this.scene.game.validIDs = [];
                     this.scene.game.showWinner();
+                }
+
+                if(this.scene.game.ani_changeT){
+                    this.scene.game.changeTurn();
+                    if(this.scene.game.mode == GameMode.BVB || (this.scene.game.mode == GameMode.PVB && this.scene.game.playerTurn == "player2")){
+                        this.scene.game.botAction = true;
+                    }
                 }
 
                 console.log("Terminou a Animação!");

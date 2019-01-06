@@ -33,6 +33,7 @@ class Game {
         this.validIDs = [];
         this.boardIndex = 0;
         this.playerTurn = "player1";
+        this.tempPTurn = "none";
         this.animationRunning = false;
         let reply = function(data) {
             this.boards.push(data);
@@ -84,6 +85,7 @@ class Game {
         this.ani_Index = parseInt(coord);
         this.ani_firstIte = true;
         this.ani_term = false;
+        this.ani_changeT = false;
         this.ani_winner = "none";
         this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
 
@@ -95,6 +97,7 @@ class Game {
         this.ani_Index = parseInt(coord);
         this.ani_firstIte = true;
         this.ani_term = false;
+        this.ani_changeT = false;
         this.ani_winner = "none";
         this.ani_ValidMoves = [];
         this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
@@ -177,6 +180,10 @@ class Game {
         }
 
         this.ani_pTurn = this.playerTurn;
+        if(this.tempPTurn != "none"){
+            this.ani_pTurn = this.tempPTurn;
+            this.tempPTurn = "none";
+        }
         
     }
 
@@ -251,14 +258,15 @@ class Game {
     }
 
     playBot(){
+        this.tempPTurn = this.playerTurn;
         let reply = function(data) {
             let command = data[0][0] + data[0][1];
             this.movesArray.push(command);
             let direction = command.charAt(0);
             let coord = command.substr(1);
             this.addBoard(data[1]);
-            //this.setupAnimationVars(direction, coord);
-            //console.log("Animation Running = " + this.animationRunning);
+            this.setupAnimationVars(direction, coord);
+            console.log("Animation Running = " + this.animationRunning);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('playBot', [this.playerTurn,this.botLevel,this.getBoardString()], reply.bind(this));
@@ -300,10 +308,16 @@ class Game {
     }
 
     nextTurn(){
-        this.changeTurn();
-        if(this.mode == GameMode.BVB || (this.mode == GameMode.PVB && this.playerTurn == "player2")){
-            this.botAction = true;
+        if(!this.animationRunning){
+            this.changeTurn();
+            if(this.mode == GameMode.BVB || (this.mode == GameMode.PVB && this.playerTurn == "player2")){
+                this.botAction = true;
+            }
         }
+        else{
+            this.ani_changeT = true;
+        }
+
     }
 
     changeTurn(){
