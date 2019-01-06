@@ -1,7 +1,7 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_board" >
+	<views default="view_far" >
 
 		<perspective id="view_board" near="0.1" far="500" angle="22.92">
 			<from x="25.0" y="33.0" z="37.0" />
@@ -13,9 +13,19 @@
 			<to x="25.0" y="0.0" z="0.0" />
 		</perspective>
 
-		<ortho id="ortho_view_top" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
-            <from x="0" y="20.0" z="0" />
-            <to x="-0.1" y="3" z="0" />
+		<perspective id="view_right" near="0.1" far="500" angle="22.92">
+			<from x="100.0" y="40.0" z="100.0" />
+			<to x="0.0" y="0.0" z="0.0" />
+		</perspective>
+
+		<perspective id="view_left" near="0.1" far="500" angle="22.92">
+			<from x="-50.0" y="40.0" z="100.0" />
+			<to x="50.0" y="0.0" z="0.0" />
+		</perspective>
+
+		<ortho id="ortho_view_side" near="0.1" far="150" left="-35.0" right="35.0" top="20.0" bottom="-20.0">
+            <from x="25.0" y="15.0" z="100.0" />
+            <to x="25.0" y="14.9" z="0.0" />
         </ortho>
 
 	</views>
@@ -27,63 +37,50 @@
 
 	<lights>
 
-		<omni id="omni_global" enabled="1" >
-			<location x="10" y="10" z="10" w="1.0" />
+		<omni id="omni_center" enabled="1" >
+			<location x="25" y="40" z="25" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
 			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
 		</omni>
 
-		<omni id="omni_office" enabled="0" >
-			<location x="-4.3" y="2.8" z="-3.5" w="1.0" />
+		<omni id="omni_left_front" enabled="0" >
+			<location x="1.0" y="30.0" z="1.0" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="0.5" />
+			<specular r="0.5" g="0.5" b="0.5" a="0.5" />
 		</omni>
 
-		<omni id="omni_SE" enabled="1" >
-			<location x="50.0" y="50.0" z="50.0" w="1.0" />
+		<omni id="omni_right_front" enabled="0" >
+			<location x="49.0" y="30.0" z="1.0" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="0.5" />
+			<specular r="0.5" g="0.5" b="0.5" a="0.5" />
 		</omni>
 
-		<omni id="omni_SW" enabled="1" >
-			<location x="-50.0" y="50.0" z="50.0" w="1.0" />
+		<omni id="omni_left_back" enabled="1" >
+			<location x="-25" y="30.0" z="50.0" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="0.5" />
+			<specular r="0.5" g="0.5" b="0.5" a="0.5" />
 		</omni>
 
-		<omni id="omni_NE" enabled="1" >
-			<location x="50.0" y="50.0" z="-50.0" w="1.0" />
+		<omni id="omni_right_back" enabled="1" >
+			<location x="75" y="30.0" z="50.0" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="0.5" />
+			<specular r="0.5" g="0.5" b="0.5" a="0.5" />
 		</omni>
 
-		<omni id="omni_NW" enabled="1" >
-			<location x="-50.0" y="50.0" z="-50.0" w="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
-		</omni>
-
-		<spot id="spot_desktop" enabled="0" angle="5.0" exponent="1.0">
-			<location x="-4.0" y="3.2" z="-2.7" w="1.0" />
-			<target x="-4.0" y="0.8" z="-2.7" />
+		<spot id="spot_board" enabled="0" angle="5.0" exponent="1.0">
+			<location x="25.0" y="30" z="25.0" w="1.0" />
+			<target x="24.9" y="0.8" z="24.9" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
 			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
 		</spot>
 
-		<spot id="spot_pyramid" enabled="0" angle="5.0" exponent="1.0">
-			<location x="-3.8" y="2.7" z="-2.5" w="1.0" />
-			<target x="-3.8" y="0.8" z="-2.5" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
-			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
-		</spot>
+
 
 	</lights>
 
@@ -194,6 +191,13 @@
 			<ambient r="0.3" g="0.3" b="0.3" a="1.0" />
 			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
 			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
+		</material>
+
+		<material id="mat_greyer" shininess ="1" >
+			<emission r="0.0" g="0.0" b="0.0" a="0.0" />
+			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+			<diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
+			<specular r="0.4" g="0.4" b="0.4" a="1.0" />
 		</material>
 
 		<material id="mat_black" shininess ="1" >
@@ -333,6 +337,10 @@
 			</patch>
 		</primitive >
 
+		<primitive id="thinker_prim">
+			<obj path="./scenes/models/thinker1.obj"/>
+		</primitive>
+
 	</primitives >
 
 	<components>
@@ -363,6 +371,8 @@
 				<componentref id="paintingRight2"/>
 				<componentref id="paintingRight3"/>
 				<componentref id="paintingCenter"/>
+				<componentref id="thinker_left"/>
+				<componentref id="thinker_right"/>
 
 				<!--<componentref id="patch1" />
 				<componentref id="patch2" />
@@ -903,6 +913,53 @@
 				<primitiveref id="quad" />
 			</children>
 		</component> 
+
+
+		<component id="thinker_left">
+			<transformation>
+				<!--<translate x="25.0" y="12.5" z="0.0" />
+				
+				<translate x="41.0" y="0.0" z="0.0" />-->
+				<translate x="0.0" y="0.0" z="25" />
+				<rotate axis="y" angle="90" />
+				<rotate axis="x" angle="-90" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transformation>
+
+			<materials>
+					<material id="mat_black" />
+			</materials>
+
+			<texture id="none" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="thinker_prim"/>
+			</children>
+		</component> 
+
+		<component id="thinker_right">
+			<transformation>
+				<!--<translate x="25.0" y="12.5" z="0.0" />
+				
+				<translate x="41.0" y="0.0" z="0.0" />-->
+				<translate x="50.0" y="0.0" z="25" />
+				<rotate axis="y" angle="-90" />
+				<rotate axis="x" angle="-90" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transformation>
+
+			<materials>
+					<material id="mat_greyer" />
+			</materials>
+
+			<texture id="none" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="thinker_prim"/>
+			</children>
+		</component> 
+		
+				
 
 
 		<component id="base">
