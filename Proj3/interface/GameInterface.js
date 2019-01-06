@@ -99,10 +99,11 @@ class GameInterface {
         this.scene.setActiveShader(this.ui_shader);
         this.gl.disable(this.gl.DEPTH_TEST);
 
-        this.ui_elements.forEach(function (element) {
-            element.display();
-        });
+
         if (this.game.inited) {
+            this.ui_elements.forEach(function (element) {
+                element.display();
+            });
             this.ui_elements["timer_label"].display();
             this.ui_elements["score_label"].display();
             this.ui_elements["minutes0"].display();
@@ -113,19 +114,19 @@ class GameInterface {
             this.ui_elements["white_score"].display();
             this.ui_elements["minus"].display();
             this.ui_elements["black_score"].display();
+
+            if (!this.game.terminated) {
+                this.ui_elements["player"].display();
+                this.ui_elements[this.game.playerTurn].display();
+            } else {
+                this.ui_elements["movie"].display();
+                this.ui_elements["winner"].display();
+                this.ui_elements[this.game.winner + "winner"].display();
+            }
         }
         else{
             this.ui_elements["start"].display();
         }
-        if (!this.game.terminated) {
-            this.ui_elements["player"].display();
-            this.ui_elements[this.game.playerTurn].display();
-        } else {
-            this.ui_elements["movie"].display();
-            this.ui_elements["winner"].display();
-            this.ui_elements[this.game.winner + "winner"].display();
-        }
-
 
         this.gl.enable(this.gl.DEPTH_TEST);
         this.scene.setActiveShader(previous_shader);

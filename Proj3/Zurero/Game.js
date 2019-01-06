@@ -19,6 +19,9 @@ class Game {
     }
 
     start(){
+        if(this.mode == GameMode.BVB){
+            this.botAction = true;
+        }
         this.inited = true;
     }
 
