@@ -1,7 +1,7 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_far" >
+	<views default="view_board" >
 
 		
 		<perspective id="view_far" near="0.1" far="500" angle="22.92">
@@ -19,7 +19,7 @@
 			<to x="-5.0" y="2.7" z="-3.5" />
 		</perspective>
 
-		<perspective id="view_desktop" near="0.1" far="500" angle="22.92">
+		<perspective id="view_board" near="0.1" far="500" angle="22.92">
 			<from x="-4.4" y="2.8" z="-2.7" />
 			<to x="-2.3" y="1.5" z="-2.7" />
 		</perspective>
@@ -97,6 +97,51 @@
 		<texture id="helipad" file="./scenes/images/helipad.jpg" />
 		<texture id="metalWall" file="./scenes/images/metalWall.jpg" />
 		<texture id="baseDoor" file="./scenes/images/garageDoor.jpg" />
+
+		<texture id="textGrid" file="./scenes/images/boardCross.png" />
+		
+		<texture id="cornerText" file="./scenes/images/blankCorner.png" />
+		<texture id="letA" file="./scenes/images/buttons/letterA.png" />
+		<texture id="letB" file="./scenes/images/buttons/letterB.png" />
+		<texture id="letC" file="./scenes/images/buttons/letterC.png" />
+		<texture id="letD" file="./scenes/images/buttons/letterD.png" />
+		<texture id="letE" file="./scenes/images/buttons/letterE.png" />
+		<texture id="letF" file="./scenes/images/buttons/letterF.png" />
+		<texture id="letG" file="./scenes/images/buttons/letterG.png" />
+		<texture id="letH" file="./scenes/images/buttons/letterH.png" />
+		<texture id="letI" file="./scenes/images/buttons/letterI.png" />
+		<texture id="letJ" file="./scenes/images/buttons/letterJ.png" />
+		<texture id="letK" file="./scenes/images/buttons/letterK.png" />
+		<texture id="letL" file="./scenes/images/buttons/letterL.png" />
+		<texture id="letM" file="./scenes/images/buttons/letterM.png" />
+		<texture id="letN" file="./scenes/images/buttons/letterN.png" />
+		<texture id="letO" file="./scenes/images/buttons/letterO.png" />
+		<texture id="letP" file="./scenes/images/buttons/letterP.png" />
+		<texture id="letQ" file="./scenes/images/buttons/letterQ.png" />
+		<texture id="letR" file="./scenes/images/buttons/letterR.png" />
+		<texture id="letS" file="./scenes/images/buttons/letterS.png" />
+		<texture id="num1" file="./scenes/images/buttons/number1.png" />
+		<texture id="num2" file="./scenes/images/buttons/number2.png" />
+		<texture id="num3" file="./scenes/images/buttons/number3.png" />
+		<texture id="num4" file="./scenes/images/buttons/number4.png" />
+		<texture id="num5" file="./scenes/images/buttons/number5.png" />
+		<texture id="num6" file="./scenes/images/buttons/number6.png" />
+		<texture id="num7" file="./scenes/images/buttons/number7.png" />
+		<texture id="num8" file="./scenes/images/buttons/number8.png" />
+		<texture id="num9" file="./scenes/images/buttons/number9.png" />
+		<texture id="num10" file="./scenes/images/buttons/number10.png" />
+		<texture id="num11" file="./scenes/images/buttons/number11.png" />
+		<texture id="num12" file="./scenes/images/buttons/number12.png" />
+		<texture id="num13" file="./scenes/images/buttons/number13.png" />
+		<texture id="num14" file="./scenes/images/buttons/number14.png" />
+		<texture id="num15" file="./scenes/images/buttons/number15.png" />
+		<texture id="num16" file="./scenes/images/buttons/number16.png" />
+		<texture id="num17" file="./scenes/images/buttons/number17.png" />
+		<texture id="num18" file="./scenes/images/buttons/number18.png" />
+		<texture id="num19" file="./scenes/images/buttons/number19.png" />
+
+		<texture id="woodBoardSide" file="./scenes/images/woodBoardSide.jpg" />
+		<texture id="floorTexture" file="./scenes/images/floorTexture.jpg" />
 
 	</textures>
 		
@@ -274,6 +319,14 @@
 			<vehicle/>
 		</primitive>
 
+		<primitive id="buttons">
+			<buttons/>
+		</primitive>
+	
+		<primitive id="pieces">
+			<pieces/>
+		</primitive>
+
 
 	</primitives >
 
@@ -368,7 +421,7 @@
 				<componentref id="testa_coil1" />
 				<componentref id="testa_coil2" />
 				<componentref id="toy_pyramid" />
-				<componentref id="laptop" />
+				<componentref id="playSet" />
 				<componentref id="stand_cone" />
 			</children>
 		</component>
@@ -1613,119 +1666,218 @@
 			</children>
 		</component> 	
 
-		<!-- /////////////////	Laptop  //////////////////////// -->
+		<!-- /////////////////	playSet  //////////////////////// -->	
 
-		<component id="laptop">
+		<component id="playSet">
 			<transformation>
-				<translate x="5.0" y="2.65" z="7" />
+				<translate x="5.50" y="2.85" z="7.5" />
 				<rotate axis="y" angle="180" />
+				<scale x="0.05" y="0.05" z="0.05" />
 			</transformation>
 
 			<materials>
-					<material id="mat_grey" />
+				<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="none" length_s="0.05263" length_t="0.05263" /> 
 
 			<children>
-				<componentref id="laptop_base"/>
-				<componentref id="laptop_screen"/>
-				<componentref id="laptop_bend"/>
-				<componentref id="laptop_keyboard"/>
-				<componentref id="laptop_screen_saver"/>
-			</children>
-		</component> 	
+				<primitiveref id="pieces" />
+				<componentref id="boardGrid" />
+				<componentref id="buttonsCol" />
+				<componentref id="cornerTL" />
+				<componentref id="cornerTR" />
+				<componentref id="cornerBL" />
+				<componentref id="cornerBR" />
+				<componentref id="boardSide1" />	
+				<componentref id="boardSide2" />	
+				<componentref id="boardSide3" />
+				<componentref id="boardSide4" />
 
-		<component id="laptop_base">
-			<transformation>
-				<translate x="0.0" y="0.05" z="0.0" />
-				<scale x="1.0" y="0.1" z="0.65" />
-			</transformation>
-
-			<materials>
-					<material id="mat_grey" />
-			</materials>
-
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
-
-			<children>
-				<componentref id="cube_no_texture"/>
 			</children>
 		</component>
 
-		<component id="laptop_screen">
+
+		<component id="boardGrid">
 			<transformation>
-				<translate x="0.0" y="0.35" z="-0.6" />
-				<rotate axis="x" angle="50" />
-				<scale x="1.0" y="0.1" z="0.65" />
+				<translate x="10.5" y="0.0" z="10.5" />
+				<scale x="19.0" y="1.0" z="19.0" />
+				<rotate axis="x" angle="-90" />
 			</transformation>
 
 			<materials>
-					<material id="mat_grey" />
+				<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="textGrid" length_s="0.05263" length_t="0.05263" /> 
 
 			<children>
-				<componentref id="cube_no_texture"/>
+				<primitiveref id="quad"/>
 			</children>
-		</component> 	 
+		</component>
 
-		<component id="laptop_bend">
+		<component id="buttonsCol">
 			<transformation>
-				<translate x="0.0" y="0.075" z="-0.35" />
+				<translate x="0.0" y="0.0" z="0.0" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="none" /> 
+
+			<children>
+				<primitiveref id="buttons"/>
+			</children>
+		</component>
+
+		<component id="cornerTL">
+			<transformation>
+				<translate x="0.5" y="0.0" z="0.5" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="cornerText" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="cornerTR">
+			<transformation>
+				<translate x="20.5" y="0.0" z="0.5" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="cornerText" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="cornerBL">
+			<transformation>
+				<translate x="0.5" y="0.0" z="20.5" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="cornerText" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="cornerBR">
+			<transformation>
+				<translate x="20.5" y="0.0" z="20.5" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="cornerText" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="boardSide1">
+			<transformation>
+				<translate x="10.5" y="-2.0" z="21.0" />
+				<scale x="21.0" y="4.0" z="1.0" />
+				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
-				<translate x="0.0" y="0.0" z="-0.505" />
-				<scale x="0.08" y="0.08" z="1.01" />
 			</transformation>
 
 			<materials>
-					<material id="mat_black" />
+				<material id="mat_white" />
 			</materials>
 
-			<texture id="none" length_s="1.0" length_t="1.0" /> 
+			<texture id="woodBoardSide" length_s="1" length_t="1" /> 
 
 			<children>
-				<primitiveref id="uni_cylinder"/>
+				<primitiveref id="nurbs_5x5"/>
 			</children>
-		</component> 	
-
-		<component id="laptop_screen_saver">
+		</component>
+		
+		<component id="boardSide2">
 			<transformation>
-				<translate x="0.0" y="0.38" z="-0.555" />
-				<rotate axis="x" angle="50" />
-				<scale x="1.0" y="1.0" z="0.65" />
-				<rotate axis="x" angle="-90" />
+				<translate x="21.0" y="-2.0" z="10.5" />
+				<rotate axis="y" angle="90" />
+				<scale x="21.0" y="4.0" z="1.0" />
+				<rotate axis="x" angle="90" />
+				<rotate axis="y" angle="90" />
 			</transformation>
 
 			<materials>
-					<material id="mat_white" />
+				<material id="mat_white" />
 			</materials>
 
-			<texture id="screen" length_s="1.0" length_t="1.0" /> 
+			<texture id="woodBoardSide" length_s="1" length_t="1" /> 
 
 			<children>
-				<primitiveref id="quad"/>
+				<primitiveref id="nurbs_5x5"/>
 			</children>
-		</component> 
+		</component>
 
-		<component id="laptop_keyboard">
+		<component id="boardSide3">
 			<transformation>
-				<translate x="0.0" y="0.101" z="0.0" />
-				<scale x="1.0" y="0.1" z="0.65" />
-				<rotate axis="x" angle="-90" />
+				<translate x="10.5" y="-2.0" z="0.0" />
+				<rotate axis="y" angle="180" />
+				<scale x="21.0" y="4.0" z="1.0" />
+				<rotate axis="x" angle="90" />
+				<rotate axis="y" angle="90" />
 			</transformation>
 
 			<materials>
-					<material id="mat_grey" />
+				<material id="mat_white" />
 			</materials>
 
-			<texture id="keyboard" length_s="1.0" length_t="1.0" /> 
+			<texture id="woodBoardSide" length_s="1" length_t="1" /> 
 
 			<children>
-				<primitiveref id="quad"/>
+				<primitiveref id="nurbs_5x5"/>
 			</children>
-		</component> 	
+		</component>
+
+		<component id="boardSide4">
+			<transformation>
+				<translate x="0.0" y="-2.0" z="10.5" />
+				<rotate axis="y" angle="270" />
+				<scale x="21.0" y="4.0" z="1.0" />
+				<rotate axis="x" angle="90" />
+				<rotate axis="y" angle="90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="woodBoardSide" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="nurbs_5x5"/>
+			</children>
+		</component>
 
 		<!--		 	 Test				-->
 

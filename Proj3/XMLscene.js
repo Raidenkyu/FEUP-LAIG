@@ -99,13 +99,14 @@ class XMLscene extends CGFscene {
     onGraphLoaded() {
 
         this.initViews();
+        this.initLights();
         
         if(this.firstScene){
         this.game = new Game(this);
         this.gameInterface = new GameInterface(this,this.game);
 
         
-        this.initLights();
+       
         this.interface.initKeys();
 
         // Adds Scene group.
@@ -346,6 +347,7 @@ class XMLscene extends CGFscene {
     }
 
     changeScene(sceneId){
+        this.lightValues = {};
         this.firstScene = false;
         this.graph.changeScene(this.sceneOptions[sceneId]);
     }
