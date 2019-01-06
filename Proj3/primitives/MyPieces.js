@@ -93,7 +93,7 @@ class MyPieces extends CGFobject{
                     this.linAnimation4 = new LinearAnimation("linear4piece", timePerCell, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate2Point[0],0,this.endTranslate2Point[1]]]);
                     this.linAnimation5 = new LinearAnimation("linear5piece", timeCircular, [[this.endTranslate1Point[0],0,this.endTranslate1Point[1]],[this.endTranslate1Point[0],0.001,this.endTranslate1Point[1]]]);
                     this.aniPieces = 2;
-                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces) + timePerCell;
+                    this.scene.game.ani_totalTime = timeCircular + timePerCell*(this.nSpaces+2);
                 }
 
                 this.scene.game.ani_firstIte = false;
@@ -136,6 +136,17 @@ class MyPieces extends CGFobject{
                         this.scene.game.botAction = true;
                     }
                 }
+
+                switch (this.scene.game.ani_FinalAction){
+                    case "undo":
+                        this.scene.game.undo();
+                        break;
+                    case "reset":
+                        this.scene.game.initBoard();
+                        break;
+                }
+
+                this.scene.game.ani_FinalAction = "none";
 
                 console.log("Terminou a Animação!");
             }

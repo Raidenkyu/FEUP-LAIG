@@ -26,32 +26,37 @@ class Game {
     }
 
     initBoard() {
+        if(this.animationRunning == true){
+            this.ani_FinalAction = "reset";
+        }
+        else if(!this.inMovie){
+            this.botAction = false;
+            this.terminated = false;
+            this.winner = 'none';
+            this.boards = [];
+            this.movesArray = [];
+            this.validMoves = [];
+            this.validIDs = [];
+            this.boardIndex = 0;
+            this.playerTurn = "player1";
+            this.tempPTurn = "none";
+            this.animationRunning = false;
+            let reply = function(data) {
+                this.boards.push(data);
+                this.pieces.storePieces(data);
+                this.updateValidMoves();
+                if(this.mode == GameMode.BVB){
+                    this.botAction = true;
+                }
+                if(this.scene.gameInterface){
+                this.scene.gameInterface.resetTimer();
+                }
+                dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
+            };
+            let request = this.server.createRequest('initialBoard', null, reply.bind(this));
+            return this.server.prologRequest(request);
+        }
 
-        this.botAction = false;
-        this.terminated = false;
-        this.winner = 'none';
-        this.boards = [];
-        this.movesArray = [];
-        this.validMoves = [];
-        this.validIDs = [];
-        this.boardIndex = 0;
-        this.playerTurn = "player1";
-        this.tempPTurn = "none";
-        this.animationRunning = false;
-        let reply = function(data) {
-            this.boards.push(data);
-            this.pieces.storePieces(data);
-            this.updateValidMoves();
-            if(this.mode == GameMode.BVB){
-                this.botAction = true;
-            }
-            if(this.scene.gameInterface){
-            this.scene.gameInterface.resetTimer();
-            }
-            dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
-        };
-        let request = this.server.createRequest('initialBoard', null, reply.bind(this));
-        return this.server.prologRequest(request);
     }
 
     move(command){
@@ -207,18 +212,25 @@ class Game {
     }
 
     undo(){ 
-        if(this.boardIndex > 1){
-            this.boards.pop();
-            this.boards.pop();
-            this.movesArray.pop();
-            this.movesArray.pop();
-            this.boardIndex--;
-            this.boardIndex--;
-            this.pieces.storePieces(this.boards[this.boardIndex]);
-            this.updateValidMoves();
+        if(!this.animationRunning){
+            if(!this.inMovie){
+                if(this.boardIndex > 1){
+                    this.boards.pop();
+                    this.boards.pop();
+                    this.movesArray.pop();
+                    this.movesArray.pop();
+                    this.boardIndex--;
+                    this.boardIndex--;
+                    this.pieces.storePieces(this.boards[this.boardIndex]);
+                    this.updateValidMoves();
+                }
+                else{
+                    console.log("This was the initial board!! There's no previous board!");
+                }
+            }
         }
         else{
-            console.log("This was the initial board!! There's no previous board!");
+            this.ani_FinalAction = "undo";
         }
     }
 
