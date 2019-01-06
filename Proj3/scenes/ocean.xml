@@ -1,21 +1,21 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_far" >
+	<views default="view_board" >
 
 		<perspective id="view_board" near="0.1" far="500" angle="22.92">
-			<from x="5.0" y="5.0" z="5.0" />
-			<to x="5.0" y="0.0" z="5.0" />
+			<from x="3.0" y="1.95" z="3.55" />
+			<to x="3.0" y="1.0" z="3.1" />
 		</perspective>
 		
 		<perspective id="view_far" near="0.1" far="500" angle="22.92">
-			<from x="10.0" y="10.0" z="10.0" />
+			<from x="20.0" y="20.0" z="20.0" />
 			<to x="3.0" y="0.0" z="3.0" />
 		</perspective>
 
-		<ortho id="ortho_view_top" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
-            <from x="0" y="20.0" z="0" />
-            <to x="-0.1" y="3" z="0" />
+		<ortho id="ortho_view_side" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
+            <from x="10.0" y="2.0" z="3.0" />
+            <to x="0.0" y="1.9" z="3.0" />
         </ortho>
 
 	</views>
@@ -28,50 +28,22 @@
 	<lights>
 
 		<omni id="omni_global" enabled="1" >
-			<location x="10" y="10" z="10" w="1.0" />
+			<location x="-10" y="10" z="-10" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
 			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
 		</omni>
 
-		<omni id="omni_office" enabled="0" >
-			<location x="-4.3" y="2.8" z="-3.5" w="1.0" />
+		<omni id="omni_overboard" enabled="0" >
+			<location x="3.0" y="8.0" z="3.1" w="1.0" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
 			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
 		</omni>
 
-		<omni id="omni_SE" enabled="1" >
-			<location x="50.0" y="50.0" z="50.0" w="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
-		</omni>
-
-		<omni id="omni_SW" enabled="1" >
-			<location x="-50.0" y="50.0" z="50.0" w="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
-		</omni>
-
-		<omni id="omni_NE" enabled="1" >
-			<location x="50.0" y="50.0" z="-50.0" w="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
-		</omni>
-
-		<omni id="omni_NW" enabled="1" >
-			<location x="-50.0" y="50.0" z="-50.0" w="1.0" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="1.0" g="1.0" b="1.0" a="0.5" />
-			<specular r="1.0" g="1.0" b="1.0" a="0.5" />
-		</omni>
-
-		<spot id="spot_desktop" enabled="0" angle="5.0" exponent="1.0">
-			<location x="-4.0" y="3.2" z="-2.7" w="1.0" />
-			<target x="-4.0" y="0.8" z="-2.7" />
+		<spot id="spot_board" enabled="0" angle="0.01" exponent="1.0">
+			<location x="3.0" y="5.0" z="3.0" w="1.0" />
+			<target x="3.0" y="1.0" z="3.1" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
 			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
@@ -416,6 +388,7 @@
 			<children>
 				<primitiveref id="pieces" />
 				<componentref id="boardGrid" />
+				<componentref id="boardBoarder" />
 				<componentref id="buttonsCol" />
 				<componentref id="cornerTL" />
 				<componentref id="cornerTR" />
@@ -426,6 +399,24 @@
 				<componentref id="boardSide3" />
 				<componentref id="boardSide4" />
 
+			</children>
+		</component>
+
+		<component id="boardBoarder">
+			<transformation>
+				<translate x="10.5" y="-0.05" z="10.5" />
+				<scale x="23.0" y="1.0" z="23.0" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_black" />
+			</materials>
+
+			<texture id="none" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
 			</children>
 		</component>
 
@@ -558,8 +549,8 @@
 
 		<component id="boardSide1">
 			<transformation>
-				<translate x="10.5" y="-2.0" z="21.0" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<translate x="10.5" y="-2.0" z="22.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -577,9 +568,9 @@
 		
 		<component id="boardSide2">
 			<transformation>
-				<translate x="21.0" y="-2.0" z="10.5" />
+				<translate x="22.0" y="-2.0" z="10.5" />
 				<rotate axis="y" angle="90" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -597,9 +588,9 @@
 
 		<component id="boardSide3">
 			<transformation>
-				<translate x="10.5" y="-2.0" z="0.0" />
+				<translate x="10.5" y="-2.0" z="-1.0" />
 				<rotate axis="y" angle="180" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -617,9 +608,9 @@
 
 		<component id="boardSide4">
 			<transformation>
-				<translate x="0.0" y="-2.0" z="10.5" />
+				<translate x="-1.0" y="-2.0" z="10.5" />
 				<rotate axis="y" angle="270" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>

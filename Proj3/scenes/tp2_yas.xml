@@ -20,8 +20,8 @@
 		</perspective>
 
 		<perspective id="view_board" near="0.1" far="500" angle="22.92">
-			<from x="-4.4" y="2.8" z="-2.7" />
-			<to x="-2.3" y="1.5" z="-2.7" />
+			<from x="-4.2" y="3.0" z="-2.7" />
+			<to x="-3.9" y="2.4" z="-2.7" />
 		</perspective>
 
 		<ortho id="ortho_view_waves" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
@@ -1693,6 +1693,7 @@
 				<componentref id="boardSide2" />	
 				<componentref id="boardSide3" />
 				<componentref id="boardSide4" />
+				<componentref id="boardBoarder" />
 
 			</children>
 		</component>
@@ -1802,8 +1803,8 @@
 
 		<component id="boardSide1">
 			<transformation>
-				<translate x="10.5" y="-2.0" z="21.0" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<translate x="10.5" y="-2.0" z="22.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -1821,9 +1822,9 @@
 		
 		<component id="boardSide2">
 			<transformation>
-				<translate x="21.0" y="-2.0" z="10.5" />
+				<translate x="22.0" y="-2.0" z="10.5" />
 				<rotate axis="y" angle="90" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -1841,9 +1842,9 @@
 
 		<component id="boardSide3">
 			<transformation>
-				<translate x="10.5" y="-2.0" z="0.0" />
+				<translate x="10.5" y="-2.0" z="-1.0" />
 				<rotate axis="y" angle="180" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -1861,9 +1862,9 @@
 
 		<component id="boardSide4">
 			<transformation>
-				<translate x="0.0" y="-2.0" z="10.5" />
+				<translate x="-1.0" y="-2.0" z="10.5" />
 				<rotate axis="y" angle="270" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -1876,6 +1877,24 @@
 
 			<children>
 				<primitiveref id="nurbs_5x5"/>
+			</children>
+		</component>
+
+		<component id="boardBoarder">
+			<transformation>
+				<translate x="10.5" y="-0.05" z="10.5" />
+				<scale x="23.0" y="1.0" z="23.0" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_black" />
+			</materials>
+
+			<texture id="none" length_s="1" length_t="1" /> 
+
+			<children>
+				<primitiveref id="quad"/>
 			</children>
 		</component>
 
