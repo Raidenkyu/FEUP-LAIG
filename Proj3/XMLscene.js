@@ -341,9 +341,9 @@ class XMLscene extends CGFscene {
 
     initSceneOptions(){
         this.sceneOptions = new Array();
-        this.sceneOptions["Island"] = "tp2_yas.xml"
-        this.sceneOptions["Room"] = "yas_file.xml"
-        this.sceneOptions["Ocean"] = "ocean.xml"
+        this.sceneOptions["Room"] = "room.xml";
+        this.sceneOptions["Island"] = "island.xml";
+        this.sceneOptions["Ocean"] = "ocean.xml";
     }
 
     changeScene(sceneId){

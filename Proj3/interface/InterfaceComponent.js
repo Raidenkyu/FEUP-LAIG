@@ -77,7 +77,6 @@ class InterfaceComponent {
   
     onClick() {
         if (this.on_click){
-          console.log("clicked");
           this.on_click();
         }
 

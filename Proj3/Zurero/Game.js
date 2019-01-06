@@ -26,10 +26,13 @@ class Game {
     }
 
     initBoard() {
+        if(this.inMovie){
+            this.inMovie = false;
+        }
         if(this.animationRunning == true){
             this.ani_FinalAction = "reset";
         }
-        else if(!this.inMovie){
+        else{
             this.botAction = false;
             this.terminated = false;
             this.winner = 'none';
@@ -65,8 +68,6 @@ class Game {
             return;
         }
 
-
-
         let reply = function(data) {
             this.addBoard(data);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
@@ -76,13 +77,9 @@ class Game {
         if(this.checkMove(direction,coord)){
             let move = [this.playerTurn,direction,coord];
             let request = this.server.createRequest('move', [this.getMoveString(move),this.getBoardString()], reply.bind(this));
-            
             this.setupAnimationVars(direction, coord);
-            console.log("Animation Running = " + this.animationRunning);
-
             return this.server.prologRequest(request);
         }
-        console.log("Invalid Move");
         return false;
         
     }
@@ -95,23 +92,7 @@ class Game {
         this.ani_term = false;
         this.ani_changeT = false;
         this.ani_winner = "none";
-        //console.log(this.boards.length);
         this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
-
-        this.animationRunning = true;
-    }
-
-    setupAnimationVarsBot(direction, coord){
-        let currTurn = this.movesArray.length-1;
-        this.ani_Dir = direction
-        this.ani_Index = parseInt(coord);
-        this.ani_firstIte = true;
-        this.ani_term = false;
-        this.ani_changeT = false;
-        this.ani_winner = "none";
-        //console.log(this.boards.length);
-        this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
-        
 
         this.animationRunning = true;
     }
@@ -224,9 +205,6 @@ class Game {
                     this.pieces.storePieces(this.boards[this.boardIndex]);
                     this.updateValidMoves();
                 }
-                else{
-                    console.log("This was the initial board!! There's no previous board!");
-                }
             }
         }
         else{
@@ -279,7 +257,6 @@ class Game {
     }
 
     showWinner(){
-        console.log("Congratulions " + this.winner + "! You Win!");
         if(this.winner == "player1"){
             this.victories[0]++;
         }
@@ -295,9 +272,8 @@ class Game {
             this.movesArray.push(command);
             let direction = command.charAt(0);
             let coord = command.substr(1);
+            this.setupAnimationVars(direction, coord);
             this.addBoard(data[1]);
-            this.setupAnimationVarsBot(direction, coord);
-            console.log("Animation Running = " + this.animationRunning);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
         let request = this.server.createRequest('playBot', [this.playerTurn,this.botLevel,this.getBoardString()], reply.bind(this));
@@ -376,7 +352,6 @@ class Game {
     async playGameMovie(){
         this.inMovie = true;
         this.terminated = true;
-        //this.winner = 'none';
         this.validMoves = [];
         this.validIDs = [];
         this.playerTurn = "player1";
@@ -384,21 +359,18 @@ class Game {
         this.pieces.storePieces(this.boards[0]);
 
         for(let i = 1; i < this.boards.length; i++){
-            console.log("Turn " + i);
             this.movieIndex = i;
             let command = this.movesArray[i-1];
             let direction = command.charAt(0);
             let coord = command.substr(1);
             this.setupAnimationVarsMovie(direction, coord, i-1);
-            await this.sleep(this.ani_totalTime*1100); // TODO - Ajustar timings
-            console.log("Acordei");
+            await this.sleep(this.ani_totalTime*1100);
             this.pieces.storePiecesMovie(this.boards[i]);
             this.changeTurn();
-
+        
         }
-
-        console.log("Did you enjoy the movie?");
         this.inMovie = false;
+        this.playerTurn = "player1";
     }
 
     addBoard(board){
