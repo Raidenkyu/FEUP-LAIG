@@ -11,6 +11,8 @@ class MyPieces extends CGFobject{
         this.scene = scene;
         this.blackPieces = [];
         this.whitePieces = [];
+        this.blackPiecesAnimation = [];
+        this.whitePiecesAnimation = [];
         this.animatedPieces = [];
         this.aniState = AniState.Circ;
         this.piece = new MySphere(scene,1,15,15);
@@ -97,7 +99,7 @@ class MyPieces extends CGFobject{
                 this.scene.game.ani_firstIte = false;
             }
 
-            
+            //console.log(this.blackPiecesAnimation);
             this.updateAnimations(deltaTime);
             this.animationTime += deltaTime;
 
@@ -112,6 +114,7 @@ class MyPieces extends CGFobject{
 
                 this.animationTime = 0;
                 this.reinsertPiecesAnimation();
+                //console.log(this.blackPiecesAnimation);
                 this.blackPiecesAnimation = [];
                 this.whitePiecesAnimation = [];
                 this.scene.game.animationRunning = false;

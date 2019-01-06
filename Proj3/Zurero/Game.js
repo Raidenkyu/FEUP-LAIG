@@ -87,7 +87,23 @@ class Game {
         this.ani_term = false;
         this.ani_changeT = false;
         this.ani_winner = "none";
+        //console.log(this.boards.length);
         this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
+
+        this.animationRunning = true;
+    }
+
+    setupAnimationVarsBot(direction, coord){
+        let currTurn = this.movesArray.length-1;
+        this.ani_Dir = direction
+        this.ani_Index = parseInt(coord);
+        this.ani_firstIte = true;
+        this.ani_term = false;
+        this.ani_changeT = false;
+        this.ani_winner = "none";
+        //console.log(this.boards.length);
+        this.calcBoardDif(this.ani_Dir, this.ani_Index-1, this.boards[currTurn]);
+        
 
         this.animationRunning = true;
     }
@@ -184,7 +200,7 @@ class Game {
             this.ani_pTurn = this.tempPTurn;
             this.tempPTurn = "none";
         }
-        
+
     }
 
     undo(){ 
@@ -265,7 +281,7 @@ class Game {
             let direction = command.charAt(0);
             let coord = command.substr(1);
             this.addBoard(data[1]);
-            this.setupAnimationVars(direction, coord);
+            this.setupAnimationVarsBot(direction, coord);
             console.log("Animation Running = " + this.animationRunning);
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data }));
         };
