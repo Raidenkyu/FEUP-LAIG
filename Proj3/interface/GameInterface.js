@@ -31,17 +31,17 @@ class GameInterface {
 
         this.ui_elements["start"] = start;
 
-        let undo = new InterfaceComponent(this.scene, [0.7, 0.15], 0.25, 0.25, "undo.png",
+        let undo = new InterfaceComponent(this.scene, [-0.9, 0.15], 0.25, 0.25, "undo.png",
             this.game.undo.bind(this.game));
 
         this.ui_elements.push(undo);
 
-        let reset = new InterfaceComponent(this.scene, [0.7, -0.15], 0.25, 0.25, "reset.png",
+        let reset = new InterfaceComponent(this.scene, [-0.9, -0.15], 0.25, 0.25, "reset.png",
             this.game.initBoard.bind(this.game));
 
         this.ui_elements.push(reset);
 
-        let movie = new InterfaceComponent(this.scene, [0.7, -0.45], 0.25, 0.25, "movie.png", this.game.playGameMovie.bind(this.game));
+        let movie = new InterfaceComponent(this.scene, [-0.9, -0.45], 0.25, 0.25, "movie.png", this.game.playGameMovie.bind(this.game));
         this.ui_elements["movie"] = movie;
 
         let winner = new InterfaceComponent(this.scene, [-0.5, 0.95], 1, 0.2, "winner.png");
