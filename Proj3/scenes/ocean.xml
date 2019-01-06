@@ -4,13 +4,13 @@
 	<views default="view_far" >
 
 		<perspective id="view_board" near="0.1" far="500" angle="22.92">
-			<from x="25.0" y="35.0" z="35.0" />
-			<to x="25.0" y="10.0" z="25.0" />
+			<from x="5.0" y="5.0" z="5.0" />
+			<to x="5.0" y="0.0" z="5.0" />
 		</perspective>
 		
 		<perspective id="view_far" near="0.1" far="500" angle="22.92">
-			<from x="25.0" y="100.0" z="150.0" />
-			<to x="25.0" y="0.0" z="0.0" />
+			<from x="10.0" y="10.0" z="10.0" />
+			<to x="3.0" y="0.0" z="3.0" />
 		</perspective>
 
 		<ortho id="ortho_view_top" near="0.1" far="70" left="-10.0" right="10.0" top="10.0" bottom="-10.0">
@@ -72,14 +72,6 @@
 		<spot id="spot_desktop" enabled="0" angle="5.0" exponent="1.0">
 			<location x="-4.0" y="3.2" z="-2.7" w="1.0" />
 			<target x="-4.0" y="0.8" z="-2.7" />
-			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
-			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
-		</spot>
-
-		<spot id="spot_pyramid" enabled="0" angle="5.0" exponent="1.0">
-			<location x="-3.8" y="2.7" z="-2.5" w="1.0" />
-			<target x="-3.8" y="0.8" z="-2.5" />
 			<ambient r="0.1" g="0.1" b="0.1" a="1.0" />
 			<diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
 			<specular r="0.6" g="0.6" b="0.6" a="1.0" />
@@ -330,6 +322,10 @@
 			</patch>
 		</primitive >
 
+		<primitive id="boat_prim">
+			<obj path="./scenes/models/boat.obj"/>
+		</primitive>
+
 	</primitives >
 
 	<components>
@@ -346,15 +342,51 @@
 			<texture id="rocks" length_s="1.0" length_t="1.0" /> 
 
 			<children>
+				<componentref id="playSet" />
+				<componentref id="water_surface" />
+			</children>
+		</component>
+
+		<component id="playSet">
+			<transformation>
+				<translate x="3.0" y="0.1" z="3.0" />
+				<scale x="2.0" y="2.0" z="2.0"/>
+			</transformation>
+
+			<materials>
+				<material id="mat_white" />
+			</materials>
+
+			<texture id="none"/> 
+
+			<children>
 				<componentref id="tableWithComps" />
+				<componentref id="boat" />
+			</children>
+		</component>
+
+		<component id="boat">
+			<transformation>
+				<scale x="1.0" y="1.0" z="1.0" />
+			</transformation>
+
+			<materials>
+				<material id="mat_blue" />
+				<material id="mat_grey" />
+				<material id="mat_red" />
+			</materials>
+
+			<texture id="none" /> 
+
+			<children>
+				<primitiveref id="boat_prim" />
 			</children>
 		</component>
 
 		<component id="tableWithComps">
 			<transformation>
-				<translate x="25.0" y="14.0" z="25.0" />
-				<translate x="-2.5" y="0.0" z="-2.5" />
-				<scale x="0.5" y="0.5" z="0.5" />
+				<translate x="-0.05" y="0.4" z ="0.0"/>
+				<scale x="0.01" y="0.01" z="0.01" />
 			</transformation>
 
 			<materials>
@@ -1249,7 +1281,7 @@
 		<component id="water_surface">
 			<transformation>
 				<translate x="0.0" y="-0.3" z="0.0" />
-				<scale x="30.0" y="2.0" z="30.0" />
+				<scale x="30.0" y="1.0" z="30.0" />
 				<!--<rotate axis="x" angle="-90" />-->
 			</transformation>
 

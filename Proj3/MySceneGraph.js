@@ -1493,13 +1493,13 @@ class MySceneGraph {
                 //Model Path
                 var modelPath = this.reader.getString(primNode, "path");
 
-                if (!(modelPath != null && !isNaN(modelPath)))
+                if (modelPath == null)
                     return "unable to parse the path of the model from the primitive ID " + primId;
                 else
                     primArray.push(modelPath);
 
                 //Wireframe
-                var wireframe = this.reader.getFloat(children[i], 'wireframe');
+                var wireframe = this.reader.getFloat(children[i], 'wireframe',false);
 
                 if(wireframe == 1){
                     primArray.push(true);
@@ -1776,6 +1776,7 @@ class MySceneGraph {
 
 
         for (var i = 0; i < node.leafs.length; i++) {
+
             if (this.primitives[node.leafs[i]] != null)
                 this.draw_primitive(node.leafs[i], sLength, tLength);
         }

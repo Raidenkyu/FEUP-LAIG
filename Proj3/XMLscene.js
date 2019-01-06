@@ -97,16 +97,14 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+
+        this.initViews();
+        
         if(this.firstScene){
         this.game = new Game(this);
         this.gameInterface = new GameInterface(this,this.game);
-        }
-        this.initViews();
 
-        this.axis = new CGFaxis(this, this.graph.axisLength);
-        this.setGlobalAmbientLight(this.graph.ambientR, this.graph.ambientG, this.graph.ambientB, this.graph.ambientA);
-        this.gl.clearColor(this.graph.backgroundR, this.graph.backgroundG, this.graph.backgroundB, this.graph.backgroundA);
-
+        
         this.initLights();
         this.interface.initKeys();
 
@@ -122,6 +120,19 @@ class XMLscene extends CGFscene {
         this.interface.addModesGroup();
 
         this.interface.addServerGroup(this.game.server);
+        }
+        else{
+            this.interface.updateLightsGroup(this.graph.lights);
+
+            this.interface.updateViewsGroup(this.graph.views);
+        }
+        
+
+        this.axis = new CGFaxis(this, this.graph.axisLength);
+        this.setGlobalAmbientLight(this.graph.ambientR, this.graph.ambientG, this.graph.ambientB, this.graph.ambientA);
+        this.gl.clearColor(this.graph.backgroundR, this.graph.backgroundG, this.graph.backgroundB, this.graph.backgroundA);
+
+
 
         this.sceneInited = true;
     }

@@ -45,11 +45,25 @@ class MyInterface extends CGFinterface {
     addLightsGroup(lights) {
 
         var group = this.gui.addFolder("Lights");
+        this.lightsGroup = group;
         group.open();
 
         // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
         // e.g. this.option1=true; this.option2=false;
 
+        for (var key in lights) {
+            if (lights.hasOwnProperty(key)) {
+                this.scene.lightValues[key] = lights[key][0];
+                group.add(this.scene.lightValues, key);
+            }
+        }
+    }
+
+    updateLightsGroup(lights){
+        var group = this.lightsGroup;
+        for(var i = this.lightsGroup.__controllers.length - 1; i >= 0;i--){
+            this.lightsGroup.__controllers[i].remove();
+        }
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
                 this.scene.lightValues[key] = lights[key][0];
@@ -64,6 +78,7 @@ class MyInterface extends CGFinterface {
      */
     addViewsGroup(views){
         var group = this.gui.addFolder("Views");
+        this.viewsGroup = group;
         group.open();
 
         const cameraIdArray = Object.keys(views);
@@ -73,6 +88,19 @@ class MyInterface extends CGFinterface {
         group.add(this.scene,'rotateCamera').name('Rotate');
     }
 
+    updateViewsGroup(views){
+        var group = this.viewsGroup;
+        for(var i = this.viewsGroup.__controllers.length - 1; i >= 0;i--){
+            this.viewsGroup.__controllers[i].remove();
+        }
+
+        const cameraIdArray = Object.keys(views);
+        this.currentCameraId = this.scene.graph.defaultView;
+
+        group.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
+        group.add(this.scene,'rotateCamera').name('Rotate');
+
+    }
 
     addServerGroup(server){
         var group = this.gui.addFolder("Server");
