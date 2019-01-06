@@ -10,7 +10,17 @@ class ButtonCollection extends CGFobject{
         this.buttons = [];
         this.createButtons();
         this.testShader = new CGFshader(scene.gl, "shaders/button.vert", "shaders/button.frag");
-		this.testShader.setUniformsValues({uSampler: 0});
+        this.testShader.setUniformsValues({uSampler: 0});
+
+        this.material = new CGFappearance(this.scene);
+        this.material.setTextureWrap("REPEAT", "REPEAT");
+        this.material.setShininess(1);
+        this.material.setEmission(0,0,0,0);
+        this.material.setAmbient(0.0,0.0,0.0,1);
+        this.material.setDiffuse(0,0.2,0,0);
+        this.material.setSpecular(0,0.2,0,0);
+
+        this.scene.graph.materials["mat_button"] = this.material;
     };
 
     display(){
@@ -67,6 +77,13 @@ class ButtonCollection extends CGFobject{
         //this.scene.setActiveShader(this.scene.defaultShader);
 
     };    
+
+    update(time){
+        var factor = 0.4 - Math.abs(Math.sin((time % 200000)*0.002)/5.0);
+        this.material.setDiffuse(0,factor,0,1);
+        this.material.setSpecular(0,factor,0,1);
+        this.scene.graph.materials["mat_button"] = this.material;
+    }
 
     createButtons(){
 

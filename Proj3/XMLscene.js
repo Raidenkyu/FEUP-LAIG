@@ -253,6 +253,8 @@ class XMLscene extends CGFscene {
                     elem.update(currTime);
                 if(elem instanceof MyPieces)
                     elem.update(elapsedTime);
+                if(elem instanceof ButtonCollection)
+                    elem.update(currTime);
             }
         }
         this.lastTime = currTime;

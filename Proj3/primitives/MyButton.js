@@ -18,7 +18,7 @@ class MyButton extends CGFobject{
 
         let buttonMat;
         if(isValid){
-            buttonMat = this.scene.graph.materials["mat_green"];
+            buttonMat = this.scene.graph.materials["mat_button"];
         }
         else{
             buttonMat = this.scene.graph.materials["mat_white"];

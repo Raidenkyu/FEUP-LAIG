@@ -1,15 +1,15 @@
 <yas>
 <scene root="rootNode" axis_length="5.0" />
 
-	<views default="view_far" >
+	<views default="view_board" >
 
 		<perspective id="view_board" near="0.1" far="500" angle="22.92">
-			<from x="25.0" y="35.0" z="35.0" />
-			<to x="25.0" y="10.0" z="25.0" />
+			<from x="25.0" y="33.0" z="37.0" />
+			<to x="25.0" y="12.0" z="25.0" />
 		</perspective>
 		
 		<perspective id="view_far" near="0.1" far="500" angle="22.92">
-			<from x="25.0" y="100.0" z="150.0" />
+			<from x="25.0" y="100.0" z="200.0" />
 			<to x="25.0" y="0.0" z="0.0" />
 		</perspective>
 
@@ -153,6 +153,9 @@
 
 		<texture id="woodBoardSide" file="./scenes/images/woodBoardSide.jpg" />
 		<texture id="floorTexture" file="./scenes/images/floorTexture.jpg" />
+		<texture id="greyBrick" file="./scenes/images/greyBrick.jpg" />
+		<texture id="painting1" file="./scenes/images/painting1.jpg" />
+		<texture id="painting2" file="./scenes/images/painting2.jpg" />
 
 	</textures>
 		
@@ -349,7 +352,17 @@
 				<componentref id="tableWithComps" />
 				<componentref id="floorScene" />
 				<componentref id="leftWall" />
-				<primitiveref id="tetra" />
+				<componentref id="rightWall" />
+				<componentref id="backWall" />
+				<componentref id="leftPillar"/>
+				<componentref id="rightPillar"/>
+				<componentref id="paintingLeft1"/>
+				<componentref id="paintingLeft2"/>
+				<componentref id="paintingLeft3"/>
+				<componentref id="paintingRight1"/>
+				<componentref id="paintingRight2"/>
+				<componentref id="paintingRight3"/>
+				<componentref id="paintingCenter"/>
 
 				<!--<componentref id="patch1" />
 				<componentref id="patch2" />
@@ -404,6 +417,7 @@
 			<children>
 				<primitiveref id="pieces" />
 				<componentref id="boardGrid" />
+				<componentref id="boardBoarder" />
 				<componentref id="buttonsCol" />
 				<componentref id="cornerTL" />
 				<componentref id="cornerTR" />
@@ -454,6 +468,24 @@
 			</materials>
 
 			<texture id="textGrid" length_s="0.05263" length_t="0.05263" /> 
+
+			<children>
+				<primitiveref id="quad"/>
+			</children>
+		</component>
+
+		<component id="boardBoarder">
+			<transformation>
+				<translate x="10.5" y="-0.05" z="10.5" />
+				<scale x="23.0" y="1.0" z="23.0" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+				<material id="mat_black" />
+			</materials>
+
+			<texture id="none" length_s="1" length_t="1" /> 
 
 			<children>
 				<primitiveref id="quad"/>
@@ -546,8 +578,8 @@
 
 		<component id="boardSide1">
 			<transformation>
-				<translate x="10.5" y="-2.0" z="21.0" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<translate x="10.5" y="-2.0" z="22.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -565,9 +597,9 @@
 		
 		<component id="boardSide2">
 			<transformation>
-				<translate x="21.0" y="-2.0" z="10.5" />
+				<translate x="22.0" y="-2.0" z="10.5" />
 				<rotate axis="y" angle="90" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -585,9 +617,9 @@
 
 		<component id="boardSide3">
 			<transformation>
-				<translate x="10.5" y="-2.0" z="0.0" />
+				<translate x="10.5" y="-2.0" z="-1.0" />
 				<rotate axis="y" angle="180" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -605,9 +637,9 @@
 
 		<component id="boardSide4">
 			<transformation>
-				<translate x="0.0" y="-2.0" z="10.5" />
+				<translate x="-1.0" y="-2.0" z="10.5" />
 				<rotate axis="y" angle="270" />
-				<scale x="21.0" y="4.0" z="1.0" />
+				<scale x="23.0" y="4.0" z="1.0" />
 				<rotate axis="x" angle="90" />
 				<rotate axis="y" angle="90" />
 			</transformation>
@@ -644,9 +676,44 @@
 
 		<component id="leftWall">
 			<transformation>
-				
 				<rotate axis="y" angle="63.435" />
-				<translate x="-25.0" y="12.5" z="0.0" />
+				<translate x="-28.0" y="12.5" z="0.0" />
+				<scale x="56.0" y="25.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="greyBrick" length_s="0.25" length_t="0.25"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="rightWall">
+			<transformation>
+				<translate x="50.0" y="0.0" z="0.0" />
+				<rotate axis="y" angle="-63.435" />
+				<translate x="28.0" y="12.5" z="0.0" />
+				<scale x="56.0" y="25.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="greyBrick" length_s="0.25" length_t="0.25"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="backWall">
+			<transformation>
+				<translate x="25.0" y="12.5" z="0.0" />
 				<scale x="50.0" y="25.0" z="1.0" />
 			</transformation>
 
@@ -661,6 +728,181 @@
 			</children>
 		</component> 
 
+		<component id="leftPillar">
+			<transformation>
+				<translate x="0.0" y="0.0" z="0.0" />
+				<scale x="1.0" y="25.0" z="1.0" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+					<material id="mat_red" />
+			</materials>
+
+			<texture id="baseDoor" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="uni_cylinder" />
+			</children>
+		</component> 
+
+		<component id="rightPillar">
+			<transformation>
+				<translate x="50.0" y="0.0" z="0.0" />
+				<scale x="1.0" y="25.0" z="1.0" />
+				<rotate axis="x" angle="-90" />
+			</transformation>
+
+			<materials>
+					<material id="mat_red" />
+			</materials>
+
+			<texture id="baseDoor" length_s="1.0" length_t="1.0" /> 
+
+			<children>
+				<primitiveref id="uni_cylinder" />
+			</children>
+		</component> 
+
+		<component id="paintingLeft1">
+			<transformation>
+				<translate x="0.0" y="12.5" z="0.0" />
+				<rotate axis="y" angle="63.435" />
+				<translate x="-9.0" y="0.0" z="0.0" />
+				<translate x="-3.5" y="3.5" z="0.1" />
+				<scale x="7.0" y="7.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="painting1" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="paintingLeft2">
+			<transformation>
+				<translate x="0.0" y="12.5" z="0.0" />
+				<rotate axis="y" angle="63.435" />
+				<translate x="-21.5" y="0.0" z="0.0" />
+				<translate x="-3.5" y="3.5" z="0.1" />
+				<scale x="7.0" y="7.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="painting1" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="paintingLeft3">
+			<transformation>
+				<translate x="0.0" y="12.5" z="0.0" />
+				<rotate axis="y" angle="63.435" />
+				<translate x="-34.0" y="0.0" z="0.0" />
+				<translate x="-3.5" y="3.5" z="0.1" />
+				<scale x="7.0" y="7.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="painting1" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="paintingRight1">
+			<transformation>
+				<translate x="50.0" y="12.5" z="0.0" />
+				<rotate axis="y" angle="-63.435" />
+				<translate x="16.0" y="0.0" z="0.0" />
+				<translate x="-3.5" y="3.5" z="0.1" />
+				<scale x="7.0" y="7.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="painting1" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="paintingRight2">
+			<transformation>
+				<translate x="50.0" y="12.5" z="0.0" />
+				<rotate axis="y" angle="-63.435" />
+				<translate x="28.5" y="0.0" z="0.0" />
+				<translate x="-3.5" y="3.5" z="0.1" />
+				<scale x="7.0" y="7.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="painting1" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="paintingRight3">
+			<transformation>
+				<translate x="50.0" y="12.5" z="0.0" />
+				<rotate axis="y" angle="-63.435" />
+				<translate x="41.0" y="0.0" z="0.0" />
+				<translate x="-3.5" y="3.5" z="0.1" />
+				<scale x="7.0" y="7.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="painting1" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
+
+		<component id="paintingCenter">
+			<transformation>
+				<translate x="25.0" y="12.5" z="0.0" />
+				<!--<rotate axis="y" angle="-63.435" />
+				<translate x="41.0" y="0.0" z="0.0" />-->
+				<translate x="0.0" y="3.5" z="0.1" />
+				<scale x="14.0" y="7.0" z="1.0" />
+			</transformation>
+
+			<materials>
+					<material id="mat_white" />
+			</materials>
+
+			<texture id="painting2" length_s="1" length_t="1"/> 
+
+			<children>
+				<primitiveref id="quad" />
+			</children>
+		</component> 
 
 
 		<component id="base">
